@@ -28,8 +28,8 @@ Ein Beispiel: Eine rote LED mit 2 V Durchlassspannung soll an einer 5-V-Quelle m
 
 Die Durchlassspannung hängt von der LED-Farbe ab. Grobe Richtwerte:
 
-- Rot und Gelb: etwa 1,8 bis 2,2 V
-- Grün: etwa 2,0 bis 3,0 V
+- Rot: etwa 1,8 bis 2,2 V
+- Grün und Gelb: etwa 2,0 bis 2,4 V
 - Blau und Weiß: etwa 3,0 bis 3,4 V
 
 Die genauen Werte stehen im Datenblatt der LED. Wer sie nicht kennt, nimmt die Richtwerte und plant etwas Reserve ein.

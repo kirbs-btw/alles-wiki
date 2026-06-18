@@ -44,7 +44,7 @@ Probiere das Ergebnis und passe beim nächsten Mal an: Schmeckt der Kaffee sauer
 ## Häufige Fragen
 
 **Wie viel Kaffeepulver pro Tasse?**
-Als Richtwert gelten etwa 6 bis 7 Gramm pro Tasse von rund 120 Millilitern. Der Kaffeepulver-Rechner liefert dir den genauen Wert für deine Menge.
+Als Richtwert gelten bei mittlerer Stärke (rund 60 g pro Liter) etwa 7 bis 8 Gramm pro Tasse von 120 bis 125 Millilitern. Der Kaffeepulver-Rechner liefert dir den genauen Wert für deine Menge.
 
 **Warum schmeckt mein Kaffee bitter?**
 Meist liegt es an zu heißem Wasser, zu feinem Mahlgrad oder zu langer Brühzeit. Senke die Temperatur und verkürze die Ziehzeit.

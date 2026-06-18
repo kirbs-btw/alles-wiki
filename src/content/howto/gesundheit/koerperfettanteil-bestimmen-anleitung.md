@@ -13,19 +13,19 @@ Der Körperfettanteil sagt mehr über deine Körperzusammensetzung aus als das r
 
 ## 1. Messmethode wählen
 
-Für zu Hause eignen sich die Umfangsmethode (zum Beispiel nach der US-Navy-Formel) oder eine Körperfettwaage mit Bioimpedanz. Die Umfangsmethode braucht nur ein Maßband und liefert mit dem [Körperfett-Rechner](/rechner/koerperfettanteil-rechner/) eine brauchbare Schätzung.
+Für zu Hause gibt es mehrere Wege: eine Schätzung aus BMI, Alter und Geschlecht (Deurenberg-Formel), eine Körperfettwaage mit Bioimpedanz oder eine Umfangsmethode mit Maßband. Der [Körperfett-Rechner](/rechner/koerperfettanteil-rechner/) nutzt die Deurenberg-Formel und kommt ganz ohne Maßband aus.
 
 ## 2. Umfänge korrekt messen
 
-Miss morgens vor dem Essen. Für die US-Navy-Methode brauchst du Größe, Hals- und Bauchumfang (bei Frauen zusätzlich die Hüfte). Lege das Maßband locker an, ohne einzuschnüren, und miss jeweils mehrmals für einen verlässlichen Mittelwert.
+Für die Schätzung im Rechner brauchst du nur Gewicht und Größe, dazu Alter und Geschlecht – kein Maßband. Willst du zusätzlich mit einer Umfangsmethode arbeiten, miss morgens vor dem Essen und lege das Maßband locker an, ohne einzuschnüren. Notiere alle Werte für einen verlässlichen Mittelwert.
 
 ## 3. Körperfettanteil berechnen
 
-Gib die gemessenen Werte zusammen mit Geschlecht und Größe in den [Körperfett-Rechner](/rechner/koerperfettanteil-rechner/) ein. Er wendet die Formel an und gibt deinen geschätzten Körperfettanteil in Prozent aus.
+Gib Geschlecht, Gewicht, Größe und Alter in den [Körperfett-Rechner](/rechner/koerperfettanteil-rechner/) ein. Er wendet die Deurenberg-Formel an und gibt deinen geschätzten Körperfettanteil in Prozent sowie die fettfreie Masse aus.
 
 ## 4. Wert einordnen
 
-Frauen haben naturgemäß einen höheren Körperfettanteil als Männer. Grobe Orientierung: Bei Männern gelten etwa 10–20 % als normal, bei Frauen etwa 18–28 %. Die genauen Spannen variieren je nach Quelle und Alter.
+Frauen haben naturgemäß einen höheren Körperfettanteil als Männer. Grobe Orientierung: Bei Männern gelten etwa 14–24 % als normaler Bereich, bei Frauen etwa 21–31 %. Die genauen Spannen variieren je nach Quelle und Alter.
 
 ## 5. Veränderung verfolgen
 

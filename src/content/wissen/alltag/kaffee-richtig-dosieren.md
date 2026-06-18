@@ -12,7 +12,7 @@ Zu dünn oder zu bitter? Die Dosierung entscheidet maßgeblich über den Geschma
 
 ## Das ideale Verhältnis
 
-Als bewährte Faustregel gilt für Filterkaffee ein Verhältnis von etwa 60 Gramm Kaffeepulver pro Liter Wasser. Pro Tasse (rund 200 ml) entspricht das ungefähr 12 Gramm, also gut einem gehäuften Esslöffel. Wer es kräftiger mag, geht etwas höher, wer es milder mag, etwas niedriger.
+Als bewährte Faustregel gilt für Filterkaffee ein Verhältnis von etwa 60 Gramm Kaffeepulver pro Liter Wasser. Pro Tasse (rund 200 ml) entspricht das ungefähr 12 Gramm, also rund anderthalb gehäuften Esslöffeln (ein gehäufter Esslöffel sind etwa 7 bis 8 Gramm). Wer es kräftiger mag, geht etwas höher, wer es milder mag, etwas niedriger.
 
 Die genaue Menge für deine gewünschte Tassen- oder Litermenge berechnest du mit dem [Kaffeepulver-Dosierung-Rechner](/rechner/kaffeepulver-dosierung-rechner/). So triffst du das Verhältnis zuverlässig, statt zu schätzen.
 
@@ -45,7 +45,7 @@ Neben der Menge spielen zwei Faktoren eine große Rolle. Der **Mahlgrad** muss z
 ## Häufige Fragen
 
 **Wie viel Kaffeepulver pro Tasse?**
-Für eine Tasse von etwa 200 ml sind rund 12 Gramm üblich, also gut ein gehäufter Esslöffel. Das entspricht etwa 60 Gramm pro Liter.
+Für eine Tasse von etwa 200 ml sind rund 12 Gramm üblich, also etwa anderthalb gehäufte Esslöffel (ein gehäufter Esslöffel sind rund 7 bis 8 Gramm). Das entspricht etwa 60 Gramm pro Liter.
 
 **Warum schmeckt mein Kaffee bitter?**
 Häufige Ursachen sind ein zu feiner Mahlgrad, zu viel Pulver oder zu heißes Wasser. Etwas gröber mahlen und das Wasser leicht abkühlen lassen hilft oft.

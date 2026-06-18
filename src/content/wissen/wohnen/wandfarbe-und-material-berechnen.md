@@ -18,7 +18,7 @@ Zuerst berechnen Sie die zu streichende Fläche. Für ein rechteckiges Zimmer gi
 
 Der Umfang ist die Summe aller Wandlängen. Bei einem Raum von 4 × 5 Metern beträgt der Umfang 18 Meter; bei 2,5 Metern Höhe ergibt das 45 Quadratmeter Wandfläche.
 
-Anschließend ziehen Sie **Fenster und Türen** ab. Eine normale Tür hat rund 1,8 bis 2 Quadratmeter, ein Fenster je nach Größe 1,5 bis 2,5 Quadratmeter. Der [Wandfarben-Rechner](/rechner/wandfarbe-rechner/) übernimmt diese Abzüge automatisch.
+Anschließend ziehen Sie **Fenster und Türen** ab. Eine normale Tür hat rund 1,8 bis 2 Quadratmeter, ein Fenster je nach Größe 1,5 bis 2,5 Quadratmeter. Diese um Fenster und Türen bereinigte Wandfläche tragen Sie dann in den [Wandfarben-Rechner](/rechner/wandfarbe-rechner/) ein, der daraus die benötigte Litermenge ermittelt.
 
 ## Schritt 2: Die Ergiebigkeit beachten
 

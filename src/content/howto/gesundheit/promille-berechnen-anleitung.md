@@ -25,7 +25,7 @@ Die Formel nutzt Geschlecht und Gewicht, weil sich Alkohol im Körperwasser vert
 
 ## 4. Promillewert schätzen
 
-Die Widmark-Formel lautet vereinfacht: **Promille = Alkohol (g) ÷ (Gewicht in kg × Verteilungsfaktor)**. Der Faktor liegt bei Männern bei etwa 0,7 und bei Frauen bei etwa 0,6. Den Wert berechnet dir der [Promillerechner](/rechner/promillerechner/) automatisch.
+Die Widmark-Formel lautet vereinfacht: **Promille = Alkohol (g) ÷ (Gewicht in kg × Verteilungsfaktor)**. Der Faktor liegt bei Männern bei etwa 0,68 und bei Frauen bei etwa 0,55, da Frauen im Schnitt einen geringeren Körperwasseranteil haben. Den Wert berechnet dir der [Promillerechner](/rechner/promillerechner/) automatisch.
 
 ## 5. Abbauzeit berücksichtigen
 

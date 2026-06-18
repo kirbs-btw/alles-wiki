@@ -9,11 +9,11 @@ related: ["kinderbetreuungskosten-steuer-rechner", "kita-beitrag-rechner", "betr
 draft: false
 ---
 
-Eltern können einen Teil ihrer Kinderbetreuungskosten als Sonderausgaben absetzen und so Steuern sparen. Diese Anleitung zeigt, welche Kosten zählen, wie viel davon (Faustregel) absetzbar ist und wie du sie korrekt einträgst. Du brauchst Rechnungen der Betreuung und Nachweise über die Zahlung. Die genannten Werte sind die aktuell bekannten Größenordnungen (Stand 2026) – maßgeblich bleiben dein Finanzamt und das geltende Steuerrecht; dies ist keine Steuerberatung.
+Eltern können einen Teil ihrer Kinderbetreuungskosten als Sonderausgaben absetzen und so Steuern sparen. Diese Anleitung zeigt, welche Kosten zählen, wie viel davon absetzbar ist und wie du sie korrekt einträgst. Du brauchst Rechnungen der Betreuung und Nachweise über die Zahlung. Die genannten Werte gelten Stand 2026 – maßgeblich bleiben dein Finanzamt und das geltende Steuerrecht; dies ist keine Steuerberatung.
 
 ## Schritt 1: Abzugsfähige Kosten identifizieren
 
-Absetzbar sind Kosten für die reine **Betreuung** – Kita, Tagesmutter, Hort oder Babysitter. Die Faustregel: Du kannst grob **zwei Drittel der Betreuungskosten** ansetzen, gedeckelt auf einen Jahreshöchstbetrag je Kind (lange Zeit 4.000 € abziehbarer Höchstbetrag, also rund 6.000 € Kosten ausgeschöpft – als Schätzung, bitte den aktuellen Wert prüfen). Beispiel: 3.600 € Kita-Beitrag im Jahr → zwei Drittel sind 2.400 €, die du als Sonderausgaben ansetzt. Reine **Verpflegung** und Beiträge für Sport- oder Freizeitangebote zählen nicht. Die Ersparnis schätzt der [Kinderbetreuungskosten-Steuer-Rechner](/rechner/kinderbetreuungskosten-steuer-rechner/).
+Absetzbar sind Kosten für die reine **Betreuung** – Kita, Tagesmutter, Hort oder Babysitter. Die Regel (Stand 2026): Du kannst **80 % der Betreuungskosten** ansetzen, gedeckelt auf einen Höchstbetrag von **4.800 € je Kind und Jahr** (den Höchstbetrag schöpfst du bei rund 6.000 € Kosten aus). Beispiel: 3.600 € Kita-Beitrag im Jahr → 80 % sind 2.880 €, die du als Sonderausgaben ansetzt. Reine **Verpflegung** und Beiträge für Sport- oder Freizeitangebote zählen nicht. Die Ersparnis schätzt der [Kinderbetreuungskosten-Steuer-Rechner](/rechner/kinderbetreuungskosten-steuer-rechner/).
 
 ## Schritt 2: Belege und Rechnungen sammeln
 
@@ -25,7 +25,7 @@ Das Finanzamt erkennt Betreuungskosten nur an, wenn sie **unbar** gezahlt wurden
 
 ## Schritt 4: Anlage Kind ausfüllen
 
-Trage die Kosten in der **Anlage Kind** ein – pro Kind eine eigene Anlage. Gib die Art der Betreuung (z. B. Kita) und den im Jahr gezahlten Betrag an; das Finanzamt rechnet die zwei Drittel und den Höchstbetrag selbst aus, du gibst die vollen Kosten an. Bei zusammen veranlagten Eltern ist die Zuordnung eindeutig; bei getrennt lebenden Eltern setzt in der Regel der Elternteil ab, der gezahlt hat und bei dem das Kind gemeldet ist.
+Trage die Kosten in der **Anlage Kind** ein – pro Kind eine eigene Anlage. Gib die Art der Betreuung (z. B. Kita) und den im Jahr gezahlten Betrag an; das Finanzamt rechnet die 80 % und den Höchstbetrag selbst aus, du gibst die vollen Kosten an. Bei zusammen veranlagten Eltern ist die Zuordnung eindeutig; bei getrennt lebenden Eltern setzt in der Regel der Elternteil ab, der gezahlt hat und bei dem das Kind gemeldet ist.
 
 ## Schritt 5: Bescheid prüfen
 
@@ -40,10 +40,10 @@ Prüfe im Steuerbescheid, ob die Betreuungskosten anerkannt wurden und ob der an
 ## Häufige Fragen
 
 **Bis zu welchem Alter kann ich Betreuungskosten absetzen?**
-In der Regel für Kinder, die das **14. Lebensjahr noch nicht vollendet** haben (Schätzung – bitte aktuell prüfen). Bei einer Behinderung, die vor einer bestimmten Altersgrenze eingetreten ist, gilt keine obere Altersgrenze.
+In der Regel für Kinder, die das **14. Lebensjahr noch nicht vollendet** haben. Bei einer Behinderung, die vor einer bestimmten Altersgrenze eingetreten ist, gilt keine obere Altersgrenze.
 
 **Welcher Anteil der Kosten ist absetzbar?**
-Als Faustregel **zwei Drittel der Betreuungskosten**, gedeckelt auf den Jahreshöchstbetrag je Kind (lange rund 4.000 € abziehbar – Schätzung, aktuellen Wert prüfen). Beispiel: 3.600 € Kosten → 2.400 € absetzbar.
+**80 % der Betreuungskosten** (Stand 2026), gedeckelt auf 4.800 € je Kind und Jahr. Beispiel: 3.600 € Kosten → 2.880 € absetzbar.
 
 **Zählt das Essensgeld der Kita?**
 Nein. Verpflegungskosten sind nicht absetzbar – nur die reinen Betreuungskosten.

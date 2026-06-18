@@ -21,7 +21,7 @@ Wie oft und wann du zahlst, beeinflusst den Effektivzins. Notiere die **Laufzeit
 
 ## Schritt 3: Effektiven Jahreszins berechnen
 
-Die exakte Formel ist anspruchsvoll, weil alle Zahlungsströme über die Laufzeit berücksichtigt werden. Genau dafür gibt es den [Effektiver-Jahreszins-Rechner](/rechner/effektiver-jahreszins-rechner/): Du gibst Kreditsumme, Sollzins, Laufzeit und Kosten ein und erhältst den **effektiven Jahreszins**. Rate und Gesamtkosten kannst du parallel mit dem [Kreditrechner](/rechner/kreditrechner/) ermitteln.
+Die exakte bankübliche Formel nach PAngV ist anspruchsvoll, weil alle Zahlungsströme über die Laufzeit berücksichtigt werden. Den Effekt der unterjährigen Zinsverrechnung machst du mit dem [Effektiver-Jahreszins-Rechner](/rechner/effektiver-jahreszins-rechner/) sichtbar: Du gibst den Nominalzins und den Verzinsungsrhythmus ein und erhältst den **effektiven Jahreszins** aus dem Zinseszinseffekt. Gebühren und Auszahlungstermine sind darin nicht enthalten – Rate und Gesamtkosten ermittelst du parallel mit dem [Kreditrechner](/rechner/kreditrechner/).
 
 ## Schritt 4: Angebote auf gleicher Basis vergleichen
 

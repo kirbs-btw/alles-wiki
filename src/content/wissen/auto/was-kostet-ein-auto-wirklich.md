@@ -44,7 +44,7 @@ Die aussagekräftigste Zahl sind die Kosten pro Kilometer. Sie zeigen, was jede 
 
 ## Praktischer Tipp: ehrlich rechnen
 
-Eine grobe Orientierung: Viele Mittelklassewagen kosten inklusive Wertverlust 40 bis 70 Cent pro Kilometer. Das ist ein Schätzwert und hängt stark von Modell, Alter und Fahrleistung ab. Wer wenig fährt, zahlt pro Kilometer mehr, weil sich die Fixkosten auf weniger Strecke verteilen.
+Eine grobe Orientierung: Viele Mittelklassewagen kosten inklusive Wertverlust grob 30 bis 60 Cent pro Kilometer. Das ist ein Schätzwert und hängt stark von Modell, Alter und Fahrleistung ab. Wer wenig fährt, zahlt pro Kilometer mehr, weil sich die Fixkosten auf weniger Strecke verteilen.
 
 ## Häufige Fragen
 

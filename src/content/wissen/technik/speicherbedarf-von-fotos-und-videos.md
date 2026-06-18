@@ -44,7 +44,7 @@ Alle Werte sind Schätzungen, da die tatsächliche Größe stark vom Motiv und d
 Das hängt von der Dateigröße ab. Bei rund 5 MB pro Foto sind es grob über 12.000 Bilder, bei großen RAW-Dateien deutlich weniger. Ein Speicherrechner liefert eine realistischere Schätzung für deine Werte.
 
 **Warum ist mein 4K-Video so groß?**
-4K hat viermal so viele Pixel wie Full HD und benötigt deshalb eine hohe Bitrate. In Kombination mit hoher Bildrate steigt die Dateigröße schnell auf mehrere Gigabyte pro Minute.
+4K hat viermal so viele Pixel wie Full HD und benötigt deshalb eine hohe Bitrate. Bei einer typischen Bitrate von rund 45 Mbit/s belegt eine Stunde 4K-Video etwa 20 GB, also schon nach wenigen Minuten mehrere Gigabyte.
 
 **Verliere ich Qualität durch Komprimierung?**
 Moderate Komprimierung ist meist kaum sichtbar. Erst bei starker Komprimierung treten Artefakte auf. Für die Archivierung empfiehlt sich daher eine eher höhere Qualitätsstufe.

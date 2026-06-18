@@ -41,7 +41,7 @@ Ein paar Orientierungspunkte:
 - **68 °F:** 20 °C (angenehme Zimmertemperatur)
 - **98,6 °F:** 37 °C (Körpertemperatur)
 - **212 °F:** 100 °C (Wasser kocht)
-- **350 °F:** rund 175 °C (typische Backtemperatur in US-Rezepten)
+- **350 °F:** rund 177 °C (typische Backtemperatur in US-Rezepten)
 
 ## Anwendung beim Backen
 
@@ -56,4 +56,4 @@ Mit der Formel: Celsius = (Fahrenheit − 32) × 5 / 9. Für 100 °F ergibt das 
 Ja: Fahrenheit minus 30, dann halbieren. Das liefert einen groben Celsius-Wert, der für den Alltag meist ausreicht.
 
 **Wie viel ist 350 Fahrenheit in Celsius?**
-350 °F entsprechen rund 175 °C. Das ist eine typische Backtemperatur in amerikanischen Rezepten.
+350 °F entsprechen rund 177 °C. Das ist eine typische Backtemperatur in amerikanischen Rezepten.

@@ -18,7 +18,7 @@ So sind Flaschen oft schon in 15 bis 20 Minuten trinkkalt, während sie im trock
 
 ## Wie viel Eis brauche ich?
 
-Die nötige Eismenge hängt von der Zahl der Getränke, ihrer Ausgangstemperatur und der gewünschten Kühldauer ab. Als grobe Orientierung gilt: Pro Liter Getränk etwa ein halbes bis ein Kilogramm Eis, bei warmem Wetter und langer Feier eher mehr.
+Die nötige Eismenge hängt von der Zahl der Getränke, ihrer Ausgangstemperatur und der gewünschten Kühldauer ab. Als grobe Orientierung gilt: Pro Liter Getränk rund ein halbes Kilogramm Eis (für etwa 20 Liter also rund 7 bis 8 Kilogramm), bei warmem Wetter und langer Feier eher mehr.
 
 Die passende Menge für deine Runde rechnest du mit dem [Getränke-Kühlung-Eismenge-Rechner](/rechner/getraenke-kuehlung-eismenge-rechner/) aus. Er berücksichtigt Getränkemenge und Kühlbedarf und nennt dir die ungefähre Kilogrammzahl.
 
@@ -40,7 +40,7 @@ Damit das Eis nicht zu schnell schmilzt, hilft eine gute Isolierung. Stelle die 
 ## Häufige Fragen
 
 **Wie viel Eis brauche ich für eine Party?**
-Als Faustwert rund ein halbes bis ein Kilogramm Eis pro Liter Getränk. Bei Hitze und langer Feier solltest du eher mehr einplanen.
+Als Faustwert rund ein halbes Kilogramm Eis pro Liter Getränk, für rund 20 Liter also etwa 7 bis 8 Kilogramm. Bei Hitze und langer Feier solltest du eher mehr einplanen.
 
 **Wie kühle ich Getränke am schnellsten?**
 Ein Bad aus Eis, Wasser und etwas Salz kühlt am schnellsten, oft in 15 bis 20 Minuten. Trockenes Eis allein braucht deutlich länger.

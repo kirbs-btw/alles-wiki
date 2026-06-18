@@ -30,7 +30,7 @@ Für hochwertige Fotodrucke gelten rund 300 DPI als Richtwert. Für große Poste
 
 ## Wie groß kann ich ein Foto drucken?
 
-Aus der Pixelzahl eines Fotos und der gewünschten Druckauflösung lässt sich die maximale Druckgröße abschätzen. Ein 12-Megapixel-Foto ergibt bei 300 DPI etwa eine Größe von rund 30 × 20 cm. Wer es größer druckt, senkt die effektive Auflösung – bei normalem Betrachtungsabstand fällt das oft kaum auf.
+Aus der Pixelzahl eines Fotos und der gewünschten Druckauflösung lässt sich die maximale Druckgröße abschätzen. Ein 12-Megapixel-Foto (4000 × 3000 Pixel) ergibt bei 300 DPI etwa eine Größe von rund 34 × 25 cm, also ungefähr DIN A4. Wer es größer druckt, senkt die effektive Auflösung – bei normalem Betrachtungsabstand fällt das oft kaum auf.
 
 ## Praktische Hinweise
 

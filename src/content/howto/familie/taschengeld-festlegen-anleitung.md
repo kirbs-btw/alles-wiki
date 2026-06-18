@@ -19,12 +19,12 @@ Wofür Taschengeld gedacht ist, hängt vom Alter ab: Mit 6–7 Jahren reicht ein
 
 Gängige Orientierungswerte (Taschengeldtabelle, Schätzung – an dein Budget anpassen):
 
-- **6–7 Jahre:** etwa 1–2 € pro Woche
-- **8–9 Jahre:** etwa 2–3 € pro Woche
-- **10–11 Jahre:** etwa 15–18 € pro Monat
-- **12–13 Jahre:** etwa 20–25 € pro Monat
-- **14–15 Jahre:** etwa 25–35 € pro Monat
-- **16–17 Jahre:** etwa 35–60 € pro Monat
+- **6–7 Jahre:** etwa 2–2,50 € pro Woche
+- **8–9 Jahre:** etwa 3–3,50 € pro Woche
+- **10–11 Jahre:** etwa 18–23 € pro Monat
+- **12–13 Jahre:** etwa 28–33 € pro Monat
+- **14–15 Jahre:** etwa 38–43 € pro Monat
+- **16–17 Jahre:** etwa 60–70 € pro Monat
 
 Den für dein Kind passenden Betrag findest du mit dem [Taschengeld-Rechner](/rechner/taschengeld-rechner/). Wichtig ist, dass die Höhe zum Familienbudget passt und verlässlich gleich bleibt.
 
@@ -49,10 +49,10 @@ Begleite ohne ständige Kontrolle. Hilf deinem Kind, Sparziele zu setzen, etwa f
 ## Häufige Fragen
 
 **Ab welchem Alter Taschengeld?**
-Viele Familien starten mit 6–7 Jahren (Schulbeginn) mit etwa 1–2 € pro Woche.
+Viele Familien starten mit 6–7 Jahren (Schulbeginn) mit etwa 2–2,50 € pro Woche.
 
 **Soll Taschengeld an Aufgaben gekoppelt sein?**
 Klassisches Taschengeld wird unabhängig von Pflichten gezahlt. Extra-Belohnungen für besondere Aufgaben kannst du getrennt regeln.
 
 **Wie viel ist angemessen?**
-Als grobe Orientierung: 1–2 € pro Woche im Grundschulalter, rund 15–25 € pro Monat mit 10–13 Jahren, 25–60 € pro Monat als Teenager (Schätzung, an dein Budget anpassen). Deinen Wert findest du im [Taschengeld-Rechner](/rechner/taschengeld-rechner/).
+Als grobe Orientierung: 2–3,50 € pro Woche im Grundschulalter, rund 18–33 € pro Monat mit 10–13 Jahren, 38–70 € pro Monat als Teenager (Schätzung, an dein Budget anpassen). Deinen Wert findest du im [Taschengeld-Rechner](/rechner/taschengeld-rechner/).

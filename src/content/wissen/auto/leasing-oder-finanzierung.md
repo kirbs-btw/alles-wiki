@@ -26,7 +26,7 @@ Ob ein Leasingangebot günstig ist, erkennst du am **Leasingfaktor**. Er setzt d
 
 > **Leasingfaktor = (Monatsrate ÷ Listenpreis) × 100**
 
-Ein Faktor unter 1,0 gilt als gutes Angebot, unter 0,5 als sehr attraktiv. Wichtig: In der Berechnung sollten alle Kosten enthalten sein, auch eine Anzahlung. Den Wert berechnest du schnell mit dem [Leasingfaktor-Rechner](/rechner/leasingfaktor-rechner/) und kannst Angebote so objektiv vergleichen.
+Ein Faktor unter 1,0 gilt als gutes Angebot, unter 0,7 als sehr attraktiv. Wichtig: In der Berechnung sollten alle Kosten enthalten sein, auch eine Anzahlung. Den Wert berechnest du schnell mit dem [Leasingfaktor-Rechner](/rechner/leasingfaktor-rechner/) und kannst Angebote so objektiv vergleichen.
 
 ## Vor- und Nachteile im Überblick
 
@@ -63,7 +63,7 @@ Leasing passt zu Menschen, die alle paar Jahre ein neues Auto wollen, planbare K
 Die monatliche Rate ist meist niedriger, weil du nur den Wertverlust zahlst. Über die gesamte Nutzungsdauer kann Leasing aber teurer sein, weil du dauerhaft zahlst und nie Eigentum erwirbst.
 
 **Was ist ein guter Leasingfaktor?**
-Ein Faktor unter 1,0 gilt als fair, unter 0,5 als sehr günstig. Achte darauf, dass eine Anzahlung mit eingerechnet ist, sonst wirkt das Angebot besser, als es ist.
+Ein Faktor unter 1,0 gilt als fair, unter 0,7 als sehr günstig. Achte darauf, dass eine Anzahlung mit eingerechnet ist, sonst wirkt das Angebot besser, als es ist.
 
 **Kann ich das Leasingauto am Ende kaufen?**
 Bei vielen Verträgen ja, zu einem vorher vereinbarten Restwert. Ob sich das lohnt, hängt davon ab, ob der Restwert über oder unter dem aktuellen Marktwert liegt.

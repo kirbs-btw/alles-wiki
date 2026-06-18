@@ -36,7 +36,7 @@ Zwei Banken bieten dir je 10.000 € Kredit an:
 - **Bank A:** 4,0 % Sollzins, aber zusätzliche Gebühren
 - **Bank B:** 4,3 % Sollzins, dafür ohne Gebühren
 
-Auf den ersten Blick wirkt Bank A günstiger. Erst der effektive Jahreszins zeigt, welcher Kredit dich am Ende wirklich weniger kostet. Genau deshalb solltest du immer auf diese Zahl achten. Mit dem [Effektiven-Jahreszins-Rechner](/rechner/effektiver-jahreszins-rechner/) kannst du Angebote auf eine vergleichbare Basis bringen.
+Auf den ersten Blick wirkt Bank A günstiger. Erst der effektive Jahreszins zeigt, welcher Kredit dich am Ende wirklich weniger kostet. Genau deshalb solltest du immer auf diese von der Bank ausgewiesene Zahl achten. Wie stark allein die unterjährige Zinsverrechnung den Effektivzins über den Nominalzins hebt, zeigt dir der [Effektiver-Jahreszins-Rechner](/rechner/effektiver-jahreszins-rechner/).
 
 ## Worauf der Effektivzins keine Antwort gibt
 

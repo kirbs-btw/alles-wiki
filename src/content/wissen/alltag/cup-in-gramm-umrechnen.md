@@ -24,13 +24,13 @@ Die zutatengenaue Umrechnung nimmt dir der [Cup-in-Gramm-Rechner](/rechner/cup-i
 
 ## Grobe Richtwerte für gängige Zutaten
 
-Als Orientierung für ein Cup (etwa 240 ml):
+Als Orientierung für ein Cup (rund 237 ml):
 
-- **Mehl:** rund 120–130 g
+- **Mehl:** rund 125 g
 - **Zucker:** rund 200 g
 - **Puderzucker:** rund 120 g
-- **Butter:** rund 225 g
-- **Wasser oder Milch:** rund 240 g
+- **Butter:** rund 227 g
+- **Wasser:** rund 237 g, Milch rund 245 g
 - **Gehackte Nüsse:** rund 120 g
 
 Diese Werte sind Näherungen. Wie locker oder fest eine Zutat im Becher liegt, beeinflusst das Ergebnis spürbar.
@@ -49,7 +49,7 @@ Neben Cups tauchen in Rezepten oft Esslöffel (Tablespoon) und Teelöffel (Teasp
 ## Häufige Fragen
 
 **Wie viel Gramm ist 1 Cup?**
-Das hängt von der Zutat ab. Ein Cup Mehl wiegt grob 120–130 g, ein Cup Zucker rund 200 g, ein Cup Wasser etwa 240 g. Ein Cup als Volumen entspricht etwa 240 ml.
+Das hängt von der Zutat ab. Ein Cup Mehl wiegt grob 125 g, ein Cup Zucker rund 200 g, ein Cup Wasser rund 237 g. Ein Cup als Volumen entspricht rund 237 ml (oft auf 240 ml gerundet).
 
 **Warum kann ich nicht einfach pauschal umrechnen?**
 Weil ein Cup ein Volumen misst, kein Gewicht. Je nach Dichte der Zutat ergibt das gleiche Volumen ein sehr unterschiedliches Gewicht.

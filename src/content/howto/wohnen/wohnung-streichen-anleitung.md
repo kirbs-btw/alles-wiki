@@ -25,7 +25,7 @@ Wisch die Wand mit einem Besen oder trockenen Tuch von Staub und Spinnweben ab. 
 
 ## Schritt 4: Farbe und Menge bestimmen
 
-Rechne den Bedarf vorher aus, damit du nicht mitten im Anstrich nachkaufen musst. Faustregel: Eine Dispersionsfarbe deckt etwa 6-8 m² pro Liter und Anstrich – für 40 m² Wandfläche und zwei Anstriche also rund 10-13 Liter. Den genauen Wert aus Wandfläche, Türen/Fenstern und Anzahl der Anstriche liefert der [Wandfarbe-Rechner](/rechner/wandfarbe-rechner/), den Rauminhalt der [Raumvolumen-Rechner](/rechner/raumvolumen-rechner/). Streichst du frei werdende Tapetenflächen, hilft der [Tapeten-Rechner](/rechner/tapeten-rechner/).
+Rechne den Bedarf vorher aus, damit du nicht mitten im Anstrich nachkaufen musst. Faustregel: Eine Dispersionsfarbe deckt etwa 6-8 m² pro Liter und Anstrich – für 40 m² Wandfläche und zwei Anstriche also rund 10-13 Liter. Den genauen Wert aus der (um Türen und Fenster bereinigten) Wandfläche, der Ergiebigkeit und der Anzahl der Anstriche liefert der [Wandfarbe-Rechner](/rechner/wandfarbe-rechner/), den Rauminhalt der [Raumvolumen-Rechner](/rechner/raumvolumen-rechner/). Streichst du frei werdende Tapetenflächen, hilft der [Tapeten-Rechner](/rechner/tapeten-rechner/).
 
 ## Schritt 5: Wand streichen
 

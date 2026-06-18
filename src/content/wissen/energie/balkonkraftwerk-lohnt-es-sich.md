@@ -24,7 +24,7 @@ Wie viel davon du wirklich nutzen kannst, bestimmt dein Verbrauchsverhalten: Wer
 
 ## Lohnt sich die Anschaffung?
 
-Die Wirtschaftlichkeit ergibt sich aus dem eingesparten Netzstrom. Wenn dein Balkonkraftwerk etwa 600 kWh pro Jahr liefert und du den Großteil davon selbst nutzt, sparst du beim aktuellen Strompreis schnell zwei- bis dreihundert Euro im Jahr. Bei Anschaffungskosten im niedrigen vierstelligen Bereich amortisiert sich die Anlage damit häufig in wenigen Jahren.
+Die Wirtschaftlichkeit ergibt sich aus dem eingesparten Netzstrom. Wenn dein Balkonkraftwerk etwa 600 kWh pro Jahr liefert und du den Großteil davon selbst nutzt, sparst du beim aktuellen Strompreis schnell um die 150 bis 200 Euro im Jahr. Bei Anschaffungskosten von meist einigen hundert Euro (ein komplettes Set liegt oft bei rund 600 Euro) amortisiert sich die Anlage damit häufig in wenigen Jahren.
 
 Mit dem [Balkonkraftwerk-Rechner](/rechner/balkonkraftwerk-rechner/) kannst du Ertrag, Eigenverbrauch und Ersparnis für deine Situation durchspielen. Wie stark sich die Ersparnis auf deine Gesamtrechnung auswirkt, zeigt ein Blick in den [Stromkosten-Rechner](/rechner/stromkosten-rechner/).
 
@@ -44,7 +44,7 @@ Den meisten Nutzen ziehst du, wenn du Strom dann verbrauchst, wenn die Sonne sch
 ## Häufige Fragen
 
 **Wie viel kostet ein Balkonkraftwerk?**
-Komplette Sets liegen je nach Leistung und Ausstattung meist im niedrigen vierstelligen Bereich. Die Preise sind in den letzten Jahren deutlich gesunken.
+Komplette Sets liegen je nach Leistung und Ausstattung meist bei einigen hundert Euro – ein typisches Set kostet rund 600 Euro. Die Preise sind in den letzten Jahren deutlich gesunken.
 
 **Brauche ich einen Elektriker?**
 Viele Anlagen sind für die normale Steckdose ausgelegt und einfach zu installieren. Bei Unsicherheit oder fest verdrahtetem Anschluss empfiehlt sich dennoch eine Fachkraft.

@@ -26,7 +26,7 @@ Verdienst du genau den Mindestlohn, ergibt sich daraus die maximale Stundenzahl.
 
 ## Wie viele Stunden sind möglich?
 
-Ein Beispiel: Liegt die Verdienstgrenze bei 556 € und der Stundenlohn beim Mindestlohn von etwa 12,82 €, sind das rund 43 Stunden pro Monat – also gut zehn Stunden pro Woche. Verdienst du mehr pro Stunde, sinkt die mögliche Stundenzahl entsprechend. Den genauen Stundenlohn deines Jobs ermittelst du bei Bedarf mit dem [Stundenlohn-Rechner](/rechner/stundenlohn-rechner/).
+Ein Beispiel: Liegt die Verdienstgrenze (Stand 2026) bei 603 € und der Stundenlohn beim Mindestlohn von 13,90 €, sind das rund 43 Stunden pro Monat – also gut zehn Stunden pro Woche. Verdienst du mehr pro Stunde, sinkt die mögliche Stundenzahl entsprechend. Den genauen Stundenlohn deines Jobs ermittelst du bei Bedarf mit dem [Stundenlohn-Rechner](/rechner/stundenlohn-rechner/).
 
 Gelegentliches Überschreiten der Grenze ist in eng begrenztem Rahmen erlaubt, etwa bei unvorhersehbarem Mehraufwand. Wer dauerhaft darüber liegt, rutscht aber aus dem Minijob heraus.
 

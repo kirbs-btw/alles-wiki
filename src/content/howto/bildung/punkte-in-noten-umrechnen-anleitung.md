@@ -21,7 +21,7 @@ Notiere die Notenpunkte, die du umrechnen willst. Beispiel: 13 Punkte. Bei mehre
 
 ## Schritt 3: Punkte der Note zuordnen
 
-Ordne jeden Punktwert über die Umrechnungstabelle einer Note zu. Grob gilt: 15 Punkte entsprechen einer 1+, rund 13 Punkte einer glatten 1, und so weiter abwärts bis 0 Punkte für die Note 6. Die [Notenpunkte-Umrechnung](/rechner/notenpunkte-umrechnung/) zeigt dir die genaue Zuordnung.
+Ordne jeden Punktwert über die Umrechnungstabelle einer Note zu. Grob gilt: 15 Punkte entsprechen einer 1+, 14 Punkte einer glatten 1, 13 Punkte einer 1−, und so weiter abwärts bis 0 Punkte für die Note 6. Die [Notenpunkte-Umrechnung](/rechner/notenpunkte-umrechnung/) zeigt dir die genaue Zuordnung.
 
 ## Schritt 4: Bei mehreren Werten umrechnen und mitteln
 

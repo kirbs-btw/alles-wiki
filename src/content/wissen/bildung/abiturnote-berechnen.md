@@ -25,7 +25,7 @@ Beide Blöcke werden nach festen Regeln zu einer Gesamtpunktzahl addiert. Aus di
 
 ## Von der Punktzahl zur Durchschnittsnote
 
-Die maximal erreichbare Gesamtpunktzahl liegt in den meisten Bundesländern bei **900 Punkten**, die für einen Schnitt von 1,0 nötig sind. Je weniger Punkte, desto höher (schlechter) die Note. Eine grobe Orientierung: Wer rund 823 Punkte und mehr erreicht, liegt im 1,0-Bereich; das Bestehen ist meist ab etwa 300 Punkten möglich.
+Die maximal erreichbare Gesamtpunktzahl liegt in den meisten Bundesländern bei **900 Punkten**. Je weniger Punkte, desto höher (schlechter) die Note. Eine grobe Orientierung: Wer rund 823 Punkte und mehr erreicht, liegt im 1,0-Bereich – die volle Punktzahl ist dafür also nicht nötig; das Bestehen ist ab 300 Punkten (Note 4,0) möglich. Zwischen diesen Werten verbessert sich die Note je 18 Punkte um 0,1.
 
 Wichtig: Die genauen Umrechnungstabellen und Einbringungsregeln **unterscheiden sich je nach Bundesland**. Die hier genannten Zahlen sind typische Richtwerte und sollten immer mit der aktuellen Abiturverordnung des eigenen Bundeslands abgeglichen werden. Eine schnelle Einschätzung des eigenen Schnitts liefert der [Abi-Durchschnitt-Rechner](/rechner/abi-durchschnitt-rechner/).
 
