@@ -46,7 +46,7 @@ const ld: object[] = [
           type="text"
           readonly
           aria-live="polite"
-          class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-3 font-mono text-lg text-zinc-900 shadow-sm outline-none"
+          class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-3 font-mono text-lg text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
         />
         <div class="flex gap-2">
           <button id="pw-gen" type="button" class="shrink-0 rounded-lg bg-brand-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-brand-600 focus-visible:ring-2 focus-visible:ring-brand-300">Neu</button>
@@ -123,20 +123,41 @@ const ld: object[] = [
         digits: '0123456789',
         symbols: '!@#$%^&*()-_=+[]{};:,.?',
       };
+      // Unverzerrter Zufallsindex via Rejection-Sampling (vermeidet Modulo-Bias).
+      const randIndex = (mod: number) => {
+        const limit = Math.floor(2 ** 32 / mod) * mod;
+        const buf = new Uint32Array(1);
+        let v: number;
+        do {
+          crypto.getRandomValues(buf);
+          v = buf[0];
+        } while (v >= limit);
+        return v % mod;
+      };
       const generate = () => {
-        let pool = '';
-        if (upper.checked) pool += sets.upper;
-        if (lower.checked) pool += sets.lower;
-        if (digits.checked) pool += sets.digits;
-        if (symbols.checked) pool += sets.symbols;
+        const active: string[] = [];
+        if (upper.checked) active.push(sets.upper);
+        if (lower.checked) active.push(sets.lower);
+        if (digits.checked) active.push(sets.digits);
+        if (symbols.checked) active.push(sets.symbols);
+        const pool = active.join('');
         const len = parseInt(lenEl.value, 10);
         lenVal.textContent = String(len);
         if (!pool) { out.value = ''; msg.textContent = 'Bitte mindestens einen Zeichentyp wählen.'; return; }
-        const rnd = new Uint32Array(len);
-        crypto.getRandomValues(rnd);
-        let pw = '';
-        for (let i = 0; i < len; i++) pw += pool[rnd[i] % pool.length];
-        out.value = pw;
+        const chars: string[] = [];
+        // Pflicht-Zeichen: pro aktivem Set garantiert mindestens eines (sofern Länge ausreicht).
+        for (const set of active) {
+          if (chars.length >= len) break;
+          chars.push(set[randIndex(set.length)]);
+        }
+        // Restliche Positionen aus dem gesamten Pool auffüllen.
+        while (chars.length < len) chars.push(pool[randIndex(pool.length)]);
+        // Fisher-Yates-Shuffle, damit die Pflicht-Zeichen nicht vorne stehen.
+        for (let i = chars.length - 1; i > 0; i--) {
+          const j = randIndex(i + 1);
+          [chars[i], chars[j]] = [chars[j], chars[i]];
+        }
+        out.value = chars.join('');
         msg.textContent = 'Generiert lokal in deinem Browser – nichts wird übertragen.';
       };
       document.getElementById('pw-gen')?.addEventListener('click', generate);

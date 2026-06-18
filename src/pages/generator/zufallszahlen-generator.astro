@@ -47,6 +47,9 @@ const ld: object[] = [
             type="number"
             value="1"
             step="1"
+            min="-1000000000"
+            max="1000000000"
+            inputmode="numeric"
             class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
           />
         </label>
@@ -57,6 +60,9 @@ const ld: object[] = [
             type="number"
             value="49"
             step="1"
+            min="-1000000000"
+            max="1000000000"
+            inputmode="numeric"
             class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
           />
         </label>
@@ -67,7 +73,9 @@ const ld: object[] = [
             type="number"
             value="6"
             min="1"
+            max="10000"
             step="1"
+            inputmode="numeric"
             class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
           />
         </label>
@@ -135,10 +143,17 @@ const ld: object[] = [
       const msg = document.getElementById('rng-msg') as HTMLElement | null;
 
       if (minEl && maxEl && countEl && uniqueEl && sortEl && drawBtn && out && msg) {
+        // Obergrenzen gegen Speicher-/Endlosschleifen-Crashes.
+        const MAX_RANGE = 1_000_000; // max. Pool-Groesse bei Ziehung ohne Wiederholung
+        const MAX_COUNT = 10_000; // max. Anzahl gezogener Zahlen
+
         // Gleichverteilte Ganzzahl in [0, max) ohne Modulo-Bias.
         const randInt = (max: number): number => {
           if (max <= 0) return 0;
-          const limit = Math.floor(0xffffffff / max) * max;
+          // Bei max > 2^32 wuerde limit zu 0 werden -> Endlosschleife. Fallback ohne Crypto.
+          if (max > 0x100000000) return Math.floor(Math.random() * max);
+          // Wertebereich von Uint32Array ist [0, 2^32-1] = 2^32 Werte.
+          const limit = Math.floor(0x100000000 / max) * max;
           const buf = new Uint32Array(1);
           let r: number;
           do {
@@ -160,6 +175,17 @@ const ld: object[] = [
         };
 
         const draw = () => {
+          // Leere Felder werden von Number('') zu 0 -> explizit als ungueltig behandeln.
+          if (
+            minEl.value.trim() === '' ||
+            maxEl.value.trim() === '' ||
+            countEl.value.trim() === ''
+          ) {
+            out.innerHTML = '';
+            msg.textContent = 'Bitte gültige Zahlen eingeben.';
+            return;
+          }
+
           let min = Math.round(Number(minEl.value));
           let max = Math.round(Number(maxEl.value));
           let count = Math.round(Number(countEl.value));
@@ -175,6 +201,7 @@ const ld: object[] = [
             max = tmp;
           }
           if (count < 1) count = 1;
+          if (count > MAX_COUNT) count = MAX_COUNT;
 
           const rangeSize = max - min + 1;
           let info = 'Ziehung läuft lokal in deinem Browser über einen sicheren Zufallsgenerator.';
@@ -182,6 +209,12 @@ const ld: object[] = [
           let result: number[];
 
           if (uniqueEl.checked) {
+            // Pool ueber den gesamten Bereich -> Groesse hart begrenzen, sonst Crash/Freeze.
+            if (rangeSize > MAX_RANGE) {
+              out.innerHTML = '';
+              msg.textContent = `Bereich zu groß für Ziehung ohne Wiederholung (max. ${MAX_RANGE.toLocaleString('de-DE')} Werte). Bitte Bereich verkleinern oder „ohne Wiederholung“ deaktivieren.`;
+              return;
+            }
             if (count > rangeSize) {
               count = rangeSize;
               info = `Ohne Wiederholung sind höchstens ${rangeSize} Zahlen möglich – Anzahl wurde begrenzt.`;

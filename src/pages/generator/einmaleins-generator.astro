@@ -174,23 +174,30 @@ const reihen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
           msg.textContent = `${count} Aufgabe${count === 1 ? '' : 'n'} aus den Reihen ${reihen.join(', ')} erstellt.`;
         };
 
+        const syncAllState = () => {
+          if (!allEl) return;
+          const someChecked = reiheEls.some((r) => r.checked);
+          const allChecked = reiheEls.every((r) => r.checked);
+          allEl.checked = allChecked;
+          allEl.indeterminate = someChecked && !allChecked;
+        };
+
         if (allEl) {
           allEl.addEventListener('change', () => {
+            allEl.indeterminate = false;
             reiheEls.forEach((el) => {
               el.checked = allEl.checked;
             });
           });
         }
         reiheEls.forEach((el) =>
-          el.addEventListener('change', () => {
-            if (allEl) allEl.checked = reiheEls.every((r) => r.checked);
-          }),
+          el.addEventListener('change', syncAllState),
         );
         solutionsEl.addEventListener('change', applySolutionVisibility);
         genBtn?.addEventListener('click', generate);
         printBtn?.addEventListener('click', () => window.print());
 
-        if (allEl) allEl.checked = reiheEls.every((r) => r.checked);
+        syncAllState();
         generate();
       }
     }

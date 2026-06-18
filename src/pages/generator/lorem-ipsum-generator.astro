@@ -81,7 +81,6 @@ const ld: object[] = [
           id="li-out"
           readonly
           rows="10"
-          aria-live="polite"
           class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-3 text-sm leading-relaxed text-zinc-900 shadow-sm outline-none"
         ></textarea>
       </label>
@@ -182,7 +181,7 @@ const ld: object[] = [
           return n;
         };
 
-        const generate = () => {
+        const generate = (announce = false) => {
           const n = clampCount();
           const unit = unitEl.value;
           const classic = classicEl.checked;
@@ -213,10 +212,12 @@ const ld: object[] = [
           }
 
           out.value = result;
-          msg.textContent = 'Generiert lokal in deinem Browser – nichts wird übertragen.';
+          msg.textContent = announce
+            ? 'Blindtext generiert – lokal in deinem Browser, nichts wird übertragen.'
+            : 'Generiert lokal in deinem Browser – nichts wird übertragen.';
         };
 
-        genBtn?.addEventListener('click', generate);
+        genBtn?.addEventListener('click', () => generate(true));
         copyBtn?.addEventListener('click', async () => {
           if (!out.value) return;
           try {

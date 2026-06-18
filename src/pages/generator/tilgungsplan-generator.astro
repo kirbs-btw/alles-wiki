@@ -57,6 +57,7 @@ const ld: object[] = [
             id="tp-rate"
             type="number"
             min="0"
+            max="20"
             step="0.01"
             value="3.5"
             class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2.5 text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
@@ -68,6 +69,7 @@ const ld: object[] = [
             id="tp-repay"
             type="number"
             min="0"
+            max="100"
             step="0.1"
             value="2"
             class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2.5 text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
@@ -87,7 +89,7 @@ const ld: object[] = [
       </div>
 
       <!-- Zusammenfassung -->
-      <div id="tp-summary" class="mt-6 grid gap-3 sm:grid-cols-3" aria-live="polite">
+      <div id="tp-summary" class="mt-6 grid gap-3 sm:grid-cols-3">
         <div class="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3">
           <span class="block text-xs font-medium uppercase tracking-wide text-zinc-500">Monatsrate</span>
           <span id="tp-rate-out" class="mt-1 block text-lg font-bold text-zinc-900">–</span>
@@ -209,6 +211,13 @@ const ld: object[] = [
           msg.textContent = 'Sollzins und anfängliche Tilgung dürfen nicht beide 0 sein.';
           return;
         }
+        if (annualRate > 100 || initialRepay > 100) {
+          rateOut.textContent = '–';
+          termOut.textContent = '–';
+          interestOut.textContent = '–';
+          msg.textContent = 'Bitte realistische Prozentwerte eingeben (Sollzins und Tilgung jeweils höchstens 100 %).';
+          return;
+        }
 
         const z = annualRate / 100; // jährlicher Zinssatz
         const monthlyRate = (principal0 * (annualRate + initialRepay)) / 100 / 12;
@@ -269,13 +278,17 @@ const ld: object[] = [
         if (remMonths > 0) termStr += `${years > 0 ? ' ' : ''}${remMonths} ${remMonths === 1 ? 'Monat' : 'Monate'}`;
         if (!termStr) termStr = '0 Monate';
 
-        rateOut.textContent = eur(monthlyRate);
-        termOut.textContent = termStr;
-        interestOut.textContent = eur(totalInterest);
+        const capped = months >= cap && balance > 0;
 
-        if (months >= cap) {
-          msg.textContent = 'Hinweis: Die Laufzeit überschreitet 100 Jahre – bitte Tilgung erhöhen.';
+        rateOut.textContent = eur(monthlyRate);
+        if (capped) {
+          // Darlehen ist nach 100 Jahren noch nicht getilgt – endliche Werte wären irreführend.
+          termOut.textContent = 'über 100 Jahre';
+          interestOut.textContent = '> ' + eur(totalInterest);
+          msg.textContent = 'Hinweis: Das Darlehen wird auch nach 100 Jahren nicht getilgt – die Restschuld bleibt positiv. Bitte Tilgung erhöhen. Laufzeit und Gesamtzinsen sind nur Mindestwerte.';
         } else {
+          termOut.textContent = termStr;
+          interestOut.textContent = eur(totalInterest);
           msg.textContent = 'Berechnet lokal in deinem Browser – nichts wird übertragen.';
         }
 
