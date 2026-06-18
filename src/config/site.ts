@@ -4,7 +4,7 @@
 export const SITE = {
   name: 'AllesWiki',
   domain: 'alles-wiki.de',
-  url: 'https://alles-wiki.de',
+  url: 'https://www.alles-wiki.de',
   tagline: 'Rechner, Wissen & How-to für jeden Alltag',
   description:
     'AllesWiki: kostenlose Rechner, verständliches Wissen und How-to-Anleitungen zu allen Alltagsthemen in Deutschland – Finanzen, Gesundheit, Auto, Wohnen, Recht, Familie und mehr.',
