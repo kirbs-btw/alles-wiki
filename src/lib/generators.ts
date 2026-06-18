@@ -155,6 +155,103 @@ export const GENERATORS: GeneratorMeta[] = [
     related: ['hex-rgb-umrechner'],
     updated: '2026-06-18',
   },
+  {
+    slug: 'schriftgenerator',
+    category: 'technik',
+    title: 'Schriftgenerator',
+    shortTitle: 'Schriftarten',
+    description:
+      'Text in coole Schriftarten umwandeln – fett, kursiv, Schreibschrift, Fraktur und mehr. Zum Kopieren für Social Media, Bio und Nicknames.',
+    keywords: ['schriftgenerator', 'schriftarten generator', 'coole schrift', 'instagram schrift', 'schreibschrift generator'],
+    intro:
+      'Gib einen Text ein und erhalte ihn in vielen Unicode-Schriftstilen – fett, kursiv, Schreibschrift, Frakturschrift, Monospace und mehr. Die Zeichen sind echtes Unicode und lassen sich überall einfügen, wo normaler Text erlaubt ist (Instagram, TikTok, WhatsApp, Profile).',
+    faq: [
+      { q: 'Funktioniert das überall?', a: 'Meist ja, da es echte Unicode-Zeichen sind. Einzelne Apps oder Schriftarten zeigen seltene Zeichen aber als Kästchen an.' },
+      { q: 'Ist das eine echte Schriftart?', a: 'Nein. Es sind Unicode-Varianten der Buchstaben, keine installierte Schriftart – deshalb funktioniert das Kopieren ohne Font-Download.' },
+    ],
+    updated: '2026-06-18',
+  },
+  {
+    slug: 'benutzername-generator',
+    category: 'alltag',
+    title: 'Benutzername-Generator',
+    shortTitle: 'Username',
+    description:
+      'Kreative Benutzernamen und Nicknames generieren – mit Zahlen, Trennzeichen und Stil-Optionen. Für Gaming, Social Media und neue Accounts.',
+    keywords: ['benutzername generator', 'username generator', 'nickname generator', 'gamertag generator', 'nutzername ideen'],
+    intro:
+      'Dir fällt kein guter Benutzername ein? Dieser Generator kombiniert Wörter, Zahlen und Trennzeichen zu Vorschlägen. Stelle Stil und Länge ein und generiere so viele Ideen, wie du möchtest – alles lokal im Browser.',
+    faq: [
+      { q: 'Sind die Namen verfügbar?', a: 'Das hängt von der jeweiligen Plattform ab. Prüfe einen Favoriten direkt beim Anbieter, da Verfügbarkeit nicht abgefragt werden kann.' },
+      { q: 'Kann ich Zahlen anhängen?', a: 'Ja, optional werden Zahlen ergänzt – das erhöht die Chance, dass ein Name noch frei ist.' },
+    ],
+    updated: '2026-06-18',
+  },
+  {
+    slug: 'uuid-generator',
+    category: 'technik',
+    title: 'UUID-Generator',
+    shortTitle: 'UUID',
+    description:
+      'Zufällige UUIDs (Version 4) erzeugen – einzeln oder als Liste, direkt kopierbar. Für Entwicklung, Datenbanken und Tests.',
+    keywords: ['uuid generator', 'guid generator', 'uuid v4', 'eindeutige id erzeugen', 'uuid online'],
+    intro:
+      'Eine UUID (Universally Unique Identifier) ist eine 128-Bit-Kennung, die praktisch garantiert eindeutig ist. Dieser Generator erzeugt UUIDs der Version 4 (zufallsbasiert) über den kryptografischen Zufallsgenerator deines Browsers – einzeln oder als Liste.',
+    faq: [
+      { q: 'Was bedeutet Version 4?', a: 'Version 4 erzeugt die UUID aus Zufallswerten. Sie ist die gängigste Variante, wenn keine zeit- oder namensbasierte ID nötig ist.' },
+      { q: 'Sind die UUIDs wirklich eindeutig?', a: 'Die Kollisionswahrscheinlichkeit ist verschwindend gering. Für praktisch alle Anwendungen gelten v4-UUIDs als eindeutig.' },
+    ],
+    updated: '2026-06-18',
+  },
+  {
+    slug: 'base64-generator',
+    category: 'technik',
+    title: 'Base64 Encoder & Decoder',
+    shortTitle: 'Base64',
+    description:
+      'Text zu Base64 kodieren und wieder dekodieren – UTF-8-sicher und komplett lokal im Browser. Für Entwicklung, APIs und Daten-URLs.',
+    keywords: ['base64 encode', 'base64 decode', 'base64 generator', 'text zu base64', 'base64 dekodieren'],
+    intro:
+      'Base64 kodiert beliebige Zeichen in ein sicher übertragbares Format aus Buchstaben, Ziffern und wenigen Sonderzeichen. Hier kodierst du Text nach Base64 oder dekodierst Base64 zurück in Klartext – UTF-8-sicher (Umlaute und Emojis bleiben erhalten).',
+    faq: [
+      { q: 'Ist Base64 eine Verschlüsselung?', a: 'Nein. Base64 ist nur eine Kodierung und bietet keinen Schutz – jeder kann sie zurückrechnen. Für Geheimnisse ist Verschlüsselung nötig.' },
+      { q: 'Werden Umlaute korrekt behandelt?', a: 'Ja. Der Text wird vor der Kodierung als UTF-8 verarbeitet, daher bleiben Umlaute und Sonderzeichen erhalten.' },
+    ],
+    related: ['bit-byte-umrechner'],
+    updated: '2026-06-18',
+  },
+  {
+    slug: 'lottozahlen-generator',
+    category: 'alltag',
+    title: 'Lottozahlen-Generator',
+    shortTitle: 'Lottozahlen',
+    description:
+      'Zufällige Lottozahlen ziehen: 6 aus 49 plus Superzahl, auf Wunsch mehrere Tippreihen auf einmal. Fairer Zufall im Browser.',
+    keywords: ['lottozahlen generator', 'lotto zufallszahlen', '6 aus 49 generator', 'zufällige lottozahlen', 'lotto tippreihen'],
+    intro:
+      'Keine Idee für deinen Lottoschein? Dieser Generator zieht zufällige Tippreihen für 6 aus 49 inklusive Superzahl (0–9). Du kannst mehrere Reihen auf einmal erzeugen – die Ziehung läuft über den Zufallsgenerator deines Browsers.',
+    faq: [
+      { q: 'Erhöht das meine Gewinnchance?', a: 'Nein. Jede Kombination ist gleich wahrscheinlich. Der Generator nimmt dir nur das Ausdenken der Zahlen ab.' },
+      { q: 'Wie funktioniert 6 aus 49?', a: 'Es werden 6 verschiedene Zahlen von 1 bis 49 gezogen, dazu eine Superzahl von 0 bis 9.' },
+    ],
+    updated: '2026-06-18',
+  },
+  {
+    slug: 'entscheidungs-generator',
+    category: 'alltag',
+    title: 'Entscheidungs-Generator',
+    shortTitle: 'Entscheidung',
+    description:
+      'Kannst du dich nicht entscheiden? Optionen eingeben und den Zufall fair entscheiden lassen – von „Ja oder Nein" bis zur langen Liste.',
+    keywords: ['entscheidung treffen', 'zufallsentscheidung', 'entscheidungshilfe', 'ja oder nein generator', 'auslosen'],
+    intro:
+      'Pizza oder Pasta? Dieser Generator trifft für dich eine neutrale Zufallsentscheidung. Trage deine Optionen ein (eine pro Zeile) und lass den Zufall wählen – fair und ohne Hintergedanken.',
+    faq: [
+      { q: 'Ist die Auswahl wirklich fair?', a: 'Ja, jede Option hat dieselbe Wahrscheinlichkeit, da der Zufallsgenerator des Browsers verwendet wird.' },
+      { q: 'Wie viele Optionen kann ich eingeben?', a: 'So viele du möchtest – eine pro Zeile. Mindestens zwei sollten es sein, damit es etwas zu entscheiden gibt.' },
+    ],
+    updated: '2026-06-18',
+  },
 ];
 
 export function getGenerator(slug: string): GeneratorMeta | undefined {

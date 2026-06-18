@@ -1,0 +1,269 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getGenerator } from '../../lib/generators';
+import { getCategory } from '../../lib/categories';
+import { getTool } from '../../lib/registry';
+import { generatorLd, breadcrumbLd, faqLd } from '../../lib/schema';
+
+const gen = getGenerator('schriftgenerator')!;
+const cat = getCategory(gen.category)!;
+const path = `/generator/${gen.slug}`;
+
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Generatoren', href: '/generator' },
+  { name: gen.title, href: path },
+];
+
+const relatedTools = (gen.related ?? [])
+  .map((slug) => getTool(slug))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const ld: object[] = [
+  generatorLd({ title: gen.title, description: gen.description, path }),
+  breadcrumbLd(crumbs.map((c) => ({ name: c.name, path: c.href }))),
+  faqLd(gen.faq),
+];
+---
+
+<BaseLayout title={gen.title} description={gen.description} path={path} jsonLd={ld}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="mt-4">
+      <p class="text-sm font-semibold text-brand-700">{cat.name} · Generator</p>
+      <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-zinc-900">{gen.title}</h1>
+      <p class="mt-2 text-lg text-zinc-600">{gen.description}</p>
+    </header>
+
+    <!-- Widget -->
+    <section class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm" data-gen>
+      <label class="block">
+        <span class="mb-1 block text-sm font-medium text-zinc-700">Dein Text</span>
+        <textarea
+          id="sg-input"
+          rows="3"
+          class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-3 text-base text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+        >Dein Text</textarea>
+      </label>
+
+      <p id="sg-msg" class="mt-3 text-xs text-zinc-500" aria-live="polite">Tippe deinen Text – die Stile aktualisieren sich automatisch.</p>
+
+      <ul id="sg-list" class="mt-5 divide-y divide-zinc-100" aria-live="polite"></ul>
+    </section>
+
+    <!-- Inhalt (SEO) -->
+    <section class="prose-werkbank mt-10 max-w-none">
+      <p>{gen.intro}</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold tracking-tight text-zinc-900">Häufige Fragen</h2>
+      <dl class="mt-4 space-y-4">
+        {gen.faq.map((f) => (
+          <div class="rounded-lg border border-zinc-200 bg-white p-4">
+            <dt class="font-semibold text-zinc-900">{f.q}</dt>
+            <dd class="mt-1 text-sm text-zinc-600">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {
+      relatedTools.length > 0 && (
+        <section class="mt-12 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-bold tracking-tight text-zinc-900">Passende Rechner</h2>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            {relatedTools.map((t) => (
+              <a href={`/rechner/${t.slug}/`} class="block rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md">
+                <span class="font-medium text-zinc-800">{t.shortTitle ?? t.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <script>
+    const root = document.querySelector('[data-gen]');
+    if (root) {
+      const input = document.getElementById('sg-input') as HTMLTextAreaElement | null;
+      const list = document.getElementById('sg-list') as HTMLElement | null;
+      const msg = document.getElementById('sg-msg') as HTMLElement | null;
+
+      if (input && list && msg) {
+        const MAX_LEN = 2000;
+
+        // Wandelt ein Zeichen anhand seines Codepoints in einen Zielbereich um.
+        // start* = Codepoint des jeweiligen Bereichsanfangs ('A', 'a', '0').
+        // Unbekannte Zeichen bleiben unverändert. exceptions erlaubt Einzelersetzungen
+        // (z. B. kursives kleines h), gaps lässt Lücken auf das Originalzeichen fallen.
+        type StyleMap = {
+          upper?: number; // Zielcodepoint für 'A'
+          lower?: number; // Zielcodepoint für 'a'
+          digit?: number; // Zielcodepoint für '0'
+          exceptions?: Record<string, string>;
+          gaps?: Record<string, true>;
+        };
+
+        const A = 0x41, Z = 0x5a; // A–Z
+        const aa = 0x61, zz = 0x7a; // a–z
+        const d0 = 0x30, d9 = 0x39; // 0–9
+
+        const convert = (text: string, map: StyleMap): string => {
+          let out = '';
+          // for...of iteriert über Codepoints, behandelt Surrogatpaare also korrekt.
+          for (const ch of text) {
+            // Einzelausnahmen zuerst (z. B. fehlendes kursives h).
+            if (map.exceptions && Object.prototype.hasOwnProperty.call(map.exceptions, ch)) {
+              out += map.exceptions[ch];
+              continue;
+            }
+            // Lücken im Unicode-Block: Originalzeichen beibehalten.
+            if (map.gaps && Object.prototype.hasOwnProperty.call(map.gaps, ch)) {
+              out += ch;
+              continue;
+            }
+            const cp = ch.codePointAt(0)!;
+            let target: number | null = null;
+            if (map.upper !== undefined && cp >= A && cp <= Z) {
+              target = map.upper + (cp - A);
+            } else if (map.lower !== undefined && cp >= aa && cp <= zz) {
+              target = map.lower + (cp - aa);
+            } else if (map.digit !== undefined && cp >= d0 && cp <= d9) {
+              target = map.digit + (cp - d0);
+            }
+            if (target !== null) {
+              try {
+                out += String.fromCodePoint(target);
+              } catch {
+                out += ch;
+              }
+            } else {
+              out += ch;
+            }
+          }
+          return out;
+        };
+
+        // Script (U+1D49C/U+1D4B6) hat bekannte Lücken: einige Buchstaben liegen
+        // im "Letterlike Symbols"-Block. Diese als Ausnahmen abbilden.
+        const scriptExceptions: Record<string, string> = {
+          B: 'ℬ', // ℬ
+          E: 'ℰ', // ℰ
+          F: 'ℱ', // ℱ
+          H: 'ℋ', // ℋ
+          I: 'ℐ', // ℐ
+          L: 'ℒ', // ℒ
+          M: 'ℳ', // ℳ
+          R: 'ℛ', // ℛ
+          e: 'ℯ', // ℯ
+          g: 'ℊ', // ℊ
+          o: 'ℴ', // ℴ
+        };
+
+        // Double-struck (U+1D538/U+1D552) hat ebenfalls Lücken bei einigen Großbuchstaben.
+        const dsExceptions: Record<string, string> = {
+          C: 'ℂ', // ℂ
+          H: 'ℍ', // ℍ
+          N: 'ℕ', // ℕ
+          P: 'ℙ', // ℙ
+          Q: 'ℚ', // ℚ
+          R: 'ℝ', // ℝ
+          Z: 'ℤ', // ℤ
+        };
+
+        type Style = { name: string; map: StyleMap };
+
+        const styles: Style[] = [
+          { name: 'Fett', map: { upper: 0x1d400, lower: 0x1d41a, digit: 0x1d7ce } },
+          {
+            name: 'Kursiv',
+            map: { upper: 0x1d434, lower: 0x1d44e, exceptions: { h: 'ℎ' } },
+          },
+          { name: 'Fett-Kursiv', map: { upper: 0x1d468, lower: 0x1d482 } },
+          { name: 'Schreibschrift', map: { upper: 0x1d49c, lower: 0x1d4b6, exceptions: scriptExceptions } },
+          { name: 'Fraktur', map: { upper: 0x1d504, lower: 0x1d51e } },
+          { name: 'Monospace', map: { upper: 0x1d670, lower: 0x1d68a, digit: 0x1d7f6 } },
+          { name: 'Double-struck', map: { upper: 0x1d538, lower: 0x1d552, exceptions: dsExceptions } },
+          { name: 'Sans-Serif Fett', map: { upper: 0x1d5d4, lower: 0x1d5ee } },
+          { name: 'Vollbreite', map: { upper: 0xff21, lower: 0xff41, digit: 0xff10 } },
+        ];
+
+        // Statische Zeilen einmalig aufbauen, danach nur die Texte aktualisieren.
+        const valueEls: HTMLElement[] = [];
+
+        styles.forEach((style, i) => {
+          const li = document.createElement('li');
+          li.className = 'flex flex-col gap-2 py-3 sm:flex-row sm:items-center sm:justify-between';
+
+          const wrap = document.createElement('div');
+          wrap.className = 'min-w-0';
+
+          const nameEl = document.createElement('p');
+          nameEl.className = 'text-xs font-semibold uppercase tracking-wide text-zinc-400';
+          nameEl.textContent = style.name;
+
+          const valEl = document.createElement('p');
+          valEl.id = `sg-val-${i}`;
+          valEl.className = 'mt-0.5 break-words text-lg text-zinc-900';
+
+          wrap.appendChild(nameEl);
+          wrap.appendChild(valEl);
+
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className =
+            'shrink-0 self-start rounded-lg bg-brand-700 px-3 py-2 text-sm font-semibold text-white transition hover:bg-brand-600 focus-visible:ring-2 focus-visible:ring-brand-300 sm:self-auto';
+          btn.textContent = 'Kopieren';
+          btn.addEventListener('click', async () => {
+            const text = valEl.textContent ?? '';
+            if (!text) {
+              msg.textContent = 'Bitte zuerst einen Text eingeben.';
+              return;
+            }
+            try {
+              await navigator.clipboard.writeText(text);
+              msg.textContent = `„${style.name}" kopiert.`;
+            } catch {
+              // Fallback: Text in eine temporäre Auswahl legen.
+              const range = document.createRange();
+              range.selectNodeContents(valEl);
+              const sel = window.getSelection();
+              if (sel) {
+                sel.removeAllRanges();
+                sel.addRange(range);
+              }
+              msg.textContent = 'Markiert – mit Strg/Cmd+C kopieren.';
+            }
+          });
+
+          li.appendChild(wrap);
+          li.appendChild(btn);
+          list.appendChild(li);
+          valueEls.push(valEl);
+        });
+
+        const render = () => {
+          let text = input.value ?? '';
+          if (text.length > MAX_LEN) {
+            text = text.slice(0, MAX_LEN);
+            msg.textContent = `Text auf ${MAX_LEN} Zeichen gekürzt.`;
+          } else if (!text.trim()) {
+            msg.textContent = 'Bitte einen Text eingeben, um die Stile zu sehen.';
+          } else {
+            msg.textContent = 'Tippe deinen Text – die Stile aktualisieren sich automatisch.';
+          }
+          styles.forEach((style, i) => {
+            valueEls[i].textContent = convert(text, style.map);
+          });
+        };
+
+        input.addEventListener('input', render);
+        render();
+      }
+    }
+  </script>
+</BaseLayout>

@@ -1,0 +1,237 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getGenerator } from '../../lib/generators';
+import { getCategory } from '../../lib/categories';
+import { getTool } from '../../lib/registry';
+import { generatorLd, breadcrumbLd, faqLd } from '../../lib/schema';
+
+const gen = getGenerator('lottozahlen-generator')!;
+const cat = getCategory(gen.category)!;
+const path = `/generator/${gen.slug}`;
+
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Generatoren', href: '/generator' },
+  { name: gen.title, href: path },
+];
+
+const relatedTools = (gen.related ?? [])
+  .map((slug) => getTool(slug))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const ld: object[] = [
+  generatorLd({ title: gen.title, description: gen.description, path }),
+  breadcrumbLd(crumbs.map((c) => ({ name: c.name, path: c.href }))),
+  faqLd(gen.faq),
+];
+---
+
+<BaseLayout title={gen.title} description={gen.description} path={path} jsonLd={ld}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="mt-4">
+      <p class="text-sm font-semibold text-brand-700">{cat.name} · Generator</p>
+      <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-zinc-900">{gen.title}</h1>
+      <p class="mt-2 text-lg text-zinc-600">{gen.description}</p>
+    </header>
+
+    <!-- Widget -->
+    <section class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm" data-gen>
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-end">
+        <label class="block w-full sm:max-w-[14rem]">
+          <span class="mb-1 block text-sm font-medium text-zinc-700">Tippreihen</span>
+          <input
+            id="lz-rows"
+            type="number"
+            min="1"
+            max="20"
+            step="1"
+            value="1"
+            inputmode="numeric"
+            class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-3 text-lg text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+          />
+        </label>
+        <div class="flex gap-2">
+          <button id="lz-draw" type="button" class="shrink-0 rounded-lg bg-brand-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-600 focus-visible:ring-2 focus-visible:ring-brand-300">Ziehen</button>
+          <button id="lz-copy" type="button" class="shrink-0 rounded-lg border border-zinc-300 px-4 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-brand-300">Kopieren</button>
+        </div>
+      </div>
+
+      <div id="lz-result" class="mt-6 space-y-4" aria-live="polite"></div>
+
+      <p id="lz-msg" class="mt-3 text-xs text-zinc-500" aria-live="polite">Gezogen wird lokal in deinem Browser über einen sicheren Zufallsgenerator.</p>
+    </section>
+
+    <!-- Inhalt (SEO) -->
+    <section class="prose-werkbank mt-10 max-w-none">
+      <p>{gen.intro}</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold tracking-tight text-zinc-900">Häufige Fragen</h2>
+      <dl class="mt-4 space-y-4">
+        {gen.faq.map((f) => (
+          <div class="rounded-lg border border-zinc-200 bg-white p-4">
+            <dt class="font-semibold text-zinc-900">{f.q}</dt>
+            <dd class="mt-1 text-sm text-zinc-600">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {
+      relatedTools.length > 0 && (
+        <section class="mt-12 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-bold tracking-tight text-zinc-900">Passende Rechner</h2>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            {relatedTools.map((t) => (
+              <a href={`/rechner/${t.slug}/`} class="block rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md">
+                <span class="font-medium text-zinc-800">{t.shortTitle ?? t.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <script>
+    const root = document.querySelector('[data-gen]');
+    if (root) {
+      const rowsEl = document.getElementById('lz-rows') as HTMLInputElement | null;
+      const result = document.getElementById('lz-result') as HTMLElement | null;
+      const msg = document.getElementById('lz-msg') as HTMLElement | null;
+      const drawBtn = document.getElementById('lz-draw');
+      const copyBtn = document.getElementById('lz-copy');
+
+      const MAX_ROWS = 20;
+
+      // Unverzerrter Zufallsindex via Rejection-Sampling (vermeidet Modulo-Bias).
+      const randInt = (mod: number) => {
+        if (mod <= 0) return 0;
+        const limit = Math.floor(2 ** 32 / mod) * mod;
+        const buf = new Uint32Array(1);
+        let v: number;
+        do {
+          crypto.getRandomValues(buf);
+          v = buf[0];
+        } while (v >= limit);
+        return v % mod;
+      };
+
+      // 6 verschiedene Zahlen 1–49 aufsteigend sortiert.
+      const drawNumbers = () => {
+        const set = new Set<number>();
+        let guard = 0;
+        while (set.size < 6 && guard < 1000) {
+          set.add(randInt(49) + 1);
+          guard++;
+        }
+        return Array.from(set).sort((a, b) => a - b);
+      };
+
+      // Superzahl 0–9.
+      const drawSuper = () => randInt(10);
+
+      // Zuletzt gezogene Reihen für die Kopierfunktion.
+      let lastRows: { numbers: number[]; superzahl: number }[] = [];
+
+      const draw = () => {
+        if (!rowsEl || !result || !msg) return;
+        const raw = parseInt(rowsEl.value, 10);
+        if (!Number.isFinite(raw) || raw < 1) {
+          result.innerHTML = '';
+          lastRows = [];
+          msg.textContent = 'Bitte eine gültige Anzahl an Tippreihen (1–20) eingeben.';
+          return;
+        }
+        const count = Math.min(raw, MAX_ROWS);
+        if (raw > MAX_ROWS) {
+          rowsEl.value = String(MAX_ROWS);
+        }
+
+        lastRows = [];
+        result.innerHTML = '';
+        const frag = document.createDocumentFragment();
+
+        for (let i = 0; i < count; i++) {
+          const numbers = drawNumbers();
+          const superzahl = drawSuper();
+          lastRows.push({ numbers, superzahl });
+
+          const row = document.createElement('div');
+          row.className = 'rounded-lg border border-zinc-200 bg-zinc-50 p-4';
+
+          const head = document.createElement('p');
+          head.className = 'mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500';
+          head.textContent = count > 1 ? `Reihe ${i + 1}` : 'Tippreihe';
+          row.appendChild(head);
+
+          const chips = document.createElement('div');
+          chips.className = 'flex flex-wrap items-center gap-2';
+
+          for (const n of numbers) {
+            const chip = document.createElement('span');
+            chip.className = 'inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-700 font-mono text-base font-bold text-white';
+            chip.textContent = String(n);
+            chips.appendChild(chip);
+          }
+
+          const sep = document.createElement('span');
+          sep.className = 'mx-1 text-sm text-zinc-400';
+          sep.textContent = 'Superzahl';
+          chips.appendChild(sep);
+
+          const sChip = document.createElement('span');
+          sChip.className = 'inline-flex h-10 w-10 items-center justify-center rounded-full border-2 border-brand-700 bg-white font-mono text-base font-bold text-brand-700';
+          sChip.textContent = String(superzahl);
+          chips.appendChild(sChip);
+
+          row.appendChild(chips);
+          frag.appendChild(row);
+        }
+
+        result.appendChild(frag);
+        msg.textContent = count === 1
+          ? '1 Tippreihe gezogen.'
+          : `${count} Tippreihen gezogen.`;
+      };
+
+      const formatRows = () =>
+        lastRows
+          .map((r, i) => {
+            const prefix = lastRows.length > 1 ? `Reihe ${i + 1}: ` : '';
+            return `${prefix}${r.numbers.join(', ')} | Superzahl: ${r.superzahl}`;
+          })
+          .join('\n');
+
+      drawBtn?.addEventListener('click', draw);
+
+      copyBtn?.addEventListener('click', async () => {
+        if (!msg) return;
+        if (lastRows.length === 0) {
+          msg.textContent = 'Erst Zahlen ziehen, dann kopieren.';
+          return;
+        }
+        const text = formatRows();
+        try {
+          await navigator.clipboard.writeText(text);
+          msg.textContent = 'Tippreihen kopiert.';
+        } catch {
+          msg.textContent = 'Kopieren nicht möglich – bitte manuell markieren.';
+        }
+      });
+
+      // Sicherstellen, dass die Eingabe nicht über das Maximum hinausgeht.
+      rowsEl?.addEventListener('input', () => {
+        if (!rowsEl) return;
+        const v = parseInt(rowsEl.value, 10);
+        if (Number.isFinite(v) && v > MAX_ROWS) rowsEl.value = String(MAX_ROWS);
+      });
+
+      draw();
+    }
+  </script>
+</BaseLayout>

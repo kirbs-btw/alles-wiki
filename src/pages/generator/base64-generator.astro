@@ -1,0 +1,200 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getGenerator } from '../../lib/generators';
+import { getCategory } from '../../lib/categories';
+import { getTool } from '../../lib/registry';
+import { generatorLd, breadcrumbLd, faqLd } from '../../lib/schema';
+
+const gen = getGenerator('base64-generator')!;
+const cat = getCategory(gen.category)!;
+const path = `/generator/${gen.slug}`;
+
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Generatoren', href: '/generator' },
+  { name: gen.title, href: path },
+];
+
+const relatedTools = (gen.related ?? [])
+  .map((slug) => getTool(slug))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const ld: object[] = [
+  generatorLd({ title: gen.title, description: gen.description, path }),
+  breadcrumbLd(crumbs.map((c) => ({ name: c.name, path: c.href }))),
+  faqLd(gen.faq),
+];
+---
+
+<BaseLayout title={gen.title} description={gen.description} path={path} jsonLd={ld}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="mt-4">
+      <p class="text-sm font-semibold text-brand-700">{cat.name} · Generator</p>
+      <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-zinc-900">{gen.title}</h1>
+      <p class="mt-2 text-lg text-zinc-600">{gen.description}</p>
+    </header>
+
+    <!-- Widget -->
+    <section class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm" data-gen>
+      <fieldset class="flex flex-wrap gap-2">
+        <legend class="mb-2 text-sm font-medium text-zinc-700">Modus</legend>
+        <label class="flex cursor-pointer items-center gap-2 rounded-lg border border-zinc-300 px-4 py-2 text-sm font-semibold text-zinc-700 transition has-[:checked]:border-brand-700 has-[:checked]:bg-brand-700 has-[:checked]:text-white focus-within:ring-2 focus-within:ring-brand-300">
+          <input id="b64-mode-enc" type="radio" name="b64-mode" value="encode" checked class="sr-only" /> Kodieren
+        </label>
+        <label class="flex cursor-pointer items-center gap-2 rounded-lg border border-zinc-300 px-4 py-2 text-sm font-semibold text-zinc-700 transition has-[:checked]:border-brand-700 has-[:checked]:bg-brand-700 has-[:checked]:text-white focus-within:ring-2 focus-within:ring-brand-300">
+          <input id="b64-mode-dec" type="radio" name="b64-mode" value="decode" class="sr-only" /> Dekodieren
+        </label>
+      </fieldset>
+
+      <div class="mt-6 grid gap-5">
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-zinc-700" id="b64-in-label">Eingabe</span>
+          <textarea
+            id="b64-in"
+            rows="5"
+            aria-labelledby="b64-in-label"
+            class="w-full resize-y rounded-lg border border-zinc-300 bg-white px-3 py-3 font-mono text-sm text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+            placeholder="Text hier eingeben …"></textarea>
+        </label>
+
+        <label class="block">
+          <span class="mb-1 flex items-center justify-between text-sm font-medium text-zinc-700">
+            <span id="b64-out-label">Ausgabe</span>
+            <button id="b64-copy" type="button" class="rounded-lg border border-zinc-300 px-3 py-1 text-xs font-semibold text-zinc-700 transition hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-brand-300">Kopieren</button>
+          </span>
+          <textarea
+            id="b64-out"
+            rows="5"
+            readonly
+            aria-labelledby="b64-out-label"
+            aria-live="polite"
+            class="w-full resize-y rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-3 font-mono text-sm text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"></textarea>
+        </label>
+      </div>
+
+      <p id="b64-msg" class="mt-3 text-xs text-zinc-500" aria-live="polite">Läuft komplett lokal in deinem Browser – nichts wird übertragen.</p>
+    </section>
+
+    <!-- Inhalt (SEO) -->
+    <section class="prose-werkbank mt-10 max-w-none">
+      <p>{gen.intro}</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold tracking-tight text-zinc-900">Häufige Fragen</h2>
+      <dl class="mt-4 space-y-4">
+        {gen.faq.map((f) => (
+          <div class="rounded-lg border border-zinc-200 bg-white p-4">
+            <dt class="font-semibold text-zinc-900">{f.q}</dt>
+            <dd class="mt-1 text-sm text-zinc-600">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {
+      relatedTools.length > 0 && (
+        <section class="mt-12 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-bold tracking-tight text-zinc-900">Passende Rechner</h2>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            {relatedTools.map((t) => (
+              <a href={`/rechner/${t.slug}/`} class="block rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md">
+                <span class="font-medium text-zinc-800">{t.shortTitle ?? t.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <script>
+    const root = document.querySelector('[data-gen]');
+    if (root) {
+      const inEl = document.getElementById('b64-in') as HTMLTextAreaElement | null;
+      const outEl = document.getElementById('b64-out') as HTMLTextAreaElement | null;
+      const inLabel = document.getElementById('b64-in-label');
+      const outLabel = document.getElementById('b64-out-label');
+      const modeEnc = document.getElementById('b64-mode-enc') as HTMLInputElement | null;
+      const modeDec = document.getElementById('b64-mode-dec') as HTMLInputElement | null;
+      const copyBtn = document.getElementById('b64-copy');
+      const msg = document.getElementById('b64-msg');
+
+      if (inEl && outEl && modeEnc && modeDec) {
+        const DEFAULT_MSG = 'Läuft komplett lokal in deinem Browser – nichts wird übertragen.';
+        const setMsg = (text: string) => { if (msg) msg.textContent = text; };
+
+        const isDecode = () => modeDec.checked;
+
+        // UTF-8-sicher kodieren. Bytes in Chunks zu Latin1-String wandeln,
+        // damit String.fromCharCode keine Stack-Limits bei langen Texten sprengt.
+        const encode = (text: string): string => {
+          const bytes = new TextEncoder().encode(text);
+          let binary = '';
+          const CHUNK = 8192;
+          for (let i = 0; i < bytes.length; i += CHUNK) {
+            const slice = bytes.subarray(i, i + CHUNK);
+            binary += String.fromCharCode.apply(null, Array.from(slice) as number[]);
+          }
+          return btoa(binary);
+        };
+
+        // UTF-8-sicher dekodieren. Wirft bei ungültigem Base64 – Aufrufer fängt ab.
+        const decode = (input: string): string => {
+          // Whitespace/Zeilenumbrüche tolerieren.
+          const cleaned = input.replace(/\s+/g, '');
+          const binary = atob(cleaned);
+          const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+          return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+        };
+
+        const update = () => {
+          const decoding = isDecode();
+          // Labels und Platzhalter an den Modus anpassen.
+          if (inLabel) inLabel.textContent = decoding ? 'Base64-Eingabe' : 'Eingabe';
+          if (outLabel) outLabel.textContent = decoding ? 'Klartext-Ausgabe' : 'Base64-Ausgabe';
+          inEl.setAttribute('placeholder', decoding ? 'Base64 hier einfügen …' : 'Text hier eingeben …');
+
+          const value = inEl.value;
+          if (value.length === 0) {
+            outEl.value = '';
+            setMsg(DEFAULT_MSG);
+            return;
+          }
+
+          try {
+            outEl.value = decoding ? decode(value) : encode(value);
+            setMsg(DEFAULT_MSG);
+          } catch (err) {
+            outEl.value = '';
+            setMsg(
+              decoding
+                ? 'Ungültiges Base64 – bitte prüfe die Eingabe.'
+                : 'Eingabe konnte nicht kodiert werden.'
+            );
+          }
+        };
+
+        inEl.addEventListener('input', update);
+        modeEnc.addEventListener('change', update);
+        modeDec.addEventListener('change', update);
+
+        copyBtn?.addEventListener('click', async () => {
+          if (!outEl.value) { setMsg('Es gibt noch keine Ausgabe zum Kopieren.'); return; }
+          try {
+            await navigator.clipboard.writeText(outEl.value);
+            setMsg('Ausgabe kopiert.');
+          } catch {
+            outEl.select();
+            setMsg('Markiert – mit Strg/Cmd+C kopieren.');
+          }
+        });
+
+        update();
+      }
+    }
+  </script>
+</BaseLayout>
