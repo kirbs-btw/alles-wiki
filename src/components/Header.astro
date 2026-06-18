@@ -11,43 +11,35 @@ import { NAV_MAIN } from '../config/site';
     </a>
 
     <nav class="hidden items-center gap-1 md:flex" aria-label="Hauptnavigation">
-      {
-        CATEGORIES.map((c) => (
-          <a
-            href={`/kategorie/${c.slug}`}
-            class="rounded-md px-3 py-2 text-sm font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
-          >
-            {c.name}
-          </a>
-        ))
-      }
-      <a
-        href="/wissen"
-        class="rounded-md px-3 py-2 text-sm font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
-      >
-        Wissen
-      </a>
-      <a
-        href="/how-to"
-        class="rounded-md px-3 py-2 text-sm font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
-      >
-        How-to
-      </a>
-      <a
-        href="/generator"
-        class="rounded-md px-3 py-2 text-sm font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
-      >
-        Generatoren
-      </a>
-      <a
-        href="/ueber-uns"
-        class="rounded-md px-3 py-2 text-sm font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
-      >
-        Über uns
-      </a>
+      <details class="group relative">
+        <summary class="flex cursor-pointer list-none items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white [&::-webkit-details-marker]:hidden">
+          Kategorien
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="transition group-open:rotate-180" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </summary>
+        <div class="absolute left-0 z-50 mt-2 w-[34rem] max-w-[90vw] rounded-lg border border-zinc-200 bg-white p-2 shadow-xl">
+          <div class="grid grid-cols-2 gap-1">
+            {
+              CATEGORIES.map((c) => (
+                <a
+                  href={`/kategorie/${c.slug}`}
+                  class="rounded-md px-3 py-2 text-sm text-zinc-700 transition hover:bg-zinc-100"
+                >
+                  {c.name}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </details>
+      <a href="/wissen" class="rounded-md px-3 py-2 text-sm font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white">Wissen</a>
+      <a href="/how-to" class="rounded-md px-3 py-2 text-sm font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white">How-to</a>
+      <a href="/generator" class="rounded-md px-3 py-2 text-sm font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white">Generatoren</a>
+      <a href="/ueber-uns" class="rounded-md px-3 py-2 text-sm font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white">Über uns</a>
       <a
         href="/rechner"
-        class="ml-2 rounded-md bg-brand-700 px-3 py-2 text-sm font-semibold text-white transition hover:bg-brand-600"
+        class="ml-1 rounded-md bg-brand-700 px-3 py-2 text-sm font-semibold text-white transition hover:bg-brand-600"
       >
         Alle Rechner
       </a>

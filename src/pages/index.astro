@@ -23,9 +23,12 @@ const genCount = GENERATORS.length;
   <section class="relative overflow-hidden bg-zinc-900 text-white">
     <div class="blueprint-grid absolute inset-0 opacity-70"></div>
     <div class="relative mx-auto max-w-6xl px-4 py-20 text-center sm:py-24">
-      <span class="inline-flex items-center rounded-full border border-zinc-700 bg-zinc-800/60 px-3 py-1 text-xs font-medium text-brand-300">
-        {TOTAL_TOOLS} Rechner · {wissenCount} Wissens-Artikel · {howtoCount} Anleitungen · {genCount} Generatoren
-      </span>
+      <div class="mx-auto flex max-w-full flex-wrap justify-center gap-2 text-xs font-medium">
+        <span class="rounded-full border border-zinc-700 bg-zinc-800/60 px-3 py-1 text-brand-300">{TOTAL_TOOLS} Rechner</span>
+        <span class="rounded-full border border-zinc-700 bg-zinc-800/60 px-3 py-1 text-brand-300">{wissenCount} Wissen</span>
+        <span class="rounded-full border border-zinc-700 bg-zinc-800/60 px-3 py-1 text-brand-300">{howtoCount} How-to</span>
+        <span class="rounded-full border border-zinc-700 bg-zinc-800/60 px-3 py-1 text-brand-300">{genCount} Generatoren</span>
+      </div>
       <h1 class="mx-auto mt-5 max-w-3xl text-4xl font-extrabold tracking-tight sm:text-5xl">
         Rechner, Wissen & How-to für <span class="text-brand-400">jeden Alltag</span>
       </h1>
