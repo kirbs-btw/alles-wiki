@@ -114,14 +114,12 @@ const ld: object[] = [
   </div>
 
   <script>
-    import qrcode from 'qrcode-generator';
+    import qrcodeImport from 'qrcode-generator';
 
     type ErrorLevel = 'L' | 'M' | 'Q' | 'H';
 
-    // UTF-8-Encoder registrieren, damit Umlaute, Emojis und andere
-    // Mehrbyte-Zeichen korrekt kodiert werden (statt charCodeAt & 0xff).
-    qrcode.stringToBytesFuncs['UTF-8'] = (s: string) => Array.from(new TextEncoder().encode(s));
-    qrcode.stringToBytes = qrcode.stringToBytesFuncs['UTF-8'];
+    // Robust gegen CJS/ESM-Interop (mal Funktion, mal { default: fn }).
+    const qrcode = (((qrcodeImport as any).default ?? qrcodeImport) as typeof qrcodeImport);
 
     const root = document.querySelector('[data-gen]');
     if (root) {
@@ -156,7 +154,12 @@ const ld: object[] = [
           const level = (levelEl.value as ErrorLevel) || 'M';
           try {
             const qr = qrcode(0, level);
-            qr.addData(text, 'Byte');
+            // UTF-8 robust: Text zu Byte-Folge kodieren und als Latin1-String übergeben –
+            // der Standard-Encoder der Bibliothek (charCodeAt & 0xff) liefert exakt diese Bytes zurück.
+            const utf8 = new TextEncoder().encode(text);
+            let bin = '';
+            for (let i = 0; i < utf8.length; i++) bin += String.fromCharCode(utf8[i]);
+            qr.addData(bin, 'Byte');
             qr.make();
             current = qr;
             // `title` ergibt im SVG ein <title>-Element samt role/aria-labelledby

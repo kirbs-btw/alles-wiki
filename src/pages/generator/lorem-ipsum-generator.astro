@@ -46,7 +46,7 @@ const ld: object[] = [
             id="li-count"
             type="number"
             min="1"
-            max="50"
+            max="1000"
             value="3"
             step="1"
             class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
@@ -177,7 +177,9 @@ const ld: object[] = [
         const clampCount = () => {
           let n = parseInt(countEl.value, 10);
           if (!Number.isFinite(n) || n < 1) n = 1;
-          if (n > 50) n = 50;
+          // Einheitenabhängige Obergrenze: Wörter bis 1000, Sätze bis 200, Absätze bis 50.
+          const max = unitEl.value === 'paragraphs' ? 50 : unitEl.value === 'sentences' ? 200 : 1000;
+          if (n > max) n = max;
           return n;
         };
 
@@ -218,6 +220,9 @@ const ld: object[] = [
         };
 
         genBtn?.addEventListener('click', () => generate(true));
+        countEl.addEventListener('input', () => generate());
+        unitEl.addEventListener('change', () => generate());
+        classicEl.addEventListener('change', () => generate());
         copyBtn?.addEventListener('click', async () => {
           if (!out.value) return;
           try {
