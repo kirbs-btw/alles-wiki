@@ -9,30 +9,61 @@ related: ["sparplan-rechner", "etf-sparplan-endwert-rechner", "zinseszinsrechner
 draft: false
 ---
 
-Ein Sparplan ist der einfachste Weg, um regelmäßig und automatisch Vermögen aufzubauen. Statt einmalig eine große Summe anzulegen, sparst du Monat für Monat einen festen Betrag. Diese Anleitung führt dich Schritt für Schritt vom Sparziel bis zum fertig eingerichteten Sparplan. Sie ersetzt keine individuelle Anlageberatung.
+Mit einem Sparplan legst du Monat für Monat einen festen Betrag an – automatisch per Dauerauftrag, schon ab 25 € bei den meisten Brokern. Diese Anleitung bringt dich in sechs Schritten vom Sparziel zum fertig eingerichteten Plan. Sie ersetzt keine individuelle Anlageberatung.
 
-## 1. Sparziel und Zeithorizont festlegen
+## Schritt 1: Sparziel und Zeithorizont festlegen
 
-Überlege zuerst, **wofür** du sparst und **wie lange**. Ein Notgroschen für drei bis sechs Monatsausgaben braucht einen anderen Zeithorizont als die Altersvorsorge über 20 Jahre. Je länger der Zeitraum, desto stärker wirkt der Zinseszins zu deinen Gunsten.
+Schreib auf, **wofür** du sparst und **bis wann** du das Geld brauchst. Beispiele:
 
-## 2. Monatliche Sparrate bestimmen
+- **Notgroschen:** 3–6 Nettogehälter, verfügbar in 1–2 Jahren. Bei 2.000 € netto sind das 6.000–12.000 €.
+- **Auto/Urlaub:** feste Summe in 2–5 Jahren.
+- **Altersvorsorge:** 20–40 Jahre, hier zählt jeder Anlagejahr doppelt durch den Zinseszins.
 
-Schau dir dein Haushaltsbudget an und lege eine Rate fest, die du **dauerhaft und entspannt** aufbringen kannst. Lieber mit einem kleinen Betrag starten und später erhöhen, als den Sparplan nach drei Monaten überfordert zu pausieren. Mit dem [Sparrate-Rechner](/rechner/sparrate-rechner/) findest du heraus, welche Rate du für dein Ziel brauchst.
+Faustregel: Geld, das du in unter 3–5 Jahren brauchst, gehört nicht in Aktien-ETFs, sondern auf Tages- oder Festgeld.
 
-## 3. Passendes Sparprodukt auswählen
+## Schritt 2: Monatliche Sparrate bestimmen
 
-Für kurzfristige Ziele eignen sich sichere Bank-Sparpläne oder Tagesgeld. Für langfristigen Vermögensaufbau setzen viele auf einen breit gestreuten **ETF-Sparplan**, etwa auf einen weltweiten Aktienindex. Wichtig: Aktien-ETFs schwanken im Wert, eignen sich also nur für längere Zeiträume.
+Rechne dein Sparziel auf die Monate herunter. Brauchst du 12.000 € in 5 Jahren (60 Monate), sind das rund 200 € pro Monat – Rendite hier noch unberücksichtigt. Lege eine Rate fest, die nach Miete, Fixkosten und Puffer **dauerhaft** übrig bleibt; starte lieber mit 50 € und erhöhe später, als den Plan nach drei Monaten zu pausieren. Welche Rate dein Ziel wirklich erfordert, rechnest du mit dem [Sparrate-Rechner](/rechner/sparrate-rechner/) aus.
 
-## 4. Depot oder Konto eröffnen
+## Schritt 3: Passendes Sparprodukt auswählen
 
-Für einen ETF-Sparplan brauchst du ein **Wertpapierdepot**, das du online bei einer Bank oder einem Broker eröffnest. Achte auf niedrige oder kostenlose Sparplangebühren. Bei einem Banksparplan reicht häufig das passende Sparkonto deiner Bank.
+- **Kurzfristig (unter 3 Jahre):** Bank-Sparplan, Tagesgeld oder Festgeld – Kapital schwankt nicht.
+- **Langfristig (ab ~10 Jahre):** breit gestreuter **ETF-Sparplan**, z. B. auf einen Welt-Aktienindex (MSCI World oder FTSE All-World). Aktien-ETFs schwanken zwischenzeitlich um 20–40 %, gleichen das über lange Zeiträume aber meist aus.
 
-## 5. Sparplan einrichten und automatisieren
+Wie viel ein ETF-Sparplan am Ende abwirft, kannst du mit dem [ETF-Sparplan-Rechner](/rechner/etf-sparplan-endwert-rechner/) durchspielen. Renditeangaben aus der Vergangenheit sind keine Garantie für die Zukunft.
 
-Lege jetzt den Sparplan an: Wähle das Produkt, die Sparrate und den Ausführungstag. Richte einen **Dauerauftrag** ein, damit der Betrag automatisch fließt. So sparst du diszipliniert, ohne jeden Monat aktiv daran denken zu müssen.
+## Schritt 4: Depot oder Konto eröffnen
 
-## 6. Sparplan regelmäßig überprüfen
+Für einen ETF-Sparplan brauchst du ein **Wertpapierdepot** – online bei Bank oder Broker, Eröffnung dauert meist 10–20 Minuten plus Identitätsprüfung (Video-Ident oder PostIdent). Achtepunkte:
 
-Schau einmal im Jahr, ob deine Rate noch passt und dein Ziel auf Kurs ist. Bei Gehaltserhöhungen kannst du die Rate anheben. Wie stark dein Geld über die Jahre wächst, zeigt dir der [Sparplan-Rechner](/rechner/sparplan-rechner/) oder der [Zinseszinsrechner](/rechner/zinseszinsrechner/).
+- Sparplangebühr: idealerweise 0 € pro Ausführung.
+- Auswahl an kostenlosen Sparplan-ETFs.
+- Mindestrate (oft 1–25 €).
 
-Mit diesen sechs Schritten hast du einen Sparplan, der im Hintergrund automatisch für dich arbeitet – und das oft schon mit kleinen Beträgen.
+Bei einem Banksparplan genügt meist das passende Sparkonto deiner Hausbank.
+
+## Schritt 5: Sparplan einrichten und automatisieren
+
+Im Depot wählst du: **ETF/Produkt** (per ISIN/WKN), **Rate**, **Ausführungsrhythmus** (monatlich) und **Ausführungstag** – leg ihn auf 2–3 Tage nach dem Gehaltseingang, dann ist das Konto gedeckt. Bestätige den Plan; ab dann zieht der Broker die Rate automatisch ein. Bei einem Banksparplan richtest du dafür einen **Dauerauftrag** ein.
+
+## Schritt 6: Sparplan regelmäßig überprüfen
+
+Kontrolliere einmal im Jahr, ob die Rate noch passt und das Ziel auf Kurs ist. Bei einer Gehaltserhöhung kannst du z. B. von 100 € auf 150 € erhöhen. Wie dein Kapital über die Jahre wächst, zeigt dir der [Sparplan-Rechner](/rechner/sparplan-rechner/); den reinen Zinseszinseffekt rechnest du mit dem [Zinseszinsrechner](/rechner/zinseszinsrechner/) nach.
+
+## Tipps
+
+- **Klein starten, automatisieren:** Schon 25–50 € im Monat genügen für den Anfang – der Dauerauftrag erledigt den Rest.
+- **Krisen aussitzen:** Bei fallenden Kursen kaufst du mit gleicher Rate mehr Anteile (Durchschnittskosteneffekt). Plan nicht panisch pausieren.
+- **Freistellungsauftrag setzen:** Bis 1.000 € Kapitalerträge pro Jahr (Ledige) bleiben durch den Sparerpauschbetrag steuerfrei – Auftrag im Depot hinterlegen (Stand 2026, Wert bitte selbst prüfen).
+- **Kosten checken:** Achte auf die laufenden ETF-Kosten (TER), oft 0,1–0,3 % pro Jahr.
+
+## Häufige Fragen
+
+**Ab welchem Betrag lohnt sich ein Sparplan?**
+Schon ab 25 € monatlich, bei einigen Brokern ab 1 €. Wichtiger als die Höhe ist, dass du regelmäßig und über viele Jahre sparst.
+
+**Kann ich den Sparplan jederzeit ändern oder pausieren?**
+Ja. Rate, Ausführungstag und Produkt lassen sich im Depot meist kostenlos anpassen, pausieren oder kündigen. ETF-Anteile kannst du auch zwischendurch verkaufen – bei Aktien-ETFs aber idealerweise erst nach Ende deines geplanten Zeithorizonts.
+
+**ETF-Sparplan oder Banksparplan – was ist besser?**
+Das hängt vom Zeithorizont ab: Banksparplan/Tagesgeld für Ziele unter 3 Jahren (kein Kursrisiko), ETF-Sparplan für langfristigen Vermögensaufbau ab rund 10 Jahren (höhere Renditechance, dafür Schwankungen).

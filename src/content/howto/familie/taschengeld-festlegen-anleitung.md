@@ -9,19 +9,28 @@ related: ["taschengeld-rechner", "sparplan-kind-rechner", "haushaltsbuch-rechner
 draft: false
 ---
 
-Taschengeld hilft Kindern, früh den Umgang mit Geld zu lernen – etwas einteilen, sparen, auch mal einen Fehlkauf erleben. Damit das gelingt, braucht es eine passende Höhe und klare Regeln. Diese Anleitung zeigt, wie du Taschengeld altersgerecht festlegst und sinnvoll begleitest. Die genannten Beträge sind allgemeine Orientierungswerte, keine festen Vorgaben.
+Taschengeld hilft Kindern, früh den Umgang mit Geld zu lernen – einteilen, sparen, auch mal einen Fehlkauf erleben. Damit das gelingt, braucht es eine passende Höhe und klare Regeln. Diese Anleitung nennt konkrete Orientierungsbeträge nach Alter und zeigt, wie du sie sinnvoll begleitest. Die Beträge sind allgemeine Orientierungswerte (angelehnt an die übliche Taschengeldtabelle), keine festen Vorgaben.
 
 ## Schritt 1: Alter und Reife berücksichtigen
 
-Wofür Taschengeld gedacht ist, hängt stark vom Alter ab. Jüngere Kinder lernen mit kleinen Beträgen das Zählen und Einteilen, ältere übernehmen mehr Verantwortung. Orientiere dich nicht nur am Alter, sondern auch daran, wie selbstständig dein Kind bereits ist.
+Wofür Taschengeld gedacht ist, hängt vom Alter ab: Mit 6–7 Jahren reicht ein kleiner Betrag fürs Zählen und Einteilen, ab 10 Jahren kommen erste eigene Wünsche dazu, ab 14 oft Handy-Guthaben oder Ausgehen. Orientiere dich nicht nur am Alter, sondern auch daran, wie selbstständig dein Kind schon ist.
 
 ## Schritt 2: Passende Höhe bestimmen
 
-Es gibt gängige **Taschengeld-Empfehlungen**, die mit dem Alter steigen. Eine Orientierung für einen passenden Betrag liefert der [Taschengeld-Rechner](/rechner/taschengeld-rechner/). Wichtiger als der exakte Betrag ist, dass er zum Familienbudget passt und verlässlich bleibt.
+Gängige Orientierungswerte (Taschengeldtabelle, Schätzung – an dein Budget anpassen):
+
+- **6–7 Jahre:** etwa 1–2 € pro Woche
+- **8–9 Jahre:** etwa 2–3 € pro Woche
+- **10–11 Jahre:** etwa 15–18 € pro Monat
+- **12–13 Jahre:** etwa 20–25 € pro Monat
+- **14–15 Jahre:** etwa 25–35 € pro Monat
+- **16–17 Jahre:** etwa 35–60 € pro Monat
+
+Den für dein Kind passenden Betrag findest du mit dem [Taschengeld-Rechner](/rechner/taschengeld-rechner/). Wichtig ist, dass die Höhe zum Familienbudget passt und verlässlich gleich bleibt.
 
 ## Schritt 3: Auszahlungsrhythmus festlegen
 
-Für jüngere Kinder eignet sich eine **wöchentliche** Auszahlung, weil ein Monat noch schwer zu überblicken ist. Ältere kommen mit einer **monatlichen** Zahlung gut zurecht und üben so, längerfristig zu planen. Zahle pünktlich und ohne ständiges Erinnern aus.
+Bis etwa 9 Jahre eignet sich eine **wöchentliche** Auszahlung, weil ein Monat noch schwer zu überblicken ist. Ab rund 10 Jahren stell auf eine **monatliche** Zahlung um, damit dein Kind übers Monatsende hinaus planen lernt. Zahl pünktlich aus (z. B. immer am 1. des Monats) und ohne ständiges Erinnern.
 
 ## Schritt 4: Regeln gemeinsam vereinbaren
 
@@ -40,10 +49,10 @@ Begleite ohne ständige Kontrolle. Hilf deinem Kind, Sparziele zu setzen, etwa f
 ## Häufige Fragen
 
 **Ab welchem Alter Taschengeld?**
-Viele Familien starten im frühen Grundschulalter mit kleinen wöchentlichen Beträgen.
+Viele Familien starten mit 6–7 Jahren (Schulbeginn) mit etwa 1–2 € pro Woche.
 
 **Soll Taschengeld an Aufgaben gekoppelt sein?**
-Klassisches Taschengeld wird unabhängig von Pflichten gezahlt. Extra-Belohnungen für besondere Aufgaben kann man getrennt regeln.
+Klassisches Taschengeld wird unabhängig von Pflichten gezahlt. Extra-Belohnungen für besondere Aufgaben kannst du getrennt regeln.
 
 **Wie viel ist angemessen?**
-Das richtet sich nach Alter und Budget. Eine Orientierung gibt der [Taschengeld-Rechner](/rechner/taschengeld-rechner/).
+Als grobe Orientierung: 1–2 € pro Woche im Grundschulalter, rund 15–25 € pro Monat mit 10–13 Jahren, 25–60 € pro Monat als Teenager (Schätzung, an dein Budget anpassen). Deinen Wert findest du im [Taschengeld-Rechner](/rechner/taschengeld-rechner/).

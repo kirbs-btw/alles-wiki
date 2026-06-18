@@ -9,38 +9,38 @@ related: ["netto-stundenlohn-rechner", "jahresgehalt-rechner", "stundenlohn-rech
 draft: false
 ---
 
-Auf der Gehaltsabrechnung steht oben ein Betrag und unten ein deutlich kleinerer – der Weg vom Brutto zum Netto ist für viele undurchsichtig. Diese Anleitung erklärt Schritt für Schritt, welche Abzüge anfallen und warum. Du brauchst dafür nur deine Gehaltsabrechnung. Sie ersetzt keine Steuerberatung, hilft dir aber, deine Abrechnung selbst zu verstehen.
+Oben auf der Abrechnung steht dein Brutto, unten landet ein deutlich kleinerer Betrag auf dem Konto. Dazwischen liegen Sozialabgaben und Steuern. Diese Anleitung zerlegt die Abrechnung Zeile für Zeile, damit du jeden Abzug nachvollziehen kannst. Du brauchst nur deine letzte Gehaltsabrechnung. Die genannten Prozentsätze sind Richtwerte (Stand 2026) und ändern sich – das hier ersetzt keine Steuerberatung.
 
 ## Schritt 1: Bruttogehalt als Ausgangspunkt nehmen
 
-Das Bruttogehalt ist der vereinbarte Lohn vor allen Abzügen. Es ist die Basis für alle weiteren Berechnungen. Von hier aus werden Sozialabgaben und Steuern abgezogen, bis am Ende das Netto übrig bleibt, das auf deinem Konto landet.
+Such auf der Abrechnung die Zeile "Gesamtbrutto" oder "Steuerbrutto". Das ist deine Startzahl. Beispiel für diese Anleitung: 3.000 € Brutto im Monat, Steuerklasse 1, keine Kinder, gesetzlich versichert. Von dieser Zahl ziehst du in den nächsten Schritten erst die Sozialabgaben, dann die Steuern ab.
 
 ## Schritt 2: Sozialabgaben abziehen
 
-Vom Brutto gehen Beiträge zur Kranken-, Pflege-, Renten- und Arbeitslosenversicherung ab. Du und dein Arbeitgeber teilt euch diese Beiträge in der Regel. Sie machen einen erheblichen Teil der Abzüge aus und finanzieren die soziale Absicherung.
+Den Arbeitnehmer-Anteil zur Sozialversicherung teilst du dir mit dem Arbeitgeber. Als grobe Richtwerte für deinen Anteil: Rentenversicherung rund 9,3 %, Arbeitslosenversicherung rund 1,3 %, Krankenversicherung rund 7,3 % plus kassenindividueller Zusatzbeitrag (oft 1-2 %), Pflegeversicherung rund 1,8 % (mehr ohne Kinder). In Summe gehen so etwa 20-21 % vom Brutto weg. Bei 3.000 € sind das ungefähr 600 € – es bleiben rund 2.400 €.
 
 ## Schritt 3: Lohnsteuer und Zuschläge berücksichtigen
 
-Zusätzlich wird die Lohnsteuer einbehalten, gegebenenfalls plus Solidaritätszuschlag und Kirchensteuer. Die Höhe der Lohnsteuer hängt vom Einkommen und deiner Steuerklasse ab. Sie wird direkt ans Finanzamt abgeführt.
+Auf das Brutto (nicht auf die 2.400 €) wird die Lohnsteuer berechnet und ans Finanzamt abgeführt. Bei 3.000 € und Steuerklasse 1 liegt sie grob bei 350-400 € im Monat. Kirchensteuer kommt nur dazu, wenn du Kirchenmitglied bist (8-9 % der Lohnsteuer); den Solidaritätszuschlag zahlst du bei diesem Gehalt in der Regel nicht mehr. Such auf der Abrechnung die Zeilen "Lohnsteuer", "Soli" und "KiSt".
 
 ## Schritt 4: Steuerklasse und Freibeträge prüfen
 
-Deine Steuerklasse, Kinderfreibeträge und individuelle Freibeträge beeinflussen, wie viel Steuer einbehalten wird. Ein Wechsel der Steuerklasse oder eingetragene Freibeträge können dein Netto spürbar verändern. Prüfe, ob deine Eintragungen noch passen.
+Die Steuerklasse steuert, wie viel Lohnsteuer einbehalten wird. Steuerklasse 1 gilt für Ledige; Verheiratete können mit der Kombination 3/5 oder 4/4 das monatliche Netto verschieben. Trägst du Freibeträge ein (z. B. lange Pendelstrecke), sinkt die monatliche Lohnsteuer. Prüf auf der Abrechnung, ob Steuerklasse, Kinderfreibeträge und Konfession stimmen – ein Fehler hier kostet dich jeden Monat Geld.
 
 ## Schritt 5: Nettogehalt nachrechnen
 
-Ziehe Sozialabgaben und Steuern vom Brutto ab – übrig bleibt dein Nettogehalt. Mit dem [Netto-Stundenlohn-Rechner](/rechner/netto-stundenlohn-rechner/) siehst du, was pro Stunde übrig bleibt, mit dem [Jahresgehalt-Rechner](/rechner/jahresgehalt-rechner/) rechnest du aufs Jahr hoch.
+Brutto minus Sozialabgaben minus Lohnsteuer (und ggf. Soli/Kirchensteuer) ergibt dein Netto. Im Beispiel: 3.000 € − ca. 600 € Sozialabgaben − ca. 380 € Lohnsteuer ≈ 2.020 € netto. Deine echte Zahl rechnest du mit dem [Netto-Stundenlohn-Rechner](/rechner/netto-stundenlohn-rechner/) nach; aufs Jahr hoch (inkl. Weihnachts-/Urlaubsgeld) rechnest du mit dem [Jahresgehalt-Rechner](/rechner/jahresgehalt-rechner/).
 
 ## Tipps
 
-- Vergleiche deine Abrechnung Monat für Monat, um Fehler früh zu bemerken.
-- Beachte, dass Einmalzahlungen wie Bonus anders versteuert werden können.
-- Eine Steuererklärung holt oft zu viel gezahlte Lohnsteuer zurück.
+- Stell deine Abrechnungen zweier Monate nebeneinander: Springt eine Abzugszeile, hat sich etwas geändert (z. B. Zusatzbeitrag der Kasse).
+- Bonus und Weihnachtsgeld werden als "sonstiger Bezug" versteuert – dort ist der Lohnsteuerabzug einmalig höher, oft holst du das per Steuererklärung zurück.
+- Liegt deine Steuerklasse falsch, ändere sie beim Finanzamt (ELSTER) – die Korrektur wirkt ab dem Folgemonat.
 
 ## Häufige Fragen
 
 **Warum bleibt von einer Gehaltserhöhung so wenig übrig?**
-Mit steigendem Brutto steigt der Steueranteil progressiv. Trotzdem bleibt unterm Strich mehr Netto – nur nicht der volle Erhöhungsbetrag. Die genaue Wirkung hängt vom Einzelfall ab.
+Der höhere Anteil wird mit deinem persönlichen Grenzsteuersatz besteuert, nicht mit dem Durchschnitt. Bei mittlerem Einkommen bleiben von 100 € mehr Brutto oft nur etwa 55-60 € netto. Unterm Strich bleibt mehr, nur nicht der volle Betrag.
 
 **Kann ich mein Netto erhöhen?**
-Über Freibeträge, Steuerklasse oder die Steuererklärung lässt sich oft etwas optimieren. Was sinnvoll ist, klärst du am besten mit einer Steuerberatung.
+Kurzfristig über die richtige Steuerklasse und eingetragene Freibeträge, langfristig über die Steuererklärung (zu viel gezahlte Lohnsteuer kommt zurück). Was sich in deinem Fall lohnt, prüfst du am besten mit einer Steuerberatung.

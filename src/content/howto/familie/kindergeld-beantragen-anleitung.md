@@ -9,11 +9,11 @@ related: ["kindergeld-rechner", "kinderfreibetrag-guenstigerpruefung-rechner", "
 draft: false
 ---
 
-Kindergeld ist eine monatliche Leistung für Eltern und wird von der Familienkasse gezahlt. Es wird nicht automatisch überwiesen – du musst es beantragen. Diese Anleitung zeigt dir, welche Unterlagen du brauchst und wie der Antrag abläuft. Für den Antrag benötigst du vor allem die Geburtsurkunde des Kindes und die Steuer-Identifikationsnummern. Maßgeblich sind die Vorgaben der Familienkasse; dies ist keine Rechtsberatung.
+Kindergeld ist eine monatliche Leistung für Eltern und wird von der Familienkasse gezahlt. Aktuell sind das **250 € pro Kind und Monat** (Stand 2026, gleicher Betrag für jedes Kind – bitte aktuellen Wert prüfen). Es kommt nicht automatisch – du musst es beantragen. Diese Anleitung zeigt, welche Unterlagen du brauchst und wie der Antrag abläuft. Du brauchst vor allem die Geburtsurkunde des Kindes und die Steuer-Identifikationsnummern. Maßgeblich sind die Vorgaben der Familienkasse; dies ist keine Rechtsberatung.
 
 ## Schritt 1: Anspruch prüfen
 
-Kindergeld gibt es in der Regel für jedes Kind bis 18 Jahre, bei Ausbildung oder Studium häufig bis 25 Jahre. Anspruch hat meist der Elternteil, in dessen Haushalt das Kind lebt. Wie viel Kindergeld dir zusteht und wie es im Vergleich zum Kinderfreibetrag wirkt, zeigt der [Kindergeld-Rechner](/rechner/kindergeld-rechner/).
+Kindergeld gibt es in der Regel für jedes Kind bis **18 Jahre**, bei Ausbildung oder Studium häufig bis **25 Jahre**. Anspruch hat meist der Elternteil, in dessen Haushalt das Kind lebt. Der Betrag liegt aktuell bei **250 € pro Kind und Monat** (Schätzung/Stand 2026). Ob für dich das Kindergeld oder der Kinderfreibetrag günstiger ist, zeigt der [Kindergeld-Rechner](/rechner/kindergeld-rechner/).
 
 ## Schritt 2: Steuer-Identifikationsnummern bereitlegen
 
@@ -29,7 +29,7 @@ Reiche den ausgefüllten Antrag samt Geburtsurkunde des Kindes bei der zuständi
 
 ## Schritt 5: Bescheid und Auszahlung prüfen
 
-Nach der Bearbeitung erhältst du einen Bescheid mit der Kindergeldnummer. Das Geld wird monatlich überwiesen. Prüfe, ob die Höhe stimmt. Ob für dich der **Kinderfreibetrag** steuerlich günstiger ist als das Kindergeld, klärt das Finanzamt automatisch – ein erster Vergleich gelingt mit der [Günstigerprüfung Kinderfreibetrag](/rechner/kinderfreibetrag-guenstigerpruefung-rechner/).
+Nach der Bearbeitung erhältst du einen Bescheid mit der Kindergeldnummer. Das Geld wird monatlich überwiesen – aktuell **250 € je Kind** (Stand 2026). Prüfe, ob die Höhe und die Anzahl der Kinder stimmen. Ob für dich der **Kinderfreibetrag** steuerlich günstiger ist als das Kindergeld, klärt das Finanzamt automatisch über die Günstigerprüfung – ein erster Vergleich gelingt mit der [Günstigerprüfung Kinderfreibetrag](/rechner/kinderfreibetrag-guenstigerpruefung-rechner/).
 
 ## Tipps
 
@@ -41,6 +41,9 @@ Nach der Bearbeitung erhältst du einen Bescheid mit der Kindergeldnummer. Das G
 
 **Wer zahlt das Kindergeld aus?**
 In der Regel die Familienkasse der Bundesagentur für Arbeit. Für Beschäftigte im öffentlichen Dienst kann eine andere Stelle zuständig sein.
+
+**Wie viel Kindergeld bekomme ich?**
+Aktuell **250 € pro Kind und Monat** (Stand 2026, für jedes Kind gleich – bitte aktuellen Wert prüfen). Bei zwei Kindern sind das also 500 € im Monat.
 
 **Bekomme ich für volljährige Kinder weiter Kindergeld?**
 Während einer Erstausbildung oder eines Studiums häufig bis 25 Jahre. Du musst entsprechende Nachweise einreichen.

@@ -9,41 +9,41 @@ related: ["kinderbetreuungskosten-steuer-rechner", "kita-beitrag-rechner", "betr
 draft: false
 ---
 
-Eltern können einen Teil ihrer Kinderbetreuungskosten in der Steuererklärung als Sonderausgaben geltend machen und so Steuern sparen. Diese Anleitung zeigt, welche Kosten zählen, welche Belege du brauchst und wie du sie korrekt einträgst. Du brauchst Rechnungen der Betreuung und Nachweise über die Zahlung. Maßgeblich sind die aktuellen Steuerregeln und dein Finanzamt; dies ist keine Steuerberatung.
+Eltern können einen Teil ihrer Kinderbetreuungskosten als Sonderausgaben absetzen und so Steuern sparen. Diese Anleitung zeigt, welche Kosten zählen, wie viel davon (Faustregel) absetzbar ist und wie du sie korrekt einträgst. Du brauchst Rechnungen der Betreuung und Nachweise über die Zahlung. Die genannten Werte sind die aktuell bekannten Größenordnungen (Stand 2026) – maßgeblich bleiben dein Finanzamt und das geltende Steuerrecht; dies ist keine Steuerberatung.
 
 ## Schritt 1: Abzugsfähige Kosten identifizieren
 
-Absetzbar sind in der Regel Kosten für die **Betreuung** des Kindes – etwa Kita, Tagesmutter, Hort oder Babysitter – bis zu einem bestimmten Höchstbetrag je Kind und Jahr. Reine **Verpflegungskosten** oder Beiträge für Freizeit- und Sportangebote zählen meist nicht. Wie viel Ersparnis möglich ist, schätzt der [Kinderbetreuungskosten-Steuer-Rechner](/rechner/kinderbetreuungskosten-steuer-rechner/).
+Absetzbar sind Kosten für die reine **Betreuung** – Kita, Tagesmutter, Hort oder Babysitter. Die Faustregel: Du kannst grob **zwei Drittel der Betreuungskosten** ansetzen, gedeckelt auf einen Jahreshöchstbetrag je Kind (lange Zeit 4.000 € abziehbarer Höchstbetrag, also rund 6.000 € Kosten ausgeschöpft – als Schätzung, bitte den aktuellen Wert prüfen). Beispiel: 3.600 € Kita-Beitrag im Jahr → zwei Drittel sind 2.400 €, die du als Sonderausgaben ansetzt. Reine **Verpflegung** und Beiträge für Sport- oder Freizeitangebote zählen nicht. Die Ersparnis schätzt der [Kinderbetreuungskosten-Steuer-Rechner](/rechner/kinderbetreuungskosten-steuer-rechner/).
 
 ## Schritt 2: Belege und Rechnungen sammeln
 
-Sammle für das ganze Jahr **Rechnungen oder Bescheide** der Betreuungseinrichtung. Bei einer Tagesmutter oder einem Babysitter dient ein schriftlicher Vertrag oder eine Rechnung als Nachweis. Achte darauf, dass die Betreuungskosten getrennt von Verpflegung ausgewiesen sind.
+Sammle für das ganze Jahr **Rechnungen oder Bescheide** der Betreuungseinrichtung. Bei Tagesmutter oder Babysitter dient ein schriftlicher Vertrag plus Rechnung als Nachweis. Wichtig: Die Betreuungskosten müssen getrennt von der Verpflegung ausgewiesen sein – steht beides in einer Summe, streicht das Finanzamt im Zweifel den Essensanteil heraus.
 
 ## Schritt 3: Unbare Zahlung sicherstellen
 
-Das Finanzamt erkennt Betreuungskosten in der Regel nur an, wenn sie **unbar** gezahlt wurden – per Überweisung oder Lastschrift. Barzahlungen werden meist nicht akzeptiert, auch nicht beim Babysitter. Überweise also konsequent und hebe die Kontonachweise auf.
+Das Finanzamt erkennt Betreuungskosten nur an, wenn sie **unbar** gezahlt wurden – per Überweisung oder Lastschrift. Barzahlung wird nicht akzeptiert, auch nicht beim Babysitter (also nicht "20 € in die Hand"). Überweise konsequent und heb die Kontoauszüge auf.
 
 ## Schritt 4: Anlage Kind ausfüllen
 
-Trage die Betreuungskosten in der **Anlage Kind** deiner Steuererklärung ein. Gib die Art der Betreuung und den gezahlten Betrag an. Bei zusammen veranlagten Eltern ist die Zuordnung in der Regel eindeutig; bei getrennt lebenden Eltern gelten besondere Regeln.
+Trage die Kosten in der **Anlage Kind** ein – pro Kind eine eigene Anlage. Gib die Art der Betreuung (z. B. Kita) und den im Jahr gezahlten Betrag an; das Finanzamt rechnet die zwei Drittel und den Höchstbetrag selbst aus, du gibst die vollen Kosten an. Bei zusammen veranlagten Eltern ist die Zuordnung eindeutig; bei getrennt lebenden Eltern setzt in der Regel der Elternteil ab, der gezahlt hat und bei dem das Kind gemeldet ist.
 
 ## Schritt 5: Bescheid prüfen
 
-Prüfe nach Erhalt des Steuerbescheids, ob die Betreuungskosten anerkannt wurden. Stimmt etwas nicht, kannst du innerhalb der Frist Einspruch einlegen. Hebe alle Belege auf, falls das Finanzamt sie nachfordert.
+Prüfe im Steuerbescheid, ob die Betreuungskosten anerkannt wurden und ob der angesetzte Betrag zu deiner Rechnung passt. Stimmt etwas nicht, kannst du **innerhalb eines Monats** nach Bekanntgabe Einspruch einlegen. Heb alle Belege auf, falls das Finanzamt sie nachfordert.
 
 ## Tipps
 
-- Zahle Betreuungskosten immer per Überweisung, nie bar.
-- Trenne in der Rechnung Betreuung von Verpflegung – nur Erstere ist absetzbar.
+- Zahl Betreuungskosten immer per Überweisung, nie bar – sonst sind sie weg.
+- Trenne in der Rechnung Betreuung von Verpflegung; nur die Betreuung zählt.
 - Was die Betreuung kostet, schätzt der [Kita-Beitrag-Rechner](/rechner/kita-beitrag-rechner/) oder der [Betreuungskosten-Rechner](/rechner/betreuungskosten-rechner/).
 
 ## Häufige Fragen
 
 **Bis zu welchem Alter kann ich Betreuungskosten absetzen?**
-In der Regel für Kinder bis zu einer bestimmten Altersgrenze; bei Behinderung gelten besondere Regeln. Details nennt das Finanzamt.
+In der Regel für Kinder, die das **14. Lebensjahr noch nicht vollendet** haben (Schätzung – bitte aktuell prüfen). Bei einer Behinderung, die vor einer bestimmten Altersgrenze eingetreten ist, gilt keine obere Altersgrenze.
 
 **Welcher Anteil der Kosten ist absetzbar?**
-Ein Teil der Betreuungskosten lässt sich bis zu einem jährlichen Höchstbetrag als Sonderausgaben ansetzen. Die genauen Werte hängen vom aktuellen Steuerrecht ab.
+Als Faustregel **zwei Drittel der Betreuungskosten**, gedeckelt auf den Jahreshöchstbetrag je Kind (lange rund 4.000 € abziehbar – Schätzung, aktuellen Wert prüfen). Beispiel: 3.600 € Kosten → 2.400 € absetzbar.
 
 **Zählt das Essensgeld der Kita?**
-Verpflegungskosten sind in der Regel nicht absetzbar – nur die reinen Betreuungskosten.
+Nein. Verpflegungskosten sind nicht absetzbar – nur die reinen Betreuungskosten.

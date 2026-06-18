@@ -9,38 +9,38 @@ related: ["dienstwagen-1-prozent-rechner", "netto-stundenlohn-rechner", "pendler
 draft: false
 ---
 
-Ein Dienstwagen, den du auch privat nutzen darfst, ist ein geldwerter Vorteil – und der muss versteuert werden. Dafür gibt es zwei Methoden: die pauschale 1-Prozent-Regelung und das Fahrtenbuch. Diese Anleitung erklärt, wie du die passende Variante wählst und den Vorteil berechnest. Du brauchst die Eckdaten deines Fahrzeugs und Angaben zum Arbeitsweg. Sie ersetzt keine Steuerberatung.
+Darfst du den Firmenwagen privat fahren, ist das ein geldwerter Vorteil und erhöht dein zu versteuerndes Einkommen. Du hast zwei Methoden: die pauschale 1-Prozent-Regelung und das Fahrtenbuch. Diese Anleitung zeigt dir mit Beispielzahlen, wie du rechnest und welche Variante günstiger ist. Du brauchst den Bruttolistenpreis des Wagens und die Entfernung Wohnung–Arbeit. Die genannten Sätze sind Richtwerte (Stand 2026); das hier ersetzt keine Steuerberatung.
 
 ## Schritt 1: Private Nutzung klären
 
-Stelle zuerst fest, ob und in welchem Umfang du den Wagen privat nutzen darfst. Nur die private Nutzung und der Weg zur Arbeit lösen die Versteuerung aus. Ist eine Privatnutzung vertraglich ausgeschlossen und wird das eingehalten, sieht die Lage anders aus.
+Schau in deine Überlassungsvereinbarung: Ist Privatnutzung erlaubt, wird versteuert – sonst nicht. Versteuert werden zwei Dinge: die reine Privatnutzung und die Fahrten zwischen Wohnung und erster Tätigkeitsstätte. Ist Privatnutzung vertraglich ausgeschlossen und hältst du das ein (idealerweise per Fahrtenbuch belegt), entfällt der geldwerte Vorteil.
 
 ## Schritt 2: Methode 1-Prozent oder Fahrtenbuch wählen
 
-Bei der 1-Prozent-Regelung wird pauschal ein Anteil des Bruttolistenpreises pro Monat angesetzt. Beim Fahrtenbuch versteuerst du nur den tatsächlichen Privatanteil – das lohnt sich oft bei wenig privater Nutzung, erfordert aber lückenlose Aufzeichnungen.
+Faustregel: Viel privat = 1-Prozent-Regelung (pauschal, kein Aufwand). Wenig privat oder hoher Listenpreis = Fahrtenbuch (du versteuerst nur den echten Privatanteil). Das Fahrtenbuch muss lückenlos sein: Datum, Kilometerstand, Ziel und Zweck jeder Fahrt. Vergisst du Einträge, erkennt das Finanzamt es nicht an und du fällst auf die 1-Prozent-Regel zurück.
 
 ## Schritt 3: Geldwerten Vorteil berechnen
 
-Berechne den monatlichen geldwerten Vorteil nach der gewählten Methode. Bei der Pauschale brauchst du den Bruttolistenpreis. Der [Dienstwagen 1-Prozent-Rechner](/rechner/dienstwagen-1-prozent-rechner/) ermittelt den Vorteil schnell, sodass du beide Varianten vergleichen kannst.
+Bei der Pauschale setzt du pro Monat 1 % des auf volle 100 € abgerundeten Bruttolistenpreises an. Beispiel: 40.000 € Listenpreis → 400 € geldwerter Vorteil im Monat. Beim Fahrtenbuch teilst du die tatsächlichen Jahreskosten (inkl. Abschreibung) durch die Gesamtkilometer und multiplizierst mit den Privatkilometern. Beide Varianten rechnest du mit dem [Dienstwagen 1-Prozent-Rechner](/rechner/dienstwagen-1-prozent-rechner/) durch.
 
 ## Schritt 4: Arbeitsweg berücksichtigen
 
-Zusätzlich zum privaten Anteil wird der Weg zwischen Wohnung und erster Tätigkeitsstätte berücksichtigt. Hier spielt die Entfernung eine Rolle. Den Arbeitsweg kannst du mit dem [Pendlerpauschale-Rechner](/rechner/pendlerpauschale-rechner/) einordnen.
+Für den Arbeitsweg kommen bei der Pauschale 0,03 % des Listenpreises pro Entfernungskilometer und Monat dazu. Beispiel: 40.000 € und 20 km → 0,03 % × 40.000 € × 20 = 240 € im Monat zusätzlich zu den 400 €. Diesen Posten gleichst du in der Steuererklärung teilweise über die Pendlerpauschale aus; deinen Arbeitsweg ordnest du mit dem [Pendlerpauschale-Rechner](/rechner/pendlerpauschale-rechner/) ein.
 
 ## Schritt 5: Vorteil in der Abrechnung erfassen
 
-Der geldwerte Vorteil erhöht dein zu versteuerndes Einkommen und damit die Abzüge auf der Gehaltsabrechnung. Mit dem [Netto-Stundenlohn-Rechner](/rechner/netto-stundenlohn-rechner/) bekommst du ein Gefühl dafür, wie sich Zusatzbeträge auf dein Netto auswirken.
+Der geldwerte Vorteil (im Beispiel 400 € + 240 € = 640 €) wird deinem Brutto hinzugerechnet, du zahlst darauf Steuern und Sozialabgaben – ausgezahlt wird er nicht. Netto kostet dich der Wagen dadurch je nach Steuersatz grob 250-350 € im Monat. Wie sich solche Zusatzbeträge auf dein Netto auswirken, siehst du im [Netto-Stundenlohn-Rechner](/rechner/netto-stundenlohn-rechner/).
 
 ## Tipps
 
-- Vergleiche beide Methoden, bevor du dich festlegst – das spart oft Geld.
-- Ein Fahrtenbuch muss zeitnah, vollständig und ordentlich geführt sein.
-- Für Elektro- und Hybridfahrzeuge gelten teils günstigere Sätze.
+- Rechne vor der Wahl beide Methoden mit deinen echten Zahlen durch – bei wenig Privatfahrten spart das Fahrtenbuch oft mehrere Hundert Euro im Jahr.
+- Für reine E-Autos wird oft nur 0,25 % statt 1 % angesetzt, für viele Hybride 0,5 % – das senkt den Vorteil deutlich.
+- Die Methode legst du pro Fahrzeug und Kalenderjahr fest; ein Wechsel mitten im Jahr ist in der Regel nicht möglich.
 
 ## Häufige Fragen
 
 **Lohnt sich das Fahrtenbuch?**
-Bei geringer Privatnutzung oder hohem Listenpreis oft ja, weil du nur den echten Anteil versteuerst. Es erfordert aber Disziplin. Was günstiger ist, zeigt nur eine konkrete Rechnung.
+Vor allem bei wenig Privatfahrten oder hohem Listenpreis, weil du dann nur den echten Anteil versteuerst statt pauschal 1 %. Es kostet aber tägliche Disziplin – was günstiger ist, zeigt nur die konkrete Gegenrechnung beider Methoden.
 
 **Muss ich den Dienstwagen immer versteuern?**
-Nur wenn du ihn privat nutzen darfst oder für den Arbeitsweg verwendest. Ohne erlaubte Privatnutzung kann die Versteuerung entfallen – die Details klärt eine Steuerberatung.
+Nur bei erlaubter Privatnutzung oder Fahrten zur Arbeit. Ist Privatnutzung ausgeschlossen und belegst du das, entfällt der geldwerte Vorteil – die genaue Handhabung klärst du mit einer Steuerberatung.
