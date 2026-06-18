@@ -1,0 +1,324 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getGenerator } from '../../lib/generators';
+import { getCategory } from '../../lib/categories';
+import { getTool } from '../../lib/registry';
+import { generatorLd, breadcrumbLd, faqLd } from '../../lib/schema';
+
+const gen = getGenerator('tilgungsplan-generator')!;
+const cat = getCategory(gen.category)!;
+const path = `/generator/${gen.slug}`;
+
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Generatoren', href: '/generator' },
+  { name: gen.title, href: path },
+];
+
+const relatedTools = (gen.related ?? [])
+  .map((slug) => getTool(slug))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const ld: object[] = [
+  generatorLd({ title: gen.title, description: gen.description, path }),
+  breadcrumbLd(crumbs.map((c) => ({ name: c.name, path: c.href }))),
+  faqLd(gen.faq),
+];
+---
+
+<BaseLayout title={gen.title} description={gen.description} path={path} jsonLd={ld}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="mt-4">
+      <p class="text-sm font-semibold text-brand-700">{cat.name} · Generator</p>
+      <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-zinc-900">{gen.title}</h1>
+      <p class="mt-2 text-lg text-zinc-600">{gen.description}</p>
+    </header>
+
+    <!-- Widget -->
+    <section class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm" data-gen>
+      <div class="grid gap-5 sm:grid-cols-2">
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-zinc-700">Darlehensbetrag (€)</span>
+          <input
+            id="tp-amount"
+            type="number"
+            min="0"
+            step="1000"
+            value="250000"
+            class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2.5 text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+          />
+        </label>
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-zinc-700">Sollzins (% p. a.)</span>
+          <input
+            id="tp-rate"
+            type="number"
+            min="0"
+            step="0.01"
+            value="3.5"
+            class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2.5 text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+          />
+        </label>
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-zinc-700">Anfängliche Tilgung (% p. a.)</span>
+          <input
+            id="tp-repay"
+            type="number"
+            min="0"
+            step="0.1"
+            value="2"
+            class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2.5 text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+          />
+        </label>
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-zinc-700">Sondertilgung pro Jahr (€)</span>
+          <input
+            id="tp-extra"
+            type="number"
+            min="0"
+            step="500"
+            value="0"
+            class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2.5 text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+          />
+        </label>
+      </div>
+
+      <!-- Zusammenfassung -->
+      <div id="tp-summary" class="mt-6 grid gap-3 sm:grid-cols-3" aria-live="polite">
+        <div class="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3">
+          <span class="block text-xs font-medium uppercase tracking-wide text-zinc-500">Monatsrate</span>
+          <span id="tp-rate-out" class="mt-1 block text-lg font-bold text-zinc-900">–</span>
+        </div>
+        <div class="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3">
+          <span class="block text-xs font-medium uppercase tracking-wide text-zinc-500">Laufzeit</span>
+          <span id="tp-term-out" class="mt-1 block text-lg font-bold text-zinc-900">–</span>
+        </div>
+        <div class="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3">
+          <span class="block text-xs font-medium uppercase tracking-wide text-zinc-500">Gesamtzinsen</span>
+          <span id="tp-interest-out" class="mt-1 block text-lg font-bold text-zinc-900">–</span>
+        </div>
+      </div>
+
+      <p id="tp-msg" class="mt-3 text-xs text-zinc-500" aria-live="polite">Berechnet lokal in deinem Browser – nichts wird übertragen.</p>
+
+      <div class="mt-4 flex justify-end">
+        <button id="tp-csv" type="button" class="shrink-0 rounded-lg bg-brand-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-600 focus-visible:ring-2 focus-visible:ring-brand-300">Als CSV herunterladen</button>
+      </div>
+
+      <!-- Tabelle pro Jahr -->
+      <div class="mt-6 max-h-96 overflow-auto rounded-lg border border-zinc-200">
+        <table class="w-full border-collapse text-right text-sm">
+          <thead class="sticky top-0 bg-zinc-100 text-zinc-700">
+            <tr>
+              <th class="px-3 py-2 text-left font-semibold">Jahr</th>
+              <th class="px-3 py-2 font-semibold">Restschuld Jahresanfang</th>
+              <th class="px-3 py-2 font-semibold">Zinsen</th>
+              <th class="px-3 py-2 font-semibold">Tilgung</th>
+              <th class="px-3 py-2 font-semibold">Restschuld Jahresende</th>
+            </tr>
+          </thead>
+          <tbody id="tp-tbody" class="divide-y divide-zinc-100">
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Inhalt (SEO) -->
+    <section class="prose-werkbank mt-10 max-w-none">
+      <p>{gen.intro}</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold tracking-tight text-zinc-900">Häufige Fragen</h2>
+      <dl class="mt-4 space-y-4">
+        {gen.faq.map((f) => (
+          <div class="rounded-lg border border-zinc-200 bg-white p-4">
+            <dt class="font-semibold text-zinc-900">{f.q}</dt>
+            <dd class="mt-1 text-sm text-zinc-600">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {
+      relatedTools.length > 0 && (
+        <section class="mt-12 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-bold tracking-tight text-zinc-900">Passende Rechner</h2>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            {relatedTools.map((t) => (
+              <a href={`/rechner/${t.slug}/`} class="block rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md">
+                <span class="font-medium text-zinc-800">{t.shortTitle ?? t.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <script>
+    const root = document.querySelector('[data-gen]');
+    if (root) {
+      const amountEl = document.getElementById('tp-amount') as HTMLInputElement;
+      const rateEl = document.getElementById('tp-rate') as HTMLInputElement;
+      const repayEl = document.getElementById('tp-repay') as HTMLInputElement;
+      const extraEl = document.getElementById('tp-extra') as HTMLInputElement;
+      const rateOut = document.getElementById('tp-rate-out') as HTMLElement;
+      const termOut = document.getElementById('tp-term-out') as HTMLElement;
+      const interestOut = document.getElementById('tp-interest-out') as HTMLElement;
+      const tbody = document.getElementById('tp-tbody') as HTMLElement;
+      const msg = document.getElementById('tp-msg') as HTMLElement;
+      const csvBtn = document.getElementById('tp-csv') as HTMLButtonElement;
+
+      interface YearRow {
+        year: number;
+        startBalance: number;
+        interest: number;
+        principal: number;
+        endBalance: number;
+      }
+
+      const eur = (v: number) =>
+        v.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+
+      let lastRows: YearRow[] = [];
+
+      const compute = () => {
+        const principal0 = Math.max(0, parseFloat(amountEl.value) || 0);
+        const annualRate = Math.max(0, parseFloat(rateEl.value) || 0);
+        const initialRepay = Math.max(0, parseFloat(repayEl.value) || 0);
+        const extra = Math.max(0, parseFloat(extraEl.value) || 0);
+
+        lastRows = [];
+        tbody.innerHTML = '';
+
+        if (principal0 <= 0) {
+          rateOut.textContent = '–';
+          termOut.textContent = '–';
+          interestOut.textContent = '–';
+          msg.textContent = 'Bitte einen Darlehensbetrag größer 0 eingeben.';
+          return;
+        }
+        if (annualRate + initialRepay <= 0) {
+          rateOut.textContent = '–';
+          termOut.textContent = '–';
+          interestOut.textContent = '–';
+          msg.textContent = 'Sollzins und anfängliche Tilgung dürfen nicht beide 0 sein.';
+          return;
+        }
+
+        const z = annualRate / 100; // jährlicher Zinssatz
+        const monthlyRate = (principal0 * (annualRate + initialRepay)) / 100 / 12;
+
+        let balance = principal0;
+        let totalInterest = 0;
+        let months = 0;
+        const cap = 1200;
+
+        // pro Jahr aggregieren
+        let yearStart = balance;
+        let yearInterest = 0;
+        let yearPrincipal = 0;
+        let yearIndex = 1;
+
+        while (balance > 0 && months < cap) {
+          const interest = (balance * z) / 12;
+          let principalPart = monthlyRate - interest;
+
+          // Falls die Rate größer ist als die Restschuld zzgl. Zins, nur den Rest tilgen
+          if (principalPart > balance) principalPart = balance;
+          if (principalPart < 0) principalPart = 0;
+
+          balance -= principalPart;
+          totalInterest += interest;
+          yearInterest += interest;
+          yearPrincipal += principalPart;
+          months++;
+
+          // Sondertilgung am Jahresende abziehen
+          const isYearEnd = months % 12 === 0;
+          if (isYearEnd && extra > 0 && balance > 0) {
+            const extraThisYear = Math.min(extra, balance);
+            balance -= extraThisYear;
+            yearPrincipal += extraThisYear;
+          }
+
+          if (isYearEnd || balance <= 0) {
+            lastRows.push({
+              year: yearIndex,
+              startBalance: yearStart,
+              interest: yearInterest,
+              principal: yearPrincipal,
+              endBalance: balance < 0 ? 0 : balance,
+            });
+            yearIndex++;
+            yearStart = balance;
+            yearInterest = 0;
+            yearPrincipal = 0;
+          }
+        }
+
+        // Zusammenfassung
+        const years = Math.floor(months / 12);
+        const remMonths = months % 12;
+        let termStr = '';
+        if (years > 0) termStr += `${years} ${years === 1 ? 'Jahr' : 'Jahre'}`;
+        if (remMonths > 0) termStr += `${years > 0 ? ' ' : ''}${remMonths} ${remMonths === 1 ? 'Monat' : 'Monate'}`;
+        if (!termStr) termStr = '0 Monate';
+
+        rateOut.textContent = eur(monthlyRate);
+        termOut.textContent = termStr;
+        interestOut.textContent = eur(totalInterest);
+
+        if (months >= cap) {
+          msg.textContent = 'Hinweis: Die Laufzeit überschreitet 100 Jahre – bitte Tilgung erhöhen.';
+        } else {
+          msg.textContent = 'Berechnet lokal in deinem Browser – nichts wird übertragen.';
+        }
+
+        // Tabelle füllen
+        const rows = lastRows
+          .map(
+            (r) => `
+            <tr>
+              <td class="px-3 py-2 text-left font-medium text-zinc-800">${r.year}</td>
+              <td class="px-3 py-2 text-zinc-700">${eur(r.startBalance)}</td>
+              <td class="px-3 py-2 text-zinc-700">${eur(r.interest)}</td>
+              <td class="px-3 py-2 text-zinc-700">${eur(r.principal)}</td>
+              <td class="px-3 py-2 font-medium text-zinc-900">${eur(r.endBalance)}</td>
+            </tr>`,
+          )
+          .join('');
+        tbody.innerHTML = rows;
+      };
+
+      const downloadCsv = () => {
+        if (lastRows.length === 0) return;
+        const sep = ';';
+        const header = ['Jahr', 'Restschuld Jahresanfang', 'Zinsen', 'Tilgung', 'Restschuld Jahresende'].join(sep);
+        const num = (v: number) => v.toFixed(2).replace('.', ',');
+        const lines = lastRows.map((r) =>
+          [r.year, num(r.startBalance), num(r.interest), num(r.principal), num(r.endBalance)].join(sep),
+        );
+        const csv = '﻿' + [header, ...lines].join('\r\n');
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'tilgungsplan.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        msg.textContent = 'Tilgungsplan als CSV heruntergeladen.';
+      };
+
+      [amountEl, rateEl, repayEl, extraEl].forEach((el) => el.addEventListener('input', compute));
+      csvBtn.addEventListener('click', downloadCsv);
+      compute();
+    }
+  </script>
+</BaseLayout>

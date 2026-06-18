@@ -1,0 +1,152 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getGenerator } from '../../lib/generators';
+import { getCategory } from '../../lib/categories';
+import { getTool } from '../../lib/registry';
+import { generatorLd, breadcrumbLd, faqLd } from '../../lib/schema';
+
+const gen = getGenerator('passwort-generator')!;
+const cat = getCategory(gen.category)!;
+const path = `/generator/${gen.slug}`;
+
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Generatoren', href: '/generator' },
+  { name: gen.title, href: path },
+];
+
+const relatedTools = (gen.related ?? [])
+  .map((slug) => getTool(slug))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const ld: object[] = [
+  generatorLd({ title: gen.title, description: gen.description, path }),
+  breadcrumbLd(crumbs.map((c) => ({ name: c.name, path: c.href }))),
+  faqLd(gen.faq),
+];
+---
+
+<BaseLayout title={gen.title} description={gen.description} path={path} jsonLd={ld}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="mt-4">
+      <p class="text-sm font-semibold text-brand-700">{cat.name} · Generator</p>
+      <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-zinc-900">{gen.title}</h1>
+      <p class="mt-2 text-lg text-zinc-600">{gen.description}</p>
+    </header>
+
+    <!-- Widget -->
+    <section class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm" data-gen>
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <label class="sr-only" for="pw-out">Generiertes Passwort</label>
+        <input
+          id="pw-out"
+          type="text"
+          readonly
+          aria-live="polite"
+          class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-3 font-mono text-lg text-zinc-900 shadow-sm outline-none"
+        />
+        <div class="flex gap-2">
+          <button id="pw-gen" type="button" class="shrink-0 rounded-lg bg-brand-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-brand-600 focus-visible:ring-2 focus-visible:ring-brand-300">Neu</button>
+          <button id="pw-copy" type="button" class="shrink-0 rounded-lg border border-zinc-300 px-4 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-brand-300">Kopieren</button>
+        </div>
+      </div>
+
+      <div class="mt-6 grid gap-5 sm:grid-cols-2">
+        <label class="block">
+          <span class="mb-1 flex items-center justify-between text-sm font-medium text-zinc-700">
+            <span>Länge</span>
+            <span id="pw-len-val" class="font-mono text-zinc-500">16</span>
+          </span>
+          <input id="pw-len" type="range" min="4" max="64" value="16" step="1" class="w-full accent-brand-700" />
+        </label>
+        <fieldset class="grid grid-cols-2 gap-2">
+          <legend class="mb-1 text-sm font-medium text-zinc-700">Zeichen</legend>
+          <label class="flex items-center gap-2 text-sm text-zinc-700"><input id="pw-upper" type="checkbox" checked class="accent-brand-700" /> Großbuchstaben</label>
+          <label class="flex items-center gap-2 text-sm text-zinc-700"><input id="pw-lower" type="checkbox" checked class="accent-brand-700" /> Kleinbuchstaben</label>
+          <label class="flex items-center gap-2 text-sm text-zinc-700"><input id="pw-digits" type="checkbox" checked class="accent-brand-700" /> Ziffern</label>
+          <label class="flex items-center gap-2 text-sm text-zinc-700"><input id="pw-symbols" type="checkbox" checked class="accent-brand-700" /> Sonderzeichen</label>
+        </fieldset>
+      </div>
+      <p id="pw-msg" class="mt-3 text-xs text-zinc-500" aria-live="polite">Generiert lokal in deinem Browser – nichts wird übertragen.</p>
+    </section>
+
+    <!-- Inhalt (SEO) -->
+    <section class="prose-werkbank mt-10 max-w-none">
+      <p>{gen.intro}</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold tracking-tight text-zinc-900">Häufige Fragen</h2>
+      <dl class="mt-4 space-y-4">
+        {gen.faq.map((f) => (
+          <div class="rounded-lg border border-zinc-200 bg-white p-4">
+            <dt class="font-semibold text-zinc-900">{f.q}</dt>
+            <dd class="mt-1 text-sm text-zinc-600">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {
+      relatedTools.length > 0 && (
+        <section class="mt-12 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-bold tracking-tight text-zinc-900">Passende Rechner</h2>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            {relatedTools.map((t) => (
+              <a href={`/rechner/${t.slug}/`} class="block rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md">
+                <span class="font-medium text-zinc-800">{t.shortTitle ?? t.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <script>
+    const root = document.querySelector('[data-gen]');
+    if (root) {
+      const out = document.getElementById('pw-out') as HTMLInputElement;
+      const lenEl = document.getElementById('pw-len') as HTMLInputElement;
+      const lenVal = document.getElementById('pw-len-val') as HTMLElement;
+      const upper = document.getElementById('pw-upper') as HTMLInputElement;
+      const lower = document.getElementById('pw-lower') as HTMLInputElement;
+      const digits = document.getElementById('pw-digits') as HTMLInputElement;
+      const symbols = document.getElementById('pw-symbols') as HTMLInputElement;
+      const msg = document.getElementById('pw-msg') as HTMLElement;
+      const sets = {
+        upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+        lower: 'abcdefghijklmnopqrstuvwxyz',
+        digits: '0123456789',
+        symbols: '!@#$%^&*()-_=+[]{};:,.?',
+      };
+      const generate = () => {
+        let pool = '';
+        if (upper.checked) pool += sets.upper;
+        if (lower.checked) pool += sets.lower;
+        if (digits.checked) pool += sets.digits;
+        if (symbols.checked) pool += sets.symbols;
+        const len = parseInt(lenEl.value, 10);
+        lenVal.textContent = String(len);
+        if (!pool) { out.value = ''; msg.textContent = 'Bitte mindestens einen Zeichentyp wählen.'; return; }
+        const rnd = new Uint32Array(len);
+        crypto.getRandomValues(rnd);
+        let pw = '';
+        for (let i = 0; i < len; i++) pw += pool[rnd[i] % pool.length];
+        out.value = pw;
+        msg.textContent = 'Generiert lokal in deinem Browser – nichts wird übertragen.';
+      };
+      document.getElementById('pw-gen')?.addEventListener('click', generate);
+      [lenEl, upper, lower, digits, symbols].forEach((el) => el.addEventListener('input', generate));
+      document.getElementById('pw-copy')?.addEventListener('click', async () => {
+        if (!out.value) return;
+        try { await navigator.clipboard.writeText(out.value); msg.textContent = 'Passwort kopiert.'; }
+        catch { out.select(); msg.textContent = 'Markiert – mit Strg/Cmd+C kopieren.'; }
+      });
+      generate();
+    }
+  </script>
+</BaseLayout>

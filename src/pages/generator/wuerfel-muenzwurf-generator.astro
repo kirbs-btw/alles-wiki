@@ -1,0 +1,203 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getGenerator } from '../../lib/generators';
+import { getCategory } from '../../lib/categories';
+import { getTool } from '../../lib/registry';
+import { generatorLd, breadcrumbLd, faqLd } from '../../lib/schema';
+
+const gen = getGenerator('wuerfel-muenzwurf-generator')!;
+const cat = getCategory(gen.category)!;
+const path = `/generator/${gen.slug}`;
+
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Generatoren', href: '/generator' },
+  { name: gen.title, href: path },
+];
+
+const relatedTools = (gen.related ?? [])
+  .map((slug) => getTool(slug))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const ld: object[] = [
+  generatorLd({ title: gen.title, description: gen.description, path }),
+  breadcrumbLd(crumbs.map((c) => ({ name: c.name, path: c.href }))),
+  faqLd(gen.faq),
+];
+---
+
+<BaseLayout title={gen.title} description={gen.description} path={path} jsonLd={ld}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="mt-4">
+      <p class="text-sm font-semibold text-brand-700">{cat.name} · Generator</p>
+      <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-zinc-900">{gen.title}</h1>
+      <p class="mt-2 text-lg text-zinc-600">{gen.description}</p>
+    </header>
+
+    <!-- Widget -->
+    <section class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm" data-gen>
+      <fieldset>
+        <legend class="sr-only">Modus auswählen</legend>
+        <div class="inline-flex rounded-lg border border-zinc-300 bg-zinc-50 p-1">
+          <label class="cursor-pointer">
+            <input id="wm-mode-dice" type="radio" name="wm-mode" value="dice" class="peer sr-only" checked />
+            <span class="block rounded-md px-4 py-2 text-sm font-semibold text-zinc-700 transition peer-checked:bg-brand-700 peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-brand-300">Würfel</span>
+          </label>
+          <label class="cursor-pointer">
+            <input id="wm-mode-coin" type="radio" name="wm-mode" value="coin" class="peer sr-only" />
+            <span class="block rounded-md px-4 py-2 text-sm font-semibold text-zinc-700 transition peer-checked:bg-brand-700 peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-brand-300">Münze</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Würfel-Einstellungen -->
+      <div id="wm-dice-controls" class="mt-6 grid gap-5 sm:grid-cols-2">
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-zinc-700">Anzahl Würfel</span>
+          <input id="wm-count" type="number" min="1" max="20" value="2" step="1" class="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300" />
+        </label>
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-zinc-700">Seiten pro Würfel</span>
+          <input id="wm-sides" type="number" min="2" max="100" value="6" step="1" class="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300" />
+        </label>
+      </div>
+
+      <div class="mt-6 flex gap-2">
+        <button id="wm-roll" type="button" class="shrink-0 rounded-lg bg-brand-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-600 focus-visible:ring-2 focus-visible:ring-brand-300">Würfeln</button>
+      </div>
+
+      <!-- Ergebnisanzeige -->
+      <div class="mt-6 rounded-lg border border-zinc-200 bg-zinc-50 p-6 text-center" aria-live="polite">
+        <div id="wm-result" class="text-5xl font-extrabold tracking-tight text-zinc-900">–</div>
+        <div id="wm-detail" class="mt-2 text-sm text-zinc-600"></div>
+      </div>
+
+      <p id="wm-msg" class="mt-3 text-xs text-zinc-500" aria-live="polite">Fairer Zufall – läuft komplett lokal in deinem Browser.</p>
+    </section>
+
+    <!-- Inhalt (SEO) -->
+    <section class="prose-werkbank mt-10 max-w-none">
+      <p>{gen.intro}</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold tracking-tight text-zinc-900">Häufige Fragen</h2>
+      <dl class="mt-4 space-y-4">
+        {gen.faq.map((f) => (
+          <div class="rounded-lg border border-zinc-200 bg-white p-4">
+            <dt class="font-semibold text-zinc-900">{f.q}</dt>
+            <dd class="mt-1 text-sm text-zinc-600">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {
+      relatedTools.length > 0 && (
+        <section class="mt-12 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-bold tracking-tight text-zinc-900">Passende Rechner</h2>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            {relatedTools.map((t) => (
+              <a href={`/rechner/${t.slug}/`} class="block rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md">
+                <span class="font-medium text-zinc-800">{t.shortTitle ?? t.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <script>
+    const root = document.querySelector('[data-gen]');
+    if (root) {
+      const modeDice = document.getElementById('wm-mode-dice') as HTMLInputElement | null;
+      const modeCoin = document.getElementById('wm-mode-coin') as HTMLInputElement | null;
+      const diceControls = document.getElementById('wm-dice-controls') as HTMLElement | null;
+      const countEl = document.getElementById('wm-count') as HTMLInputElement | null;
+      const sidesEl = document.getElementById('wm-sides') as HTMLInputElement | null;
+      const rollBtn = document.getElementById('wm-roll') as HTMLButtonElement | null;
+      const resultEl = document.getElementById('wm-result') as HTMLElement | null;
+      const detailEl = document.getElementById('wm-detail') as HTMLElement | null;
+      const msg = document.getElementById('wm-msg') as HTMLElement | null;
+
+      if (modeDice && modeCoin && diceControls && countEl && sidesEl && rollBtn && resultEl && detailEl && msg) {
+        // Sichere Zufallszahl im Bereich [0, max) ohne Modulo-Bias.
+        const randInt = (max: number): number => {
+          if (max <= 0) return 0;
+          const limit = Math.floor(0xffffffff / max) * max;
+          const buf = new Uint32Array(1);
+          let x = 0;
+          do {
+            crypto.getRandomValues(buf);
+            x = buf[0];
+          } while (x >= limit);
+          return x % max;
+        };
+
+        const clamp = (v: number, min: number, max: number): number =>
+          Math.min(max, Math.max(min, v));
+
+        const isCoin = (): boolean => modeCoin.checked;
+
+        const syncMode = () => {
+          if (isCoin()) {
+            diceControls.classList.add('hidden');
+            rollBtn.textContent = 'Werfen';
+          } else {
+            diceControls.classList.remove('hidden');
+            rollBtn.textContent = 'Würfeln';
+          }
+          resultEl.textContent = '–';
+          detailEl.textContent = '';
+          msg.textContent = 'Fairer Zufall – läuft komplett lokal in deinem Browser.';
+        };
+
+        const rollDice = () => {
+          const count = clamp(Math.floor(Number(countEl.value)) || 1, 1, 20);
+          const sides = clamp(Math.floor(Number(sidesEl.value)) || 6, 2, 100);
+          countEl.value = String(count);
+          sidesEl.value = String(sides);
+
+          const rolls: number[] = [];
+          let sum = 0;
+          for (let i = 0; i < count; i++) {
+            const v = randInt(sides) + 1;
+            rolls.push(v);
+            sum += v;
+          }
+
+          if (count === 1) {
+            resultEl.textContent = String(rolls[0]);
+            detailEl.textContent = `1 Würfel mit ${sides} Seiten`;
+          } else {
+            resultEl.textContent = String(sum);
+            detailEl.textContent = `Einzelwürfe: ${rolls.join(' + ')} = ${sum} (${count}× W${sides})`;
+          }
+          msg.textContent = 'Fairer Zufall – läuft komplett lokal in deinem Browser.';
+        };
+
+        const flipCoin = () => {
+          const heads = randInt(2) === 0;
+          resultEl.textContent = heads ? 'Kopf' : 'Zahl';
+          detailEl.textContent = 'Münzwurf';
+          msg.textContent = 'Fairer Zufall – läuft komplett lokal in deinem Browser.';
+        };
+
+        const run = () => {
+          if (isCoin()) flipCoin();
+          else rollDice();
+        };
+
+        modeDice.addEventListener('change', syncMode);
+        modeCoin.addEventListener('change', syncMode);
+        rollBtn.addEventListener('click', run);
+
+        syncMode();
+      }
+    }
+  </script>
+</BaseLayout>

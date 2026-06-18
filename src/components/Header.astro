@@ -22,6 +22,24 @@ import { NAV_MAIN } from '../config/site';
         ))
       }
       <a
+        href="/wissen"
+        class="rounded-md px-3 py-2 text-sm font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
+      >
+        Wissen
+      </a>
+      <a
+        href="/how-to"
+        class="rounded-md px-3 py-2 text-sm font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
+      >
+        How-to
+      </a>
+      <a
+        href="/generator"
+        class="rounded-md px-3 py-2 text-sm font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
+      >
+        Generatoren
+      </a>
+      <a
         href="/ueber-uns"
         class="rounded-md px-3 py-2 text-sm font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
       >
@@ -59,7 +77,7 @@ import { NAV_MAIN } from '../config/site';
           Alle Rechner
         </a>
         {
-          NAV_MAIN.filter((n) => n.href === '/ueber-uns').map((n) => (
+          NAV_MAIN.filter((n) => n.href === '/wissen' || n.href === '/how-to' || n.href === '/generator' || n.href === '/ueber-uns').map((n) => (
             <a href={n.href} class="block rounded-md px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-100">
               {n.label}
             </a>

@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { CATEGORIES } from '../../lib/categories';
+
+const entries = await getCollection('howto', ({ data }) => !data.draft);
+const guides = entries.sort((a, b) =>
+  a.data.title.localeCompare(b.data.title, 'de'),
+);
+
+const path = '/how-to';
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'How-to', href: path },
+];
+---
+
+<BaseLayout
+  title="How-to & Anleitungen"
+  description={`Schritt für Schritt erklärt: ${guides.length} How-to-Anleitungen zu Finanzen, Gesundheit, Auto, Wohnen, Recht, Familie, Beruf, Energie und mehr – jeweils mit passenden Rechnern.`}
+  path={path}
+>
+  <div class="mx-auto max-w-6xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+    <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-zinc-900">
+      How-to &amp; Anleitungen
+    </h1>
+    <p class="mt-2 max-w-2xl text-zinc-600">
+      Hier zeigen wir dir Schritt für Schritt, wie du typische Aufgaben aus dem
+      Alltag erledigst – verständlich, ohne Fachchinesisch und mit klaren
+      Handlungsschritten. Jede Anleitung verlinkt auf die passenden Rechner,
+      damit du direkt nachrechnen kannst.
+    </p>
+
+    {
+      guides.length === 0 ? (
+        <p class="mt-10 text-zinc-500">Noch keine Anleitungen veröffentlicht.</p>
+      ) : (
+        <div class="mt-8 space-y-10">
+          {CATEGORIES.map((c) => {
+            const list = guides.filter((g) => g.data.category === c.slug);
+            return list.length > 0 ? (
+              <section id={c.slug}>
+                <h2 class="text-xl font-bold tracking-tight text-zinc-900">
+                  {c.name}{' '}
+                  <span class="text-sm font-normal text-zinc-500">({list.length})</span>
+                </h2>
+                <div class="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                  {list.map((g) => (
+                    <a
+                      href={`/how-to/${g.id}/`}
+                      class="block rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md"
+                    >
+                      <span class="block font-medium text-zinc-800">{g.data.title}</span>
+                      <span class="mt-1 block text-zinc-500">{g.data.description}</span>
+                    </a>
+                  ))}
+                </div>
+              </section>
+            ) : null;
+          })}
+        </div>
+      )
+    }
+  </div>
+</BaseLayout>

@@ -1,0 +1,210 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getGenerator } from '../../lib/generators';
+import { getCategory } from '../../lib/categories';
+import { getTool } from '../../lib/registry';
+import { generatorLd, breadcrumbLd, faqLd } from '../../lib/schema';
+
+const gen = getGenerator('einmaleins-generator')!;
+const cat = getCategory(gen.category)!;
+const path = `/generator/${gen.slug}`;
+
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Generatoren', href: '/generator' },
+  { name: gen.title, href: path },
+];
+
+const relatedTools = (gen.related ?? [])
+  .map((slug) => getTool(slug))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const ld: object[] = [
+  generatorLd({ title: gen.title, description: gen.description, path }),
+  breadcrumbLd(crumbs.map((c) => ({ name: c.name, path: c.href }))),
+  faqLd(gen.faq),
+];
+
+const reihen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+---
+
+<BaseLayout title={gen.title} description={gen.description} path={path} jsonLd={ld}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="mt-4">
+      <p class="text-sm font-semibold text-brand-700">{cat.name} · Generator</p>
+      <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-zinc-900">{gen.title}</h1>
+      <p class="mt-2 text-lg text-zinc-600">{gen.description}</p>
+    </header>
+
+    <!-- Widget -->
+    <section class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm print:border-0 print:p-0 print:shadow-none" data-gen>
+      <div class="grid gap-5 sm:grid-cols-2 print:hidden">
+        <fieldset>
+          <legend class="mb-2 text-sm font-medium text-zinc-700">Reihen</legend>
+          <label class="mb-2 flex items-center gap-2 text-sm font-semibold text-zinc-800">
+            <input id="ee-all" type="checkbox" class="accent-brand-700" /> Alle Reihen
+          </label>
+          <div class="grid grid-cols-3 gap-2 sm:grid-cols-5">
+            {reihen.map((r) => (
+              <label class="flex items-center gap-2 text-sm text-zinc-700">
+                <input
+                  type="checkbox"
+                  class="accent-brand-700"
+                  data-ee-reihe
+                  value={r}
+                  checked={r === 2 || r === 5 || r === 10}
+                />
+                {r}er
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <div class="flex flex-col gap-4">
+          <label class="block">
+            <span class="mb-1 block text-sm font-medium text-zinc-700">Anzahl Aufgaben</span>
+            <input
+              id="ee-count"
+              type="number"
+              min="1"
+              max="100"
+              value="20"
+              class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+            />
+          </label>
+          <label class="flex items-center gap-2 text-sm text-zinc-700">
+            <input id="ee-solutions" type="checkbox" class="accent-brand-700" /> Lösungen anzeigen
+          </label>
+          <div class="flex gap-2">
+            <button id="ee-gen" type="button" class="shrink-0 rounded-lg bg-brand-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-600 focus-visible:ring-2 focus-visible:ring-brand-300">Neu generieren</button>
+            <button id="ee-print" type="button" class="shrink-0 rounded-lg border border-zinc-300 px-4 py-2.5 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-brand-300">Drucken</button>
+          </div>
+        </div>
+      </div>
+
+      <p id="ee-msg" class="mt-3 text-xs text-zinc-500 print:hidden" aria-live="polite">Wähle die Reihen und klicke auf „Neu generieren".</p>
+
+      <div id="ee-sheet" class="mt-6 print:mt-0" aria-live="polite">
+        <h2 class="hidden text-lg font-bold text-zinc-900 print:block">Einmaleins-Arbeitsblatt</h2>
+        <ol id="ee-out" class="mt-2 grid list-decimal grid-cols-1 gap-x-8 gap-y-3 pl-6 text-zinc-900 sm:grid-cols-2"></ol>
+      </div>
+    </section>
+
+    <!-- Inhalt (SEO) -->
+    <section class="prose-werkbank mt-10 max-w-none print:hidden">
+      <p>{gen.intro}</p>
+    </section>
+
+    <section class="mt-10 print:hidden">
+      <h2 class="text-xl font-bold tracking-tight text-zinc-900">Häufige Fragen</h2>
+      <dl class="mt-4 space-y-4">
+        {gen.faq.map((f) => (
+          <div class="rounded-lg border border-zinc-200 bg-white p-4">
+            <dt class="font-semibold text-zinc-900">{f.q}</dt>
+            <dd class="mt-1 text-sm text-zinc-600">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {
+      relatedTools.length > 0 && (
+        <section class="mt-12 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm print:hidden">
+          <h2 class="text-xl font-bold tracking-tight text-zinc-900">Passende Rechner</h2>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            {relatedTools.map((t) => (
+              <a href={`/rechner/${t.slug}/`} class="block rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md">
+                <span class="font-medium text-zinc-800">{t.shortTitle ?? t.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <script>
+    const root = document.querySelector('[data-gen]');
+    if (root) {
+      const allEl = document.getElementById('ee-all') as HTMLInputElement | null;
+      const reiheEls = Array.from(
+        document.querySelectorAll<HTMLInputElement>('input[data-ee-reihe]'),
+      );
+      const countEl = document.getElementById('ee-count') as HTMLInputElement | null;
+      const solutionsEl = document.getElementById('ee-solutions') as HTMLInputElement | null;
+      const out = document.getElementById('ee-out') as HTMLOListElement | null;
+      const msg = document.getElementById('ee-msg') as HTMLElement | null;
+      const genBtn = document.getElementById('ee-gen');
+      const printBtn = document.getElementById('ee-print');
+
+      if (countEl && solutionsEl && out && msg) {
+        const selectedReihen = (): number[] =>
+          reiheEls.filter((el) => el.checked).map((el) => parseInt(el.value, 10));
+
+        const applySolutionVisibility = () => {
+          out.classList.toggle('ee-show-solutions', solutionsEl.checked);
+        };
+
+        const generate = () => {
+          const reihen = selectedReihen();
+          if (reihen.length === 0) {
+            out.innerHTML = '';
+            msg.textContent = 'Bitte mindestens eine Reihe auswählen.';
+            return;
+          }
+          let count = parseInt(countEl.value, 10);
+          if (!Number.isFinite(count) || count < 1) count = 1;
+          if (count > 100) count = 100;
+          countEl.value = String(count);
+
+          const items: string[] = [];
+          for (let i = 0; i < count; i++) {
+            const a = reihen[Math.floor(Math.random() * reihen.length)];
+            const b = Math.floor(Math.random() * 10) + 1;
+            const result = a * b;
+            items.push(
+              `<li class="break-inside-avoid font-mono text-base">${a} × ${b} = <span class="ee-blank inline-block min-w-[3rem] border-b border-zinc-400 text-center align-baseline"></span><span class="ee-solution font-semibold text-brand-700">${result}</span></li>`,
+            );
+          }
+          out.innerHTML = items.join('');
+          applySolutionVisibility();
+          msg.textContent = `${count} Aufgabe${count === 1 ? '' : 'n'} aus den Reihen ${reihen.join(', ')} erstellt.`;
+        };
+
+        if (allEl) {
+          allEl.addEventListener('change', () => {
+            reiheEls.forEach((el) => {
+              el.checked = allEl.checked;
+            });
+          });
+        }
+        reiheEls.forEach((el) =>
+          el.addEventListener('change', () => {
+            if (allEl) allEl.checked = reiheEls.every((r) => r.checked);
+          }),
+        );
+        solutionsEl.addEventListener('change', applySolutionVisibility);
+        genBtn?.addEventListener('click', generate);
+        printBtn?.addEventListener('click', () => window.print());
+
+        if (allEl) allEl.checked = reiheEls.every((r) => r.checked);
+        generate();
+      }
+    }
+  </script>
+
+  <style>
+    #ee-out .ee-solution {
+      display: none;
+    }
+    #ee-out.ee-show-solutions .ee-blank {
+      display: none;
+    }
+    #ee-out.ee-show-solutions .ee-solution {
+      display: inline;
+    }
+  </style>
+</BaseLayout>

@@ -25,7 +25,7 @@ function readValues(form: HTMLFormElement, tool: Tool): InputValues {
       const v = parseFloat(el.value.replace(',', '.'));
       values[input.id] = Number.isFinite(v) ? v : input.default;
     } else {
-      values[input.id] = el.value;
+      values[input.id] = el.value !== '' ? el.value : input.default;
     }
   }
   return values;
@@ -60,6 +60,14 @@ async function initRoot(root: HTMLElement): Promise<void> {
   const form = root.querySelector<HTMLFormElement>('[data-calc-form]');
   const out = root.querySelector<HTMLElement>('[data-results]');
   if (!form || !out) return;
+
+  // Datums-Felder mit today-Flag initial auf das heutige Datum setzen (nur Client, nie in compute).
+  for (const input of tool.inputs) {
+    if (input.type === 'date' && input.today) {
+      const el = form.querySelector<HTMLInputElement>(`[data-input="${input.id}"]`);
+      if (el && !el.value) el.value = new Date().toISOString().slice(0, 10);
+    }
+  }
 
   const update = (): void => {
     try {

@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { GENERATORS } from '../../lib/generators';
+import { getCategory } from '../../lib/categories';
+import { breadcrumbLd } from '../../lib/schema';
+
+const path = '/generator';
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Generatoren', href: path },
+];
+const ld = [breadcrumbLd(crumbs.map((c) => ({ name: c.name, path: c.href })))];
+---
+
+<BaseLayout
+  title="Generatoren"
+  description="Interaktive Generatoren von AllesWiki: Passwort, QR-Code, Zufallszahlen, Tilgungsplan, Einmaleins-Arbeitsblätter und mehr – kostenlos, ohne Anmeldung, direkt im Browser."
+  path={path}
+  jsonLd={ld}
+>
+  <div class="mx-auto max-w-6xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+    <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-zinc-900">Generatoren</h1>
+    <p class="mt-2 max-w-2xl text-zinc-600">
+      {GENERATORS.length} interaktive Tools – alles läuft direkt in deinem Browser, kostenlos und ohne Anmeldung.
+    </p>
+
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        GENERATORS.map((g) => (
+          <a
+            href={`/generator/${g.slug}/`}
+            class="group flex flex-col rounded-xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md"
+          >
+            <span class="text-xs font-semibold text-brand-700">{getCategory(g.category)?.name}</span>
+            <h2 class="mt-1 text-lg font-bold tracking-tight text-zinc-900 group-hover:text-brand-700">
+              {g.title}
+            </h2>
+            <p class="mt-1 text-sm text-zinc-600">{g.description}</p>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>

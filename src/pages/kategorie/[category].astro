@@ -5,6 +5,8 @@ import ToolCard from '../../components/ToolCard.astro';
 import { CATEGORIES } from '../../lib/categories';
 import { toolsByCategory } from '../../lib/registry';
 import { breadcrumbLd } from '../../lib/schema';
+import { getCollection } from 'astro:content';
+import { GENERATORS } from '../../lib/generators';
 
 export function getStaticPaths() {
   return CATEGORIES.map((c) => ({ params: { category: c.slug }, props: { category: c } }));
@@ -12,6 +14,9 @@ export function getStaticPaths() {
 
 const { category } = Astro.props;
 const tools = toolsByCategory(category.slug);
+const wissen = await getCollection('wissen', ({ data }) => !data.draft && data.category === category.slug);
+const howto = await getCollection('howto', ({ data }) => !data.draft && data.category === category.slug);
+const gens = GENERATORS.filter((g) => g.category === category.slug);
 const path = `/kategorie/${category.slug}`;
 const crumbs = [
   { name: 'Start', href: '/' },
@@ -43,6 +48,65 @@ const crumbs = [
         <p class="mt-8 rounded-lg border border-dashed border-zinc-300 p-8 text-center text-zinc-500">
           Hier entstehen gerade die ersten Rechner – schau bald wieder vorbei.
         </p>
+      )
+    }
+
+    {
+      gens.length > 0 && (
+        <section class="mt-14">
+          <h2 class="text-2xl font-bold tracking-tight text-zinc-900">Generatoren</h2>
+          <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {gens.map((g) => (
+              <a
+                href={`/generator/${g.slug}/`}
+                class="block rounded-xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md"
+              >
+                <span class="font-bold text-zinc-900">{g.title}</span>
+                <p class="mt-1 text-sm text-zinc-600">{g.description}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      wissen.length > 0 && (
+        <section class="mt-14">
+          <h2 class="text-2xl font-bold tracking-tight text-zinc-900">Wissen zu {category.name}</h2>
+          <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+            {wissen.map((e) => (
+              <li>
+                <a
+                  href={`/wissen/${e.id}/`}
+                  class="block rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm transition hover:border-brand-300 hover:shadow-md"
+                >
+                  <span class="font-medium text-zinc-800">{e.data.title}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      howto.length > 0 && (
+        <section class="mt-14">
+          <h2 class="text-2xl font-bold tracking-tight text-zinc-900">Anleitungen zu {category.name}</h2>
+          <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+            {howto.map((e) => (
+              <li>
+                <a
+                  href={`/how-to/${e.id}/`}
+                  class="block rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm transition hover:border-brand-300 hover:shadow-md"
+                >
+                  <span class="font-medium text-zinc-800">{e.data.title}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
       )
     }
   </div>

@@ -18,6 +18,9 @@ export const SITE = {
 
 export const NAV_MAIN = [
   { label: 'Alle Rechner', href: '/rechner' },
+  { label: 'Wissen', href: '/wissen' },
+  { label: 'How-to', href: '/how-to' },
+  { label: 'Generatoren', href: '/generator' },
   { label: 'Kategorien', href: '/#kategorien' },
   { label: 'Über uns', href: '/ueber-uns' },
 ] as const;
