@@ -83,7 +83,7 @@ export const tool: Tool = {
     const menge = mengeFaktor > 0 ? mengeByte / mengeFaktor : 0;
     return [
       { label: 'Durchsatz in MB/s', value: mbProSek, unit: 'MB/s', digits: 3, primary: true },
-      { label: 'Übertragene Datenmenge', value: menge, digits: 3, help: 'Über die gewählte Dauer.' },
+      { label: 'Übertragene Datenmenge', value: menge, unit: ({ mb: 'MB', gb: 'GB', tb: 'TB' }[String(v.mengeEinheit)] ?? 'GB'), digits: 3, help: 'Über die gewählte Dauer.' },
       { label: 'Datenmenge in GB', value: mengeByte / 1e9, unit: 'GB', digits: 3 },
       { label: 'Datenrate in Byte/s', value: byteProSek, unit: 'B/s', digits: 0 },
     ];

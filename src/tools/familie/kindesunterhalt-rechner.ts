@@ -2,14 +2,14 @@ import type { Tool } from '../../lib/types';
 import { num } from '../../lib/types';
 
 // Düsseldorfer Tabelle 2026 (Näherung), erste Einkommensgruppe (bis 2.100 € netto).
-// Zahlbeträge nach Abzug des hälftigen Kindergeldes (255 €/2 = 127,50 €) bei
+// Zahlbeträge nach Abzug des hälftigen Kindergeldes (259 €/2 = 129,50 €) bei
 // minderjährigen Kindern. Werte als nachvollziehbare Näherung – maßgeblich ist die
 // jeweils gültige amtliche Tabelle.
 const ALTERSSTUFE: { value: string; label: string; bedarf: number }[] = [
-  { value: 'st1', label: '0 bis 5 Jahre', bedarf: 482 },
-  { value: 'st2', label: '6 bis 11 Jahre', bedarf: 554 },
-  { value: 'st3', label: '12 bis 17 Jahre', bedarf: 649 },
-  { value: 'st4', label: 'ab 18 Jahre', bedarf: 693 },
+  { value: 'st1', label: '0 bis 5 Jahre', bedarf: 486 },
+  { value: 'st2', label: '6 bis 11 Jahre', bedarf: 558 },
+  { value: 'st3', label: '12 bis 17 Jahre', bedarf: 653 },
+  { value: 'st4', label: 'ab 18 Jahre', bedarf: 698 },
 ];
 
 // Prozentaufschlag der Düsseldorfer Tabelle je Einkommensgruppe (Stufe 1 = 100 %).
@@ -21,7 +21,7 @@ const EINKOMMENSGRUPPE: { value: string; label: string; faktor: number }[] = [
   { value: 'g5', label: '3.301 – 3.700 € (Stufe 5, +20 %)', faktor: 1.2 },
 ];
 
-const KINDERGELD_HALB = 127.5; // 255 € / 2, Stand 2026
+const KINDERGELD_HALB = 129.5; // 259 € / 2, Stand 2026
 
 export const tool: Tool = {
   slug: 'kindesunterhalt-rechner',
@@ -29,7 +29,7 @@ export const tool: Tool = {
   title: 'Kindesunterhalt nach Düsseldorfer Tabelle',
   shortTitle: 'Kindesunterhalt',
   description:
-    'Schätze den Kindesunterhalt nach der Düsseldorfer Tabelle: Bedarf nach Alter und Einkommensgruppe, Zahlbetrag nach Abzug des halben Kindergeldes (Stand 2026).',
+    'Schätze den Kindesunterhalt nach der Düsseldorfer Tabelle 2026: Bedarf nach Alter und Einkommensgruppe, Zahlbetrag nach Abzug des halben Kindergeldes (129,50 €).',
   keywords: [
     'kindesunterhalt rechner',
     'düsseldorfer tabelle 2026',
@@ -40,9 +40,9 @@ export const tool: Tool = {
     'unterhalt tabelle',
   ],
   intro:
-    'Der Kindesunterhalt richtet sich nach der Düsseldorfer Tabelle. Maßgeblich sind das bereinigte Nettoeinkommen des zahlenden Elternteils und das Alter des Kindes. Vom Tabellenbedarf wird bei minderjährigen Kindern das halbe Kindergeld (127,50 € bei 255 €) abgezogen. Dieser Rechner liefert eine nachvollziehbare Näherung (Stand 2026) – verbindlich ist die jeweils aktuelle amtliche Tabelle.',
+    'Der Kindesunterhalt richtet sich nach der Düsseldorfer Tabelle. Maßgeblich sind das bereinigte Nettoeinkommen des zahlenden Elternteils und das Alter des Kindes. Vom Tabellenbedarf wird bei minderjährigen Kindern das halbe Kindergeld (129,50 € bei 259 €) abgezogen. Dieser Rechner liefert eine nachvollziehbare Näherung (Stand 2026) – verbindlich ist die jeweils aktuelle amtliche Tabelle.',
   formula:
-    'Zahlbetrag = Tabellenbedarf(Alter) × Einkommensfaktor − halbes Kindergeld (127,50 €)',
+    'Zahlbetrag = Tabellenbedarf(Alter) × Einkommensfaktor − halbes Kindergeld (129,50 €)',
   inputs: [
     {
       type: 'select', id: 'stufe', label: 'Altersstufe des Kindes', default: 'st2',
@@ -75,7 +75,7 @@ export const tool: Tool = {
   ],
   faq: [
     { q: 'Was ist die Düsseldorfer Tabelle?', a: 'Eine bundesweit anerkannte Leitlinie der Gerichte zur Höhe des Kindesunterhalts. Sie staffelt den Bedarf nach dem Einkommen des Unterhaltspflichtigen und dem Alter des Kindes.' },
-    { q: 'Warum wird Kindergeld abgezogen?', a: 'Bei minderjährigen Kindern wird die Hälfte des Kindergeldes (Stand 2026: 127,50 €) auf den Bedarf angerechnet. Bei volljährigen Kindern in der Regel das volle Kindergeld.' },
+    { q: 'Warum wird Kindergeld abgezogen?', a: 'Bei minderjährigen Kindern wird die Hälfte des Kindergeldes (Stand 2026: 129,50 €) auf den Bedarf angerechnet. Bei volljährigen Kindern in der Regel das volle Kindergeld.' },
     { q: 'Was bedeutet bereinigtes Nettoeinkommen?', a: 'Das Nettoeinkommen abzüglich berücksichtigungsfähiger Posten wie berufsbedingter Aufwendungen oder bestimmter Schulden. Der genaue Betrag wird im Einzelfall ermittelt.' },
     { q: 'Wie genau ist dieser Rechner?', a: 'Er bildet die ersten Einkommensgruppen als Näherung ab (Stand 2026). Selbstbehalt, Mangelfälle, weitere Unterhaltsberechtigte und Sonderbedarf sind nicht berücksichtigt. Verbindlich ist die amtliche Tabelle.' },
     { q: 'Gibt es einen Mindestunterhalt?', a: 'Ja. Die unterste Stufe der Düsseldorfer Tabelle entspricht dem gesetzlichen Mindestunterhalt. Darunter darf der Unterhalt für minderjährige Kinder grundsätzlich nicht fallen.' },
@@ -85,13 +85,13 @@ export const tool: Tool = {
     {
       values: { stufe: 'st2', gruppe: 'g1' },
       expect: [
-        { label: 'Tabellenbedarf', value: 554, tolerance: 0.01 },
-        { label: 'Zahlbetrag pro Monat', value: 426.5, tolerance: 0.01 },
+        { label: 'Tabellenbedarf', value: 558, tolerance: 0.01 },
+        { label: 'Zahlbetrag pro Monat', value: 428.5, tolerance: 0.01 },
       ],
     },
     {
       values: { stufe: 'st1', gruppe: 'g3' },
-      expect: [{ label: 'Tabellenbedarf', value: 530.2, tolerance: 0.01 }],
+      expect: [{ label: 'Tabellenbedarf', value: 534.6, tolerance: 0.01 }],
     },
   ],
   updated: '2026-06-18',

@@ -24,7 +24,7 @@ export const tool: Tool = {
   inputs: [
     { type: 'number', id: 'einkommen1', label: 'Nettoeinkommen 1', unit: '€/Monat', default: 2500, min: 0, step: 50 },
     { type: 'number', id: 'einkommen2', label: 'Nettoeinkommen 2', unit: '€/Monat', default: 1500, min: 0, step: 50 },
-    { type: 'number', id: 'kindergeld', label: 'Kindergeld & Zuschüsse', unit: '€/Monat', default: 255, min: 0, step: 5 },
+    { type: 'number', id: 'kindergeld', label: 'Kindergeld & Zuschüsse', unit: '€/Monat', default: 259, min: 0, step: 5 },
     { type: 'number', id: 'wohnen', label: 'Miete/Wohnen inkl. Nebenkosten', unit: '€/Monat', default: 1200, min: 0, step: 50 },
     { type: 'number', id: 'fixkosten', label: 'Weitere Fixkosten (Versich., Abos)', unit: '€/Monat', default: 500, min: 0, step: 25 },
     { type: 'number', id: 'lebenshaltung', label: 'Lebenshaltung (Essen, Mobilität)', unit: '€/Monat', default: 1300, min: 0, step: 25 },

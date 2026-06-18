@@ -42,6 +42,7 @@ export const tool: Tool = {
     { q: 'Wird der Geburtstag mitgezählt?', a: 'Das Alter in Jahren erhöht sich erst am Geburtstag selbst. Bis dahin zählt das vorherige Lebensjahr.' },
     { q: 'Sind Schaltjahre berücksichtigt?', a: 'Ja. Die Gesamttage werden kalendergenau inklusive aller Schalttage berechnet.' },
   ],
+  related: ['tage-zwischen-daten-rechner', 'tage-bis-rechner', 'wochentag-rechner'],
   updated: '2026-06-18',
   examples: [
     {

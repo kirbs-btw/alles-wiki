@@ -21,7 +21,7 @@ export const tool: Tool = {
     'Provision brutto = Kaufpreis × Satz/100 × 1,19; Käuferanteil = Provision × Aufteilung',
   inputs: [
     { type: 'number', id: 'kaufpreis', label: 'Kaufpreis', unit: '€', default: 350000, min: 0, step: 1000 },
-    { type: 'number', id: 'satz', label: 'Provisionssatz (netto, je Partei)', unit: '%', default: 3.57, min: 0, max: 10, step: 0.01, help: 'Üblich sind 3,57 % netto bzw. 3,57 % zzgl. MwSt je Seite. Hier als Nettosatz eintragen.' },
+    { type: 'number', id: 'satz', label: 'Provisionssatz (netto, je Partei)', unit: '%', default: 3.0, min: 0, max: 10, step: 0.01, help: 'Marktüblich sind 3,0 % netto je Seite (entspricht 3,57 % brutto inkl. 19 % MwSt). Hier den Nettosatz eintragen; die MwSt wird automatisch ergänzt.' },
     {
       type: 'select', id: 'aufteilung', label: 'Aufteilung der Provision', default: 'haelfte',
       options: [
@@ -46,15 +46,15 @@ export const tool: Tool = {
     ];
   },
   intro:
-    'Beim Kauf einer Immobilie fällt häufig eine Maklerprovision (Courtage) an, die auf den Kaufpreis berechnet wird und der Mehrwertsteuer unterliegt. Seit Dezember 2020 gilt beim Kauf von Wohnungen und Einfamilienhäusern das Halbteilungsprinzip: Wer den Makler beauftragt, muss mindestens die Hälfte der Provision selbst tragen. Übliche Sätze liegen bei rund 3,57 % netto je Seite.',
+    'Beim Kauf einer Immobilie fällt häufig eine Maklerprovision (Courtage) an, die auf den Kaufpreis berechnet wird und der Mehrwertsteuer unterliegt. Seit Dezember 2020 gilt beim Kauf von Wohnungen und Einfamilienhäusern das Halbteilungsprinzip: Wer den Makler beauftragt, muss mindestens die Hälfte der Provision selbst tragen. Übliche Sätze liegen bei rund 3,0 % netto je Seite (3,57 % brutto), zusammen also 6,0 % netto bzw. 7,14 % brutto.',
   howto: [
     'Kaufpreis der Immobilie eintragen.',
-    'Provisionssatz netto je Partei angeben (oft 3,57 %).',
+    'Provisionssatz netto je Partei angeben (oft 3,0 %, entspricht 3,57 % brutto).',
     'Aufteilung wählen: hälftig geteilt oder Käufer trägt alles.',
     'Provisionsanteile inklusive Mehrwertsteuer ablesen.',
   ],
   faq: [
-    { q: 'Wie hoch ist die übliche Maklerprovision?', a: 'Marktüblich sind je nach Region rund 3,57 % des Kaufpreises netto je Partei (zzgl. MwSt entspricht das etwa 4,25 % brutto je Seite, zusammen also rund 7,14 % netto). Die Höhe ist jedoch frei verhandelbar.' },
+    { q: 'Wie hoch ist die übliche Maklerprovision?', a: 'Marktüblich sind je nach Region rund 3,0 % des Kaufpreises netto je Partei, also 3,57 % brutto inkl. 19 % MwSt. Zusammen ergibt das für Käufer und Verkäufer rund 6,0 % netto bzw. 7,14 % brutto. Die Höhe ist jedoch frei verhandelbar.' },
     { q: 'Was bedeutet das Halbteilungsprinzip?', a: 'Beim Kauf von Wohnungen und Einfamilienhäusern muss die Partei, die den Makler beauftragt hat, seit Ende 2020 mindestens die Hälfte der Provision tragen. Der Käufer kann höchstens den gleichen Anteil wie der Verkäufer aufgebracht bekommen.' },
     { q: 'Ist auf die Provision Mehrwertsteuer fällig?', a: 'Ja, die Maklercourtage ist eine Dienstleistung und unterliegt dem Regelsatz von 19 % Umsatzsteuer. Der Rechner addiert die Mehrwertsteuer automatisch auf den Nettosatz.' },
     { q: 'Wann wird die Provision fällig?', a: 'Die Provision wird in der Regel fällig, wenn ein wirksamer Kaufvertrag durch die Maklertätigkeit zustande gekommen ist (notarielle Beurkundung). Die genauen Bedingungen stehen im Maklervertrag.' },
@@ -63,10 +63,10 @@ export const tool: Tool = {
   updated: '2026-06-18',
   examples: [
     {
-      values: { kaufpreis: 350000, satz: 3.57, aufteilung: 'haelfte' },
+      values: { kaufpreis: 350000, satz: 3.0, aufteilung: 'haelfte' },
       expect: [
-        { label: 'Provision gesamt (brutto)', value: 29738.1, tolerance: 1 },
-        { label: 'Provision Käufer (brutto)', value: 14869.05, tolerance: 1 },
+        { label: 'Provision gesamt (brutto)', value: 24990, tolerance: 1 },
+        { label: 'Provision Käufer (brutto)', value: 12495, tolerance: 1 },
       ],
     },
   ],

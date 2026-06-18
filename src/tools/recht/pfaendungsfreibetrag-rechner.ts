@@ -44,7 +44,7 @@ export const tool: Tool = {
     ];
   },
   intro:
-    'Bei einer Lohnpfändung bleibt ein Teil des Einkommens unpfändbar, damit der Existenzminimum gesichert ist (§ 850c ZPO). Der Freibetrag steigt mit der Zahl der unterhaltsberechtigten Personen. Die genauen Beträge legt die amtliche Pfändungstabelle fest, die jährlich zum 1. Juli angepasst wird. Dieser Rechner liefert eine vereinfachte Näherung (Stand 2026) und ersetzt nicht den Blick in die aktuelle Tabelle.',
+    'Bei einer Lohnpfändung bleibt ein Teil des Einkommens unpfändbar, damit das Existenzminimum gesichert ist (§ 850c ZPO). Der Freibetrag steigt mit der Zahl der unterhaltsberechtigten Personen. Die genauen Beträge legt die amtliche Pfändungstabelle fest, die jährlich zum 1. Juli angepasst wird. Dieser Rechner liefert eine vereinfachte Näherung (Stand 2026) und ersetzt nicht den Blick in die aktuelle Tabelle.',
   howto: [
     'Bereinigtes monatliches Nettoeinkommen eingeben.',
     'Anzahl der Personen angeben, denen du Unterhalt schuldest.',

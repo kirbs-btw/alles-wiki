@@ -41,7 +41,7 @@ export const tool: Tool = {
     const restjahre = verjaehrungsjahr - aktuellesJahr;
     const verjaehrt = aktuellesJahr > verjaehrungsjahr ? 1 : 0;
     return [
-      { label: 'Verjährung tritt ein Ende', value: verjaehrungsjahr, digits: 0, primary: true, help: istRegel ? 'am 31.12. dieses Jahres' : 'orientierend am Jahresende' },
+      { label: 'Jahr des Verjährungseintritts', value: verjaehrungsjahr, digits: 0, primary: true, help: istRegel ? 'am 31.12. dieses Jahres' : 'orientierend am Jahresende' },
       { label: 'Verbleibende Jahre', value: restjahre, unit: 'Jahre', digits: 0 },
       { label: 'Bereits verjährt (1=ja, 0=nein)', value: verjaehrt, digits: 0 },
     ];
@@ -65,7 +65,7 @@ export const tool: Tool = {
     {
       values: { jahrEntstehung: 2025, frist: '3', aktuellesJahr: 2026 },
       expect: [
-        { label: 'Verjährung tritt ein Ende', value: 2028, tolerance: 0.01 },
+        { label: 'Jahr des Verjährungseintritts', value: 2028, tolerance: 0.01 },
         { label: 'Verbleibende Jahre', value: 2, tolerance: 0.01 },
         { label: 'Bereits verjährt (1=ja, 0=nein)', value: 0, tolerance: 0.01 },
       ],
@@ -73,7 +73,7 @@ export const tool: Tool = {
     {
       values: { jahrEntstehung: 2020, frist: '3', aktuellesJahr: 2026 },
       expect: [
-        { label: 'Verjährung tritt ein Ende', value: 2023, tolerance: 0.01 },
+        { label: 'Jahr des Verjährungseintritts', value: 2023, tolerance: 0.01 },
         { label: 'Bereits verjährt (1=ja, 0=nein)', value: 1, tolerance: 0.01 },
       ],
     },

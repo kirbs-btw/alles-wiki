@@ -69,7 +69,7 @@ export const tool: Tool = {
     { q: 'Was ist ElterngeldPlus?', a: 'ElterngeldPlus halbiert in der Regel den monatlichen Betrag, kann dafür aber doppelt so lange bezogen werden. Dieser Rechner bildet nur das Basiselterngeld ab.' },
     { q: 'Gibt es einen Geschwisterbonus?', a: 'Ja. Bei weiteren kleinen Kindern im Haushalt kann sich das Elterngeld um 10 %, mindestens 75 €, erhöhen. Das ist hier nicht eingerechnet.' },
   ],
-  related: ['kindergeld-rechner', 'kosten-kind-rechner', 'netto-vom-brutto-rechner'],
+  related: ['kindergeld-rechner', 'kosten-kind-rechner', 'mutterschaftsgeld-rechner'],
   examples: [
     {
       values: { netto: 2000, monate: 12 },

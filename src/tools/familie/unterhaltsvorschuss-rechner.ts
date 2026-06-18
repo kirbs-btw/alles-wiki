@@ -9,12 +9,12 @@ import { num } from '../../lib/types';
 // Etablierte Orientierungswerte (Stand 2026).
 
 const MINDESTUNTERHALT: { value: string; label: string; betrag: number }[] = [
-  { value: 'st1', label: '0 bis 5 Jahre', betrag: 482 },
-  { value: 'st2', label: '6 bis 11 Jahre', betrag: 554 },
-  { value: 'st3', label: '12 bis 17 Jahre', betrag: 649 },
+  { value: 'st1', label: '0 bis 5 Jahre', betrag: 486 },
+  { value: 'st2', label: '6 bis 11 Jahre', betrag: 558 },
+  { value: 'st3', label: '12 bis 17 Jahre', betrag: 653 },
 ];
 
-const KINDERGELD = 255; // Stand 2026
+const KINDERGELD = 259; // Stand 2026
 
 export const tool: Tool = {
   slug: 'unterhaltsvorschuss-rechner',
@@ -33,7 +33,7 @@ export const tool: Tool = {
   ],
   intro:
     'Zahlt der andere Elternteil keinen oder zu wenig Kindesunterhalt, springt der Staat mit dem Unterhaltsvorschuss ein. Die Höhe entspricht dem Mindestunterhalt der jeweiligen Altersstufe abzüglich des vollen Kindergeldes. Bereits gezahlter Unterhalt wird angerechnet. Dieser Rechner liefert eine Orientierung mit etablierten Werten (Stand 2026).',
-  formula: 'Vorschuss = max(0; Mindestunterhalt(Alter) − Kindergeld(255 €) − bereits gezahlter Unterhalt)',
+  formula: 'Vorschuss = max(0; Mindestunterhalt(Alter) − Kindergeld(259 €) − bereits gezahlter Unterhalt)',
   inputs: [
     {
       type: 'select', id: 'stufe', label: 'Altersstufe des Kindes', default: 'st2',
@@ -60,7 +60,7 @@ export const tool: Tool = {
   ],
   faq: [
     { q: 'Wer hat Anspruch auf Unterhaltsvorschuss?', a: 'Alleinerziehende, bei denen der andere Elternteil keinen oder zu geringen Unterhalt zahlt. Das Kind muss bei dem alleinerziehenden Elternteil leben.' },
-    { q: 'Wie hoch ist der Unterhaltsvorschuss?', a: 'Er entspricht dem Mindestunterhalt der Altersstufe minus dem vollen Kindergeld (Stand 2026: 255 €). Teilzahlungen des anderen Elternteils werden abgezogen.' },
+    { q: 'Wie hoch ist der Unterhaltsvorschuss?', a: 'Er entspricht dem Mindestunterhalt der Altersstufe minus dem vollen Kindergeld (Stand 2026: 259 €). Teilzahlungen des anderen Elternteils werden abgezogen.' },
     { q: 'Bis zu welchem Alter wird gezahlt?', a: 'In der Regel bis zur Vollendung des 18. Lebensjahres, bei älteren Kindern unter weiteren Voraussetzungen.' },
     { q: 'Wie genau ist die Schätzung?', a: 'Es ist eine Orientierung mit etablierten Werten (Stand 2026). Einkommensgrenzen für ältere Kinder und Sonderfälle sind nicht abgebildet. Verbindlich ist der Jugendamtsbescheid.' },
   ],

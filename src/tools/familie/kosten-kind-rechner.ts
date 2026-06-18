@@ -28,7 +28,7 @@ export const tool: Tool = {
     { type: 'number', id: 'wohnen', label: 'Wohnanteil (mehr Wohnraum)', unit: '€/Monat', default: 150, min: 0, step: 10 },
     { type: 'number', id: 'freizeit', label: 'Freizeit & Hobbys', unit: '€/Monat', default: 60, min: 0, step: 5 },
     { type: 'number', id: 'sonstiges', label: 'Sonstiges (Schule, Versich.)', unit: '€/Monat', default: 50, min: 0, step: 5 },
-    { type: 'number', id: 'kindergeld', label: 'Kindergeld (Abzug)', unit: '€/Monat', default: 255, min: 0, step: 5, help: 'Stand 2026: 255 € pro Kind' },
+    { type: 'number', id: 'kindergeld', label: 'Kindergeld (Abzug)', unit: '€/Monat', default: 259, min: 0, step: 5, help: 'Stand 2026: 259 € pro Kind' },
   ],
   compute: (v) => {
     const ernaehrung = Math.max(0, num(v.ernaehrung));
@@ -52,7 +52,7 @@ export const tool: Tool = {
   howto: [
     'Die monatlichen Ausgaben je Kategorie eintragen.',
     'Den Wohnanteil schätzen – etwa anteilige Miete für ein zusätzliches Zimmer.',
-    'Kindergeld als Abzug eintragen (Stand 2026: 255 € pro Kind).',
+    'Kindergeld als Abzug eintragen (Stand 2026: 259 € pro Kind).',
     'Gesamt- und Netto-Belastung pro Monat und Jahr ablesen.',
   ],
   faq: [
@@ -65,10 +65,10 @@ export const tool: Tool = {
   related: ['kindergeld-rechner', 'betreuungskosten-rechner', 'taschengeld-rechner'],
   examples: [
     {
-      values: { ernaehrung: 150, kleidung: 50, betreuung: 120, wohnen: 150, freizeit: 60, sonstiges: 50, kindergeld: 255 },
+      values: { ernaehrung: 150, kleidung: 50, betreuung: 120, wohnen: 150, freizeit: 60, sonstiges: 50, kindergeld: 259 },
       expect: [
         { label: 'Gesamtkosten pro Monat', value: 580, tolerance: 0.01 },
-        { label: 'Netto-Belastung pro Monat', value: 325, tolerance: 0.01 },
+        { label: 'Netto-Belastung pro Monat', value: 321, tolerance: 0.01 },
       ],
     },
   ],

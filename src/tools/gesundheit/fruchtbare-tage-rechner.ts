@@ -46,7 +46,7 @@ export const tool: Tool = {
     'fruchtbare tage zyklus',
   ],
   intro:
-    'Dieser Rechner schätzt aus dem ersten Tag deiner letzten Regelblutung und deiner durchschnittlichen Zykluslänge, wann der Eisprung etwa stattfindet und welche Tage als fruchtbar gelten. Modell: Die zweite Zyklushälfte (Lutealphase) dauert recht konstant rund 14 Tage, der Eisprung liegt also etwa 14 Tage vor der nächsten Periode. Das fruchtbare Fenster umfasst die 5 Tage vor dem Eisprung sowie den Eisprungtag selbst, weil Spermien bis zu 5 Tage und die Eizelle rund 1 Tag überlebensfähig sind. <strong>Wichtig:</strong> Dies ist nur eine grobe Orientierung und ersetzt weder eine Verhütungsmethode noch eine ärztliche Beratung.',
+    'Dieser Rechner schätzt aus dem ersten Tag deiner letzten Regelblutung und deiner durchschnittlichen Zykluslänge, wann der Eisprung etwa stattfindet und welche Tage als fruchtbar gelten. Modell: Die zweite Zyklushälfte (Lutealphase) dauert recht konstant rund 14 Tage, der Eisprung liegt also etwa 14 Tage vor der nächsten Periode. Das fruchtbare Fenster umfasst die 5 Tage vor dem Eisprung, den Eisprungtag selbst und den darauffolgenden Tag (insgesamt 7 Tage), weil Spermien bis zu 5 Tage und die Eizelle rund 1 Tag überlebensfähig sind. <strong>Wichtig:</strong> Dies ist nur eine grobe Orientierung und ersetzt weder eine Verhütungsmethode noch eine ärztliche Beratung.',
   formula:
     'Eisprung = letzte Periode + (Zykluslänge − 14); fruchtbar = Eisprung − 5 Tage bis Eisprung + 1 Tag',
   inputs: [
@@ -88,7 +88,7 @@ export const tool: Tool = {
     'Eisprung und fruchtbares Zeitfenster ablesen – als grobe Orientierung.',
   ],
   faq: [
-    { q: 'Wie werden die fruchtbaren Tage berechnet?', a: 'Der Eisprung wird etwa 14 Tage vor der nächsten Periode angesetzt. Das fruchtbare Fenster umfasst die 5 Tage davor und den Eisprungtag, weil Spermien mehrere Tage überleben können.' },
+    { q: 'Wie werden die fruchtbaren Tage berechnet?', a: 'Der Eisprung wird etwa 14 Tage vor der nächsten Periode angesetzt. Das fruchtbare Fenster umfasst die 5 Tage davor, den Eisprungtag und den Folgetag (zusammen 7 Tage), weil Spermien bis zu 5 Tage und die Eizelle rund 1 Tag überleben können.' },
     { q: 'Kann ich damit verhüten?', a: 'Nein. Die Berechnung ist eine grobe Schätzung und kein zuverlässiger Verhütungsschutz. Eine Schwangerschaft ist auch außerhalb des berechneten Fensters möglich.' },
     { q: 'Wie genau ist das Ergebnis?', a: 'Bei sehr regelmäßigem Zyklus ist es eine brauchbare Orientierung. Bei unregelmäßigen Zyklen schwankt der Eisprung stark, dann ist die Aussagekraft gering.' },
     { q: 'Was ist die Zykluslänge?', a: 'Die Anzahl der Tage vom ersten Tag einer Periode bis zum Tag vor der nächsten Periode. Üblich sind etwa 21 bis 35 Tage.' },

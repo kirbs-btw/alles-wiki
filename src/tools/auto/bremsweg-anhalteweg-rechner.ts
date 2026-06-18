@@ -59,7 +59,7 @@ export const tool: Tool = {
     { q: 'Wie groß sollte der Sicherheitsabstand sein?', a: 'Innerorts grob der Reaktionsweg, außerorts mindestens „halber Tacho" in Metern als Abstand zum Vordermann.' },
     { q: 'Warum halbiert sich der Bremsweg bei Gefahr?', a: 'Bei einer Vollbremsung wirkt die maximale Bremskraft. Die Faustformel bildet das näherungsweise durch Halbieren des normalen Bremswegs ab.' },
   ],
-  related: ['durchschnittsverbrauch-rechner', 'reichweite-rechner', 'spritkosten-rechner'],
+  related: ['ueberholweg-rechner', 'beschleunigung-rechner', 'fahrzeit-rechner'],
   updated: '2026-06-18',
   examples: [
     {

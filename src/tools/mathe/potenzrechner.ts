@@ -53,7 +53,7 @@ export const tool: Tool = {
       a: 'Ja. Ein Exponent von 0,5 entspricht der Quadratwurzel. Bei negativer Basis und gebrochenem Exponenten ist das Ergebnis reell jedoch nicht definiert.',
     },
   ],
-  related: ['wurzelrechner', 'logarithmus-rechner', 'fakultaet-rechner'],
+  related: ['wurzelrechner', 'logarithmus-rechner', 'pq-formel-rechner'],
   updated: '2026-06-18',
   examples: [
     {

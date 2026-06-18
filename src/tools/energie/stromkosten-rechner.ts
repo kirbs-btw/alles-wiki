@@ -15,6 +15,8 @@ export const tool: Tool = {
     'strompreis rechner',
     'jahresstromkosten',
   ],
+  intro:
+    'Mit diesem Rechner ermittelst du deine jährlichen und monatlichen Stromkosten aus Jahresverbrauch, Arbeitspreis pro kWh und der jährlichen Grundgebühr. So siehst du schnell, was dich dein Stromtarif tatsächlich kostet und kannst Anbieter vergleichen.',
   formula: 'Kosten = Verbrauch × Preis + Grundgebühr',
   inputs: [
     { type: 'number', id: 'verbrauch', label: 'Jahresverbrauch', unit: 'kWh', default: 2500, min: 0, step: 50 },
@@ -39,7 +41,7 @@ export const tool: Tool = {
   faq: [
     { q: 'Was ist ein normaler Stromverbrauch?', a: 'Grobe Richtwerte pro Jahr: 1 Person ~1.500 kWh, 2 Personen ~2.500 kWh, 4 Personen ~4.000 kWh.' },
   ],
-  related: ['spritkosten-rechner'],
+  related: ['kwh-kosten-rechner', 'gaskosten-rechner', 'energie-tarifvergleich-rechner'],
   updated: '2026-06-18',
   examples: [
     {

@@ -29,8 +29,8 @@ export const tool: Tool = {
     },
     { type: 'number', id: 'gewicht', label: 'Körpergewicht', unit: 'kg', default: 80, min: 20, step: 1 },
     { type: 'number', id: 'bier', label: 'Bier (0,5 l, 5 %)', unit: 'Gläser', default: 2, min: 0, step: 1, help: 'Großes Bier mit etwa 20 g Alkohol' },
-    { type: 'number', id: 'wein', label: 'Wein (0,2 l, 11 %)', unit: 'Gläser', default: 0, min: 0, step: 1, help: 'Glas Wein mit etwa 17,4 g Alkohol' },
-    { type: 'number', id: 'schnaps', label: 'Schnaps (4 cl, 40 %)', unit: 'Gläser', default: 0, min: 0, step: 1, help: 'Shot mit etwa 12,6 g Alkohol' },
+    { type: 'number', id: 'wein', label: 'Wein (0,2 l, 11 %)', unit: 'Gläser', default: 0, min: 0, step: 1, help: 'Glas Wein mit etwa 17,6 g Alkohol' },
+    { type: 'number', id: 'schnaps', label: 'Schnaps (4 cl, 40 %)', unit: 'Gläser', default: 0, min: 0, step: 1, help: 'Shot mit etwa 12,8 g Alkohol' },
     { type: 'number', id: 'stunden', label: 'Stunden seit Trinkbeginn', unit: 'h', default: 0, min: 0, step: 0.5 },
   ],
   compute: (v) => {
@@ -49,7 +49,7 @@ export const tool: Tool = {
     const restStunden = promilleAktuell > 0 ? promilleAktuell / 0.15 : 0;
     return [
       { label: 'Aktueller Blutalkohol', value: promilleAktuell, unit: '‰', digits: 2, primary: true },
-      { label: 'Maximalwert (bei Trinkbeginn)', value: promilleStart, unit: '‰', digits: 2 },
+      { label: 'Maximalwert (theoretischer Spitzenwert)', value: promilleStart, unit: '‰', digits: 2 },
       { label: 'Aufgenommener Alkohol', value: alkGesamt, unit: 'g', digits: 0 },
       { label: 'Geschätzte Abbauzeit ab jetzt', value: restStunden, unit: 'h', digits: 1 },
     ];
@@ -76,7 +76,7 @@ export const tool: Tool = {
       values: { geschlecht: 'mann', gewicht: 80, bier: 2, wein: 0, schnaps: 0, stunden: 0 },
       expect: [
         { label: 'Aufgenommener Alkohol', value: 40, tolerance: 0.5 },
-        { label: 'Maximalwert (bei Trinkbeginn)', value: 0.74, tolerance: 0.02 },
+        { label: 'Maximalwert (theoretischer Spitzenwert)', value: 0.74, tolerance: 0.02 },
       ],
     },
   ],

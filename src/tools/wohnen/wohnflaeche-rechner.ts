@@ -7,7 +7,7 @@ export const tool: Tool = {
   title: 'Wohnfläche-Rechner (Raumflächen addieren)',
   shortTitle: 'Wohnfläche',
   description:
-    'Berechne die Wohnfläche aus bis zu fünf Räumen und einer Dachschräge – mit anrechenbaren Anteilen nach Wohnflächenverordnung für Balkon und niedrige Bereiche.',
+    'Berechne die Wohnfläche aus bis zu vier Räumen und einer Dachschräge – mit anrechenbaren Anteilen nach Wohnflächenverordnung für Balkon und niedrige Bereiche.',
   keywords: [
     'wohnfläche berechnen',
     'wohnflächenverordnung rechner',

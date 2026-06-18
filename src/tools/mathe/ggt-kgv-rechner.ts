@@ -60,7 +60,7 @@ export const tool: Tool = {
       a: 'Der ggT dient zum Kürzen von Brüchen, das kgV zum Finden eines gemeinsamen Nenners beim Addieren von Brüchen.',
     },
   ],
-  related: ['bruchrechner', 'primzahl-rechner', 'fakultaet-rechner'],
+  related: ['bruchrechner', 'potenzrechner', 'durchschnitt-rechner'],
   updated: '2026-06-18',
   examples: [
     {

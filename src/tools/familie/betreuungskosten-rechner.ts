@@ -62,7 +62,7 @@ export const tool: Tool = {
     { q: 'Muss ich die Kosten überweisen?', a: 'Ja. Das Finanzamt erkennt nur unbare Zahlungen an – also Überweisungen mit Rechnung. Barzahlungen werden nicht akzeptiert.' },
     { q: 'Ist die Steuerersparnis exakt?', a: 'Nein, sie ist eine Schätzung auf Basis Ihres Grenzsteuersatzes. Der tatsächliche Effekt hängt von Ihrer gesamten Steuersituation ab (Stand 2026).' },
   ],
-  related: ['kosten-kind-rechner', 'kindergeld-rechner', 'netto-vom-brutto-rechner'],
+  related: ['kosten-kind-rechner', 'kindergeld-rechner', 'kinderbetreuungskosten-steuer-rechner'],
   examples: [
     {
       values: { kostenMonat: 300, monate: 12, steuersatz: 30 },

@@ -52,7 +52,7 @@ export const tool: Tool = {
     { q: 'Warum mal 2 in der Formel?', a: 'Der Strom muss durch Hin- und Rueckleiter fliessen. Daher wird die einfache Leitungslaenge verdoppelt.' },
     { q: 'Was tun bei zu hohem Spannungsabfall?', a: 'Einen groesseren Leiterquerschnitt waehlen. Bei doppeltem Querschnitt halbiert sich der Spannungsabfall.' },
   ],
-  related: ['kabelquerschnitt-rechner', 'ohmsches-gesetz-rechner', 'watt-volt-ampere-rechner'],
+  related: ['ohmsches-gesetz-rechner', 'watt-volt-ampere-rechner', 'led-vorwiderstand-rechner'],
   updated: '2026-06-18',
   examples: [
     {

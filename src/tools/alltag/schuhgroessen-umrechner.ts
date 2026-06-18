@@ -17,7 +17,7 @@ export const tool: Tool = {
     'schuhgroessen tabelle',
   ],
   formula:
-    'EU = Fußlänge(cm) × 1,5 + 1,5 (gerundet auf 0,5); UK = EU/3 − 24/3 (Näherung); US Herren = UK + 1',
+    'EU = (Fußlänge + 1,5 cm) × 1,5 (gerundet auf 0,5); UK = EU × 0,8333 − 27 (an Standardtabelle kalibriert); US Herren = UK + 1, US Damen = UK + 2',
   inputs: [
     {
       type: 'number',
@@ -49,11 +49,13 @@ export const tool: Tool = {
     const innen = fl + 1.5;
     const euRaw = innen / (2 / 3);
     const eu = Math.round(euRaw * 2) / 2;
-    // UK: EU ≈ UK × (2/3) × ... vereinfachte Näherung: UK = (EU - 23) / (4/3) ... gängige Tabelle
-    const ukRaw = eu * 0.66 - 25;
+    // UK: an Standard-Schuhgrößentabelle kalibrierte lineare Näherung
+    // (Stützpunkte EU 42 = UK 8, EU 45 = UK 10,5). UK = EU × 0,8333 − 27
+    const ukRaw = eu * 0.8333 - 27;
     const uk = Math.round(ukRaw * 2) / 2;
     const usHerren = uk + 1;
-    const us = geschlecht === 'damen' ? usHerren + 1.5 : usHerren;
+    // US-Damen liegen rund 2 Nummern über UK
+    const us = geschlecht === 'damen' ? uk + 2 : usHerren;
     return [
       { label: 'EU-Größe', value: eu, unit: '', digits: 1, primary: true },
       { label: 'UK-Größe', value: uk, unit: '', digits: 1 },
@@ -81,6 +83,8 @@ export const tool: Tool = {
       values: { fusslaenge: 26, geschlecht: 'herren' },
       expect: [
         { label: 'EU-Größe', value: 41.5, tolerance: 0.6 },
+        { label: 'UK-Größe', value: 7.5, tolerance: 0.1 },
+        { label: 'US-Größe', value: 8.5, tolerance: 0.1 },
         { label: 'Empf. Innenlänge', value: 27.5, tolerance: 0.1 },
       ],
     },
@@ -88,6 +92,8 @@ export const tool: Tool = {
       values: { fusslaenge: 24, geschlecht: 'damen' },
       expect: [
         { label: 'EU-Größe', value: 38.5, tolerance: 0.6 },
+        { label: 'UK-Größe', value: 5, tolerance: 0.1 },
+        { label: 'US-Größe', value: 7, tolerance: 0.1 },
       ],
     },
   ],

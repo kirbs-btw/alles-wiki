@@ -42,6 +42,7 @@ export const tool: Tool = {
   faq: [
     { q: 'Wie viel Trinkgeld ist in Deutschland üblich?', a: 'Im Restaurant sind etwa 5–10 % des Rechnungsbetrags üblich, meist auf einen runden Betrag aufgerundet.' },
   ],
+  related: ['rechnung-splitten-rechner', 'benzin-pro-person-rechner', 'getraenke-pro-gast-rechner'],
   updated: '2026-06-18',
   examples: [
     {

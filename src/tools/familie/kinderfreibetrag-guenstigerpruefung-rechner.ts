@@ -5,13 +5,13 @@ import { num } from '../../lib/types';
 // Das Finanzamt vergleicht die jährliche Kindergeldsumme mit der Steuerersparnis
 // durch den Kinderfreibetrag (inkl. BEA-Freibetrag). Die für den Steuerpflichtigen
 // günstigere Variante wird angewandt.
-// Freibetrag 2026 (Näherung): Kinderfreibetrag + BEA-Freibetrag pro Kind, je Elternteil
-// hälftig; bei Zusammenveranlagung voll. Hier: voller Freibetrag pro Kind.
+// Freibetrag 2026 (Näherung): Kinderfreibetrag 6.828 € + BEA-Freibetrag 2.928 € = 9.756 €
+// pro Kind, je Elternteil hälftig; bei Zusammenveranlagung voll. Hier: voller Freibetrag pro Kind.
 // Steuerersparnis = Freibetrag × Grenzsteuersatz.
-// Kindergeld 2026: 255 €/Monat = 3.060 €/Jahr pro Kind.
+// Kindergeld 2026: 259 €/Monat = 3.108 €/Jahr pro Kind.
 
-const FREIBETRAG_PRO_KIND = 9600; // Kinderfreibetrag + BEA, Näherung 2026 (gemeinsam)
-const KINDERGELD_JAHR = 3060; // 255 € × 12, Stand 2026
+const FREIBETRAG_PRO_KIND = 9756; // Kinderfreibetrag 6.828 € + BEA 2.928 €, Stand 2026 (gemeinsam)
+const KINDERGELD_JAHR = 3108; // 259 € × 12, Stand 2026
 
 export const tool: Tool = {
   slug: 'kinderfreibetrag-guenstigerpruefung-rechner',
@@ -31,7 +31,7 @@ export const tool: Tool = {
   intro:
     'Eltern bekommen entweder Kindergeld oder den Kinderfreibetrag – das Finanzamt prüft automatisch, was günstiger ist (Günstigerprüfung). Der Kinderfreibetrag (inkl. Betreuungsfreibetrag) lohnt sich erst ab einem höheren Einkommen, weil die Steuerersparnis dann das Kindergeld übersteigt. Dieser Rechner vergleicht beides als Näherung (Stand 2026).',
   formula:
-    'Steuerersparnis = Freibetrag(9.600 €/Kind) × Grenzsteuersatz × Kinder; Kindergeld = 3.060 €/Jahr × Kinder; günstiger = Maximum',
+    'Steuerersparnis = Freibetrag(9.756 €/Kind) × Grenzsteuersatz × Kinder; Kindergeld = 3.108 €/Jahr × Kinder; günstiger = Maximum',
   inputs: [
     { type: 'number', id: 'kinder', label: 'Anzahl Kinder', unit: 'Kinder', default: 1, min: 1, max: 10, step: 1 },
     { type: 'number', id: 'satz', label: 'Persönlicher Grenzsteuersatz', unit: '%', default: 30, min: 0, max: 45, step: 1, help: 'Grenzsteuersatz auf das letzte Einkommen' },
@@ -70,16 +70,16 @@ export const tool: Tool = {
     {
       values: { kinder: 1, satz: 30 },
       expect: [
-        { label: 'Steuerersparnis Freibetrag', value: 2880, tolerance: 0.01 },
-        { label: 'Günstiger pro Jahr', value: 3060, tolerance: 0.01 },
+        { label: 'Steuerersparnis Freibetrag', value: 2926.8, tolerance: 0.01 },
+        { label: 'Günstiger pro Jahr', value: 3108, tolerance: 0.01 },
       ],
     },
     {
       values: { kinder: 2, satz: 42 },
       expect: [
-        { label: 'Steuerersparnis Freibetrag', value: 8064, tolerance: 0.01 },
-        { label: 'Günstiger pro Jahr', value: 8064, tolerance: 0.01 },
-        { label: 'Kindergeld pro Jahr', value: 6120, tolerance: 0.01 },
+        { label: 'Steuerersparnis Freibetrag', value: 8195.04, tolerance: 0.01 },
+        { label: 'Günstiger pro Jahr', value: 8195.04, tolerance: 0.01 },
+        { label: 'Kindergeld pro Jahr', value: 6216, tolerance: 0.01 },
       ],
     },
   ],

@@ -84,8 +84,8 @@ export const tool: Tool = {
     const skala = beladung / REFERENZ_BELADUNG_KG;
     const dosis = grund * faktor * skala;
     return [
-      { label: 'Waschmittel-Dosis', value: dosis, unit: 'ml/g', digits: 0, primary: true, help: 'Pulver in Gramm bzw. Flüssigwaschmittel in Milliliter.' },
-      { label: 'Dosis pro kg Wäsche', value: grund * faktor, unit: 'ml/g', digits: 0 },
+      { label: 'Waschmittel-Dosis', value: dosis, unit: 'ml oder g', digits: 0, primary: true, help: 'Pulver in Gramm bzw. Flüssigwaschmittel in Milliliter.' },
+      { label: 'Dosis bei voller Trommel (ca. 4,5 kg)', value: grund * faktor, unit: 'ml oder g', digits: 0 },
     ];
   },
   intro:
@@ -110,7 +110,7 @@ export const tool: Tool = {
       // 70 * 1.0 * (4.5/4.5) = 70
       expect: [
         { label: 'Waschmittel-Dosis', value: 70, tolerance: 0.5 },
-        { label: 'Dosis pro kg Wäsche', value: 70, tolerance: 0.5 },
+        { label: 'Dosis bei voller Trommel (ca. 4,5 kg)', value: 70, tolerance: 0.5 },
       ],
     },
     {

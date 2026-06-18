@@ -58,7 +58,7 @@ export const tool: Tool = {
     { q: 'Wie hoch ist die Einspeisevergütung 2026?', a: 'Stand 2026 erhalten kleine Volleinspeise- oder Überschussanlagen grob im Bereich von 8 ct/kWh. Der genaue Satz hängt von Inbetriebnahme und Anlagentyp ab - prüfe deinen aktuellen Wert.' },
     { q: 'Ist das eine genaue Prognose?', a: 'Nein, es ist eine Schätzung. Verschattung, Modulneigung, Wechselrichterverluste und das Wetter eines Jahres verändern den realen Ertrag um mehrere Prozent.' },
   ],
-  related: ['e-auto-ladekosten-rechner', 'stromkosten-rechner', 'kwh-kosten-rechner'],
+  related: ['pv-eigenverbrauch-ersparnis-rechner', 'pv-einspeiseverguetung-rechner', 'balkonkraftwerk-rechner', 'stromkosten-rechner'],
   updated: '2026-06-18',
   examples: [
     {

@@ -21,7 +21,7 @@ export const tool: Tool = {
   formula:
     'Durchschnitt = Summe aller Werte / Anzahl der Werte',
   intro:
-    'Der Durchschnitt – auch arithmetisches Mittel genannt – ist die Summe aller Werte geteilt durch ihre Anzahl. Er fasst eine Zahlenreihe zu einem einzigen typischen Wert zusammen. Leere Felder werden ignoriert: Lasse Felder, die du nicht brauchst, einfach auf 0 oder gib weniger Werte ein.',
+    'Der Durchschnitt – auch arithmetisches Mittel genannt – ist die Summe aller Werte geteilt durch ihre Anzahl. Er fasst eine Zahlenreihe zu einem einzigen typischen Wert zusammen. Felder mit dem Wert 0 werden standardmäßig ignoriert: Lasse Felder, die du nicht brauchst, einfach auf 0.',
   inputs: [
     { type: 'number', id: 'w1', label: 'Wert 1', default: 2, step: 0.01 },
     { type: 'number', id: 'w2', label: 'Wert 2', default: 3, step: 0.01 },
@@ -59,7 +59,7 @@ export const tool: Tool = {
   },
   howto: [
     'Gib deine Zahlen in die Felder Wert 1 bis Wert 5 ein.',
-    'Nicht benötigte Felder auf 0 lassen.',
+    'Nicht benötigte Felder mit dem Wert 0 lassen.',
     'Wähle, ob Nullen als echte Messwerte zählen sollen.',
     'Lies den Durchschnitt sowie Summe, Anzahl und Spannweite ab.',
   ],

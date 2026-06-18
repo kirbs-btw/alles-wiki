@@ -7,7 +7,7 @@ export const tool: Tool = {
   title: 'Quadratmeterpreis-Rechner',
   shortTitle: 'qm-Preis',
   description:
-    'Berechne den Quadratmeterpreis aus Gesamtpreis und Wohnfläche – für Kauf oder Miete, inkl. Gegenrichtung.',
+    'Berechne den Quadratmeterpreis aus Gesamtpreis und Wohnfläche – für Kauf oder Miete.',
   keywords: [
     'quadratmeterpreis berechnen',
     'qm preis rechner',

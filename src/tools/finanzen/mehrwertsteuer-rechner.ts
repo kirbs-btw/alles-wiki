@@ -51,6 +51,8 @@ export const tool: Tool = {
       { label: 'Bruttobetrag', value: brutto, unit: '€', digits: 2, primary: true },
     ];
   },
+  intro:
+    'Die Mehrwertsteuer (Umsatzsteuer) beträgt in Deutschland 19 % (Regelsatz) bzw. 7 % (ermäßigter Satz). Dieser Rechner wandelt Netto- in Bruttobeträge und umgekehrt und zeigt den enthaltenen Steuerbetrag.',
   howto: [
     'Betrag eingeben.',
     'Wählen, ob der Betrag netto (ohne) oder brutto (mit MwSt) ist.',
@@ -60,6 +62,7 @@ export const tool: Tool = {
     { q: 'Wann gelten 7 % statt 19 %?', a: 'Der ermäßigte Satz von 7 % gilt z. B. für Grundnahrungsmittel, Bücher und den ÖPNV. Der Regelsatz von 19 % gilt für die meisten Waren und Dienstleistungen.' },
     { q: 'Wie rechne ich Brutto in Netto?', a: 'Netto = Brutto / 1,19 (bei 19 %). Stelle dazu oben „Betrag ist Bruttobetrag" ein.' },
   ],
+  related: ['rabattrechner', 'skonto', 'prozentrechner'],
   updated: '2026-06-18',
   examples: [
     {

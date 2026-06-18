@@ -23,10 +23,10 @@ export const tool: Tool = {
     {
       type: 'select', id: 'satz', label: 'Steuersatz / Bundesland (Stand 2026)', default: '6.5',
       options: [
-        { value: '3.5', label: '3,5 % (Bayern, Sachsen)' },
-        { value: '5.0', label: '5,0 % (z. B. Baden-Württemberg, Niedersachsen, Sachsen-Anhalt)' },
-        { value: '5.5', label: '5,5 % (Hamburg)' },
-        { value: '6.0', label: '6,0 % (z. B. Berlin, Hessen, Bremen)' },
+        { value: '3.5', label: '3,5 % (Bayern)' },
+        { value: '5.0', label: '5,0 % (z. B. Baden-Württemberg, Niedersachsen, Sachsen-Anhalt, Bremen)' },
+        { value: '5.5', label: '5,5 % (Hamburg, Sachsen)' },
+        { value: '6.0', label: '6,0 % (z. B. Berlin, Hessen)' },
         { value: '6.5', label: '6,5 % (z. B. NRW, Brandenburg, Schleswig-Holstein, Thüringen, Saarland)' },
       ],
     },
@@ -47,7 +47,7 @@ export const tool: Tool = {
     ];
   },
   intro:
-    'Die Grunderwerbsteuer fällt beim Kauf von Grundstücken und Immobilien an und wird auf den Kaufpreis erhoben. Der Steuersatz wird von den Bundesländern festgelegt und liegt 2026 zwischen 3,5 % (Bayern, Sachsen) und 6,5 % (z. B. NRW, Brandenburg). Erst nach Zahlung stellt das Finanzamt die Unbedenklichkeitsbescheinigung aus, die für die Eintragung ins Grundbuch nötig ist.',
+    'Die Grunderwerbsteuer fällt beim Kauf von Grundstücken und Immobilien an und wird auf den Kaufpreis erhoben. Der Steuersatz wird von den Bundesländern festgelegt und liegt 2026 zwischen 3,5 % (Bayern) und 6,5 % (z. B. NRW, Brandenburg). Erst nach Zahlung stellt das Finanzamt die Unbedenklichkeitsbescheinigung aus, die für die Eintragung ins Grundbuch nötig ist.',
   howto: [
     'Notariellen Kaufpreis für Grundstück und Gebäude eintragen.',
     'Steuersatz des betreffenden Bundeslandes auswählen.',
@@ -55,7 +55,7 @@ export const tool: Tool = {
     'Grunderwerbsteuer und Gesamtkosten ablesen.',
   ],
   faq: [
-    { q: 'Wie hoch ist die Grunderwerbsteuer 2026?', a: 'Der Satz hängt vom Bundesland ab und reicht von 3,5 % (Bayern, Sachsen) bis 6,5 % (etwa Nordrhein-Westfalen, Brandenburg, Schleswig-Holstein, Thüringen, Saarland). Stand 2026 – Sätze können sich durch Landesgesetze ändern, prüfe daher den aktuellen Wert.' },
+    { q: 'Wie hoch ist die Grunderwerbsteuer 2026?', a: 'Der Satz hängt vom Bundesland ab und reicht von 3,5 % (Bayern) bis 6,5 % (etwa Nordrhein-Westfalen, Brandenburg, Schleswig-Holstein, Thüringen, Saarland). Sachsen hat den Satz 2023 auf 5,5 % angehoben. Stand 2026 – Sätze können sich durch Landesgesetze ändern, prüfe daher den aktuellen Wert.' },
     { q: 'Worauf wird die Steuer berechnet?', a: 'Bemessungsgrundlage ist der im Notarvertrag vereinbarte Kaufpreis für Grundstück und Gebäude. Mitverkaufte bewegliche Gegenstände wie eine Einbauküche oder Möbel können gesondert ausgewiesen und von der Bemessungsgrundlage abgezogen werden.' },
     { q: 'Wann muss ich die Grunderwerbsteuer zahlen?', a: 'Nach Beurkundung des Kaufvertrags meldet der Notar den Verkauf dem Finanzamt. Dieses versendet einen Steuerbescheid, der meist innerhalb eines Monats fällig wird. Die Unbedenklichkeitsbescheinigung folgt nach Zahlung.' },
     { q: 'Gibt es Ausnahmen von der Grunderwerbsteuer?', a: 'Steuerfrei sind unter anderem Käufe unter 2.500 € sowie Erwerbe zwischen Ehegatten oder in gerader Verwandtschaftslinie, etwa zwischen Eltern und Kindern. Auch Erbschaften und Schenkungen lösen keine Grunderwerbsteuer aus.' },

@@ -24,7 +24,7 @@ export const tool: Tool = {
     { type: 'number', id: 'w2', label: 'Wert 2', default: 8, step: 0.1 },
     { type: 'number', id: 'w3', label: 'Wert 3', default: 6, step: 0.1 },
     { type: 'number', id: 'w4', label: 'Wert 4', default: 5, step: 0.1 },
-    { type: 'number', id: 'w5', label: 'Wert 5 (optional, sonst 0 lassen wenn unbenutzt)', default: 3, step: 0.1, help: 'Nicht benötigte Felder einfach gleich lassen – es zählen alle eingegebenen Werte.' },
+    { type: 'number', id: 'w5', label: 'Wert 5', default: 3, step: 0.1, help: 'Wird nur einbezogen, wenn „Anzahl genutzter Werte" = 5 ist.' },
     {
       type: 'select',
       id: 'typ',
@@ -78,7 +78,7 @@ export const tool: Tool = {
       a: 'Sie beschreibt die mittlere Streuung der Werte um den Mittelwert. Eine kleine Standardabweichung bedeutet, dass die Werte eng beieinander liegen.',
     },
   ],
-  related: ['durchschnitt-rechner', 'median-rechner', 'prozentrechner'],
+  related: ['durchschnitt-rechner', 'prozentuale-veraenderung-rechner', 'prozentrechner'],
   updated: '2026-06-18',
   examples: [
     {

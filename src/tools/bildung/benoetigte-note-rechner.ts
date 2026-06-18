@@ -41,7 +41,7 @@ export const tool: Tool = {
     if (anzeige < 1) anzeige = 1;
     if (anzeige > 6) anzeige = 6;
     return [
-      { label: 'Benoetigte Note', value: Math.round(benoetigt * 100) / 100, digits: 2, primary: true },
+      { label: 'Benoetigte Note (rechnerisch)', value: Math.round(benoetigt * 100) / 100, digits: 2, primary: true, help: 'Reine Rechengroesse: Werte unter 1 bzw. ueber 6 sind keine echten Schulnoten.' },
       { label: 'Realistisch (1–6)', value: Math.round(anzeige * 100) / 100, digits: 2 },
       { label: 'Status', value: hinweis },
       { label: 'Ziel erreichbar', value: erreichbar ? 'ja' : 'nein' },
@@ -64,11 +64,11 @@ export const tool: Tool = {
   examples: [
     {
       values: { schnittAlt: 2.4, gewichtAlt: 3, gewichtNeu: 1, ziel: 2 },
-      expect: [{ label: 'Benoetigte Note', value: 0.8, tolerance: 0.01 }],
+      expect: [{ label: 'Benoetigte Note (rechnerisch)', value: 0.8, tolerance: 0.01 }],
     },
     {
       values: { schnittAlt: 3, gewichtAlt: 2, gewichtNeu: 1, ziel: 2.5 },
-      expect: [{ label: 'Benoetigte Note', value: 1.5, tolerance: 0.01 }],
+      expect: [{ label: 'Benoetigte Note (rechnerisch)', value: 1.5, tolerance: 0.01 }],
     },
   ],
 };
