@@ -1,0 +1,298 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getGenerator } from '../../lib/generators';
+import { getCategory } from '../../lib/categories';
+import { getTool } from '../../lib/registry';
+import { generatorLd, breadcrumbLd, faqLd } from '../../lib/schema';
+
+const gen = getGenerator('pomodoro-timer')!;
+const cat = getCategory(gen.category)!;
+const path = `/generator/${gen.slug}`;
+
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Generatoren', href: '/generator' },
+  { name: gen.title, href: path },
+];
+
+const relatedTools = (gen.related ?? [])
+  .map((slug) => getTool(slug))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const ld: object[] = [
+  generatorLd({ title: gen.title, description: gen.description, path }),
+  breadcrumbLd(crumbs.map((c) => ({ name: c.name, path: c.href }))),
+  faqLd(gen.faq),
+];
+---
+
+<BaseLayout title={gen.title} description={gen.description} path={path} jsonLd={ld}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="mt-4">
+      <p class="text-sm font-semibold text-brand-700">{cat.name} · Generator</p>
+      <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-zinc-900">{gen.title}</h1>
+      <p class="mt-2 text-lg text-zinc-600">{gen.description}</p>
+    </header>
+
+    <!-- Widget -->
+    <section class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm" data-gen>
+      <div class="flex flex-col items-center">
+        <p id="pomo-phase" class="text-sm font-semibold uppercase tracking-wide text-brand-700">Fokus</p>
+        <div id="pomo-display" class="mt-2 font-mono text-6xl font-extrabold tabular-nums tracking-tight text-zinc-900" aria-live="polite">25:00</div>
+        <p id="pomo-count" class="mt-2 text-sm text-zinc-500">Abgeschlossene Fokus-Einheiten: 0</p>
+
+        <div class="mt-6 flex flex-wrap justify-center gap-2">
+          <button id="pomo-start" type="button" class="shrink-0 rounded-lg bg-brand-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-600 focus-visible:ring-2 focus-visible:ring-brand-300">Start</button>
+          <button id="pomo-pause" type="button" class="shrink-0 rounded-lg border border-zinc-300 px-5 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-brand-300">Pause</button>
+          <button id="pomo-reset" type="button" class="shrink-0 rounded-lg border border-zinc-300 px-5 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-brand-300">Zurücksetzen</button>
+        </div>
+      </div>
+
+      <div class="mt-8 grid gap-4 sm:grid-cols-2">
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-zinc-700">Fokus-Minuten</span>
+          <input id="pomo-focus" type="number" min="1" max="180" value="25" step="1" inputmode="numeric" class="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300" />
+        </label>
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-zinc-700">Kurze Pause (Min.)</span>
+          <input id="pomo-short" type="number" min="1" max="60" value="5" step="1" inputmode="numeric" class="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300" />
+        </label>
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-zinc-700">Lange Pause (Min.)</span>
+          <input id="pomo-long" type="number" min="1" max="120" value="15" step="1" inputmode="numeric" class="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300" />
+        </label>
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-zinc-700">Runden bis lange Pause</span>
+          <input id="pomo-rounds" type="number" min="1" max="12" value="4" step="1" inputmode="numeric" class="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300" />
+        </label>
+      </div>
+
+      <p id="pomo-msg" class="mt-4 text-center text-xs text-zinc-500" aria-live="polite">Stelle deine Zeiten ein und starte den Fokus-Block.</p>
+    </section>
+
+    <!-- Inhalt (SEO) -->
+    <section class="prose-werkbank mt-10 max-w-none">
+      <p>{gen.intro}</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold tracking-tight text-zinc-900">Häufige Fragen</h2>
+      <dl class="mt-4 space-y-4">
+        {gen.faq.map((f) => (
+          <div class="rounded-lg border border-zinc-200 bg-white p-4">
+            <dt class="font-semibold text-zinc-900">{f.q}</dt>
+            <dd class="mt-1 text-sm text-zinc-600">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {
+      relatedTools.length > 0 && (
+        <section class="mt-12 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-bold tracking-tight text-zinc-900">Passende Rechner</h2>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            {relatedTools.map((t) => (
+              <a href={`/rechner/${t.slug}/`} class="block rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md">
+                <span class="font-medium text-zinc-800">{t.shortTitle ?? t.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <script>
+    const root = document.querySelector('[data-gen]');
+    if (root) {
+      const phaseEl = document.getElementById('pomo-phase');
+      const displayEl = document.getElementById('pomo-display');
+      const countEl = document.getElementById('pomo-count');
+      const focusEl = document.getElementById('pomo-focus') as HTMLInputElement | null;
+      const shortEl = document.getElementById('pomo-short') as HTMLInputElement | null;
+      const longEl = document.getElementById('pomo-long') as HTMLInputElement | null;
+      const roundsEl = document.getElementById('pomo-rounds') as HTMLInputElement | null;
+      const startBtn = document.getElementById('pomo-start');
+      const pauseBtn = document.getElementById('pomo-pause');
+      const resetBtn = document.getElementById('pomo-reset');
+      const msg = document.getElementById('pomo-msg');
+
+      if (phaseEl && displayEl && countEl && focusEl && shortEl && longEl && roundsEl && startBtn && pauseBtn && resetBtn && msg) {
+        type Phase = 'focus' | 'short' | 'long';
+
+        let phase: Phase = 'focus';
+        let remaining = 25 * 60; // verbleibende Sekunden der aktuellen Phase
+        let completed = 0; // abgeschlossene Fokus-Einheiten gesamt
+        let roundInCycle = 0; // Fokus-Einheiten seit letzter langer Pause
+        let running = false;
+        let intervalId: ReturnType<typeof setInterval> | null = null;
+
+        const setMsg = (text: string) => { msg.textContent = text; };
+        const pad = (n: number) => String(n).padStart(2, '0');
+
+        // Eingabe robust einlesen: leere/ungültige Felder werden als min behandelt, danach begrenzt.
+        const clampInt = (raw: string, min: number, max: number): number => {
+          const n = Math.floor(Number(raw));
+          if (!Number.isFinite(n)) return min;
+          return Math.min(max, Math.max(min, n));
+        };
+
+        // Eingaben sichtbar normalisieren und Werte in Minuten zurückgeben.
+        const focusMin = () => { const v = clampInt(focusEl.value, 1, 180); focusEl.value = String(v); return v; };
+        const shortMin = () => { const v = clampInt(shortEl.value, 1, 60); shortEl.value = String(v); return v; };
+        const longMin = () => { const v = clampInt(longEl.value, 1, 120); longEl.value = String(v); return v; };
+        const roundsCfg = () => { const v = clampInt(roundsEl.value, 1, 12); roundsEl.value = String(v); return v; };
+
+        const phaseSeconds = (p: Phase): number => {
+          if (p === 'focus') return focusMin() * 60;
+          if (p === 'short') return shortMin() * 60;
+          return longMin() * 60;
+        };
+
+        const phaseLabel = (p: Phase): string => {
+          if (p === 'focus') return 'Fokus';
+          if (p === 'short') return 'Kurze Pause';
+          return 'Lange Pause';
+        };
+
+        const render = () => {
+          const safe = remaining < 0 ? 0 : remaining;
+          const m = Math.floor(safe / 60);
+          const s = safe % 60;
+          displayEl.textContent = `${pad(m)}:${pad(s)}`;
+          phaseEl.textContent = phaseLabel(phase);
+          countEl.textContent = `Abgeschlossene Fokus-Einheiten: ${completed}`;
+        };
+
+        const setInputsDisabled = (disabled: boolean) => {
+          focusEl.disabled = disabled;
+          shortEl.disabled = disabled;
+          longEl.disabled = disabled;
+          roundsEl.disabled = disabled;
+        };
+
+        const stopInterval = () => {
+          if (intervalId !== null) { clearInterval(intervalId); intervalId = null; }
+        };
+
+        // Kurzer Signalton via Web-Audio – in try/catch, da Autoplay-Policy blocken kann.
+        const beep = () => {
+          try {
+            const Ctx = window.AudioContext || (window as any).webkitAudioContext;
+            if (!Ctx) return;
+            const ctx = new Ctx();
+            const playTone = (start: number, freq: number) => {
+              const osc = ctx.createOscillator();
+              const gain = ctx.createGain();
+              osc.type = 'sine';
+              osc.frequency.value = freq;
+              osc.connect(gain);
+              gain.connect(ctx.destination);
+              gain.gain.setValueAtTime(0.0001, ctx.currentTime + start);
+              gain.gain.exponentialRampToValueAtTime(0.3, ctx.currentTime + start + 0.02);
+              gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + start + 0.35);
+              osc.start(ctx.currentTime + start);
+              osc.stop(ctx.currentTime + start + 0.4);
+            };
+            playTone(0, 880);
+            playTone(0.45, 660);
+            // Kontext nach den Tönen schließen.
+            setTimeout(() => { try { ctx.close(); } catch (_e) { /* ignorieren */ } }, 1200);
+          } catch (_e) {
+            // Audio nicht erlaubt – stillschweigend ignorieren.
+          }
+        };
+
+        // Automatischer Wechsel zur nächsten Phase, wenn die aktuelle abgelaufen ist.
+        const advancePhase = () => {
+          if (phase === 'focus') {
+            completed += 1;
+            roundInCycle += 1;
+            if (roundInCycle >= roundsCfg()) {
+              roundInCycle = 0;
+              phase = 'long';
+              setMsg('Fokus-Einheit geschafft – Zeit für eine lange Pause.');
+            } else {
+              phase = 'short';
+              setMsg('Fokus-Einheit geschafft – kurze Pause.');
+            }
+          } else {
+            phase = 'focus';
+            setMsg('Pause vorbei – neuer Fokus-Block.');
+          }
+          remaining = phaseSeconds(phase);
+          render();
+        };
+
+        const tick = () => {
+          remaining -= 1;
+          if (remaining <= 0) {
+            beep();
+            advancePhase();
+            return;
+          }
+          render();
+        };
+
+        const start = () => {
+          if (running) return;
+          // Beim ersten Start (oder nach Reset) die aktuelle Phase aus den Eingaben laden.
+          if (remaining <= 0) remaining = phaseSeconds(phase);
+          if (remaining <= 0) {
+            setMsg('Bitte eine gültige Dauer einstellen.');
+            render();
+            return;
+          }
+          running = true;
+          setInputsDisabled(true);
+          setMsg(phase === 'focus' ? 'Fokus läuft …' : 'Pause läuft …');
+          render();
+          stopInterval();
+          intervalId = setInterval(tick, 1000);
+        };
+
+        const pause = () => {
+          if (!running) return;
+          running = false;
+          stopInterval();
+          setMsg('Pausiert. Mit „Start“ weiter.');
+        };
+
+        const reset = () => {
+          running = false;
+          stopInterval();
+          phase = 'focus';
+          completed = 0;
+          roundInCycle = 0;
+          remaining = phaseSeconds('focus');
+          setInputsDisabled(false);
+          setMsg('Zurückgesetzt. Stelle deine Zeiten ein und starte.');
+          render();
+        };
+
+        startBtn.addEventListener('click', start);
+        pauseBtn.addEventListener('click', pause);
+        resetBtn.addEventListener('click', reset);
+
+        // Geänderte Eingaben sofort übernehmen, solange der Timer nicht läuft.
+        [focusEl, shortEl, longEl, roundsEl].forEach((el) => {
+          el.addEventListener('input', () => {
+            if (!running) {
+              remaining = phaseSeconds(phase);
+              render();
+            }
+          });
+        });
+
+        // Aufräumen, falls die Seite verlassen wird.
+        window.addEventListener('pagehide', stopInterval);
+
+        render();
+      }
+    }
+  </script>
+</BaseLayout>

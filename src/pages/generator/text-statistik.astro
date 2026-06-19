@@ -1,0 +1,185 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getGenerator } from '../../lib/generators';
+import { getCategory } from '../../lib/categories';
+import { getTool } from '../../lib/registry';
+import { generatorLd, breadcrumbLd, faqLd } from '../../lib/schema';
+
+const gen = getGenerator('text-statistik')!;
+const cat = getCategory(gen.category)!;
+const path = `/generator/${gen.slug}`;
+
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Generatoren', href: '/generator' },
+  { name: gen.title, href: path },
+];
+
+const relatedTools = (gen.related ?? [])
+  .map((slug) => getTool(slug))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const ld: object[] = [
+  generatorLd({ title: gen.title, description: gen.description, path }),
+  breadcrumbLd(crumbs.map((c) => ({ name: c.name, path: c.href }))),
+  faqLd(gen.faq),
+];
+---
+
+<BaseLayout title={gen.title} description={gen.description} path={path} jsonLd={ld}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="mt-4">
+      <p class="text-sm font-semibold text-brand-700">{cat.name} · Generator</p>
+      <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-zinc-900">{gen.title}</h1>
+      <p class="mt-2 text-lg text-zinc-600">{gen.description}</p>
+    </header>
+
+    <!-- Widget -->
+    <section class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm" data-gen>
+      <label class="block">
+        <span class="mb-1 block text-sm font-medium text-zinc-700">Dein Text</span>
+        <textarea
+          id="ts-input"
+          rows="8"
+          placeholder="Füge hier deinen Text ein …"
+          class="w-full resize-y rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-3 text-sm text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+        ></textarea>
+      </label>
+
+      <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3" aria-live="polite">
+        <div class="rounded-lg border border-zinc-200 bg-zinc-50 p-4">
+          <div class="text-xs font-medium uppercase tracking-wide text-zinc-500">Wörter</div>
+          <div id="ts-words" class="mt-1 font-mono text-2xl font-bold text-zinc-900">0</div>
+        </div>
+        <div class="rounded-lg border border-zinc-200 bg-zinc-50 p-4">
+          <div class="text-xs font-medium uppercase tracking-wide text-zinc-500">Zeichen (mit Leerzeichen)</div>
+          <div id="ts-chars" class="mt-1 font-mono text-2xl font-bold text-zinc-900">0</div>
+        </div>
+        <div class="rounded-lg border border-zinc-200 bg-zinc-50 p-4">
+          <div class="text-xs font-medium uppercase tracking-wide text-zinc-500">Zeichen (ohne Leerzeichen)</div>
+          <div id="ts-chars-nospace" class="mt-1 font-mono text-2xl font-bold text-zinc-900">0</div>
+        </div>
+        <div class="rounded-lg border border-zinc-200 bg-zinc-50 p-4">
+          <div class="text-xs font-medium uppercase tracking-wide text-zinc-500">Sätze</div>
+          <div id="ts-sentences" class="mt-1 font-mono text-2xl font-bold text-zinc-900">0</div>
+        </div>
+        <div class="rounded-lg border border-zinc-200 bg-zinc-50 p-4">
+          <div class="text-xs font-medium uppercase tracking-wide text-zinc-500">Absätze</div>
+          <div id="ts-paragraphs" class="mt-1 font-mono text-2xl font-bold text-zinc-900">0</div>
+        </div>
+        <div class="rounded-lg border border-zinc-200 bg-zinc-50 p-4">
+          <div class="text-xs font-medium uppercase tracking-wide text-zinc-500">Lesezeit</div>
+          <div id="ts-readtime" class="mt-1 font-mono text-2xl font-bold text-zinc-900">0 Sek</div>
+        </div>
+      </div>
+
+      <p id="ts-msg" class="mt-3 text-xs text-zinc-500" aria-live="polite">Tippe oder füge Text ein – die Statistik aktualisiert sich live in deinem Browser.</p>
+    </section>
+
+    <!-- Inhalt (SEO) -->
+    <section class="prose-werkbank mt-10 max-w-none">
+      <p>{gen.intro}</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold tracking-tight text-zinc-900">Häufige Fragen</h2>
+      <dl class="mt-4 space-y-4">
+        {gen.faq.map((f) => (
+          <div class="rounded-lg border border-zinc-200 bg-white p-4">
+            <dt class="font-semibold text-zinc-900">{f.q}</dt>
+            <dd class="mt-1 text-sm text-zinc-600">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {
+      relatedTools.length > 0 && (
+        <section class="mt-12 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-bold tracking-tight text-zinc-900">Passende Rechner</h2>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            {relatedTools.map((t) => (
+              <a href={`/rechner/${t.slug}/`} class="block rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md">
+                <span class="font-medium text-zinc-800">{t.shortTitle ?? t.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <script>
+    const root = document.querySelector('[data-gen]');
+    if (root) {
+      const input = document.getElementById('ts-input') as HTMLTextAreaElement | null;
+      const wordsEl = document.getElementById('ts-words');
+      const charsEl = document.getElementById('ts-chars');
+      const charsNoSpaceEl = document.getElementById('ts-chars-nospace');
+      const sentencesEl = document.getElementById('ts-sentences');
+      const paragraphsEl = document.getElementById('ts-paragraphs');
+      const readtimeEl = document.getElementById('ts-readtime');
+      const msg = document.getElementById('ts-msg');
+
+      // Lokale Zahlenformatierung (Tausenderpunkte) – robust mit Fallback.
+      const fmt = (n: number) => {
+        try { return n.toLocaleString('de-DE'); } catch { return String(n); }
+      };
+
+      const update = () => {
+        if (!input) return;
+        const text = input.value ?? '';
+
+        // Wörter: an Whitespace-Folgen trennen, leere Treffer ignorieren.
+        const trimmed = text.trim();
+        const words = trimmed === '' ? 0 : trimmed.split(/\s+/).length;
+
+        // Zeichen mit Leerzeichen = volle Länge (Unicode-aware via Array-Spread).
+        const charsWithSpace = [...text].length;
+
+        // Zeichen ohne Leerzeichen: alle Whitespace-Zeichen entfernen.
+        const charsNoSpace = [...text.replace(/\s/g, '')].length;
+
+        // Sätze: an Satzendezeichen (. ! ?) zählen, Folgen wie "?!" als ein Ende.
+        const sentenceMatches = trimmed === '' ? [] : trimmed.match(/[^.!?]+[.!?]+/g);
+        let sentences = sentenceMatches ? sentenceMatches.length : 0;
+        // Rest ohne abschließendes Satzzeichen zählt als angefangener Satz.
+        if (trimmed !== '' && !/[.!?]\s*$/.test(trimmed)) sentences += 1;
+
+        // Absätze: nicht-leere, durch Leerzeilen getrennte Blöcke.
+        const paragraphs = trimmed === ''
+          ? 0
+          : trimmed.split(/\n\s*\n/).filter((p) => p.trim() !== '').length;
+
+        // Lesezeit: 200 Wörter/Minute, Ausgabe als Min/Sek.
+        const totalSeconds = Math.round((words / 200) * 60);
+        const mins = Math.floor(totalSeconds / 60);
+        const secs = totalSeconds % 60;
+        let readtime: string;
+        if (totalSeconds === 0) readtime = '0 Sek';
+        else if (mins === 0) readtime = `${secs} Sek`;
+        else if (secs === 0) readtime = `${mins} Min`;
+        else readtime = `${mins} Min ${secs} Sek`;
+
+        if (wordsEl) wordsEl.textContent = fmt(words);
+        if (charsEl) charsEl.textContent = fmt(charsWithSpace);
+        if (charsNoSpaceEl) charsNoSpaceEl.textContent = fmt(charsNoSpace);
+        if (sentencesEl) sentencesEl.textContent = fmt(sentences);
+        if (paragraphsEl) paragraphsEl.textContent = fmt(paragraphs);
+        if (readtimeEl) readtimeEl.textContent = readtime;
+
+        if (msg) {
+          msg.textContent = trimmed === ''
+            ? 'Tippe oder füge Text ein – die Statistik aktualisiert sich live in deinem Browser.'
+            : 'Live aktualisiert – nichts wird übertragen.';
+        }
+      };
+
+      input?.addEventListener('input', update);
+      update();
+    }
+  </script>
+</BaseLayout>

@@ -1,0 +1,299 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getGenerator } from '../../lib/generators';
+import { getCategory } from '../../lib/categories';
+import { getTool } from '../../lib/registry';
+import { generatorLd, breadcrumbLd, faqLd } from '../../lib/schema';
+
+const gen = getGenerator('wlan-qr-generator')!;
+const cat = getCategory(gen.category)!;
+const path = `/generator/${gen.slug}`;
+
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Generatoren', href: '/generator' },
+  { name: gen.title, href: path },
+];
+
+const relatedTools = (gen.related ?? [])
+  .map((slug) => getTool(slug))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const ld: object[] = [
+  generatorLd({ title: gen.title, description: gen.description, path }),
+  breadcrumbLd(crumbs.map((c) => ({ name: c.name, path: c.href }))),
+  faqLd(gen.faq),
+];
+---
+
+<BaseLayout title={gen.title} description={gen.description} path={path} jsonLd={ld}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="mt-4">
+      <p class="text-sm font-semibold text-brand-700">{cat.name} · Generator</p>
+      <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-zinc-900">{gen.title}</h1>
+      <p class="mt-2 text-lg text-zinc-600">{gen.description}</p>
+    </header>
+
+    <!-- Widget -->
+    <section class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm" data-gen>
+      <div class="grid gap-5 sm:grid-cols-2">
+        <div class="flex flex-col gap-5">
+          <label class="block">
+            <span class="mb-1 block text-sm font-medium text-zinc-700">WLAN-Name (SSID)</span>
+            <input
+              id="wlanqr-ssid"
+              type="text"
+              autocomplete="off"
+              placeholder="z. B. Gäste-WLAN"
+              class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+            />
+          </label>
+
+          <label class="block">
+            <span class="mb-1 block text-sm font-medium text-zinc-700">Verschlüsselung</span>
+            <select
+              id="wlanqr-enc"
+              class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+            >
+              <option value="WPA" selected>WPA/WPA2</option>
+              <option value="WEP">WEP</option>
+              <option value="nopass">Kein Passwort</option>
+            </select>
+          </label>
+
+          <label class="block" id="wlanqr-pass-wrap">
+            <span class="mb-1 block text-sm font-medium text-zinc-700">Passwort</span>
+            <input
+              id="wlanqr-pass"
+              type="text"
+              autocomplete="off"
+              placeholder="WLAN-Passwort"
+              class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+            />
+          </label>
+
+          <label class="flex items-center gap-2 text-sm text-zinc-700">
+            <input id="wlanqr-hidden" type="checkbox" class="accent-brand-700" />
+            Verstecktes Netz
+          </label>
+
+          <div class="flex flex-wrap gap-2">
+            <button id="wlanqr-svg" type="button" class="shrink-0 rounded-lg bg-brand-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-brand-600 focus-visible:ring-2 focus-visible:ring-brand-300">Als SVG herunterladen</button>
+            <button id="wlanqr-png" type="button" class="shrink-0 rounded-lg border border-zinc-300 px-4 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-brand-300">Als PNG herunterladen</button>
+          </div>
+        </div>
+
+        <div class="flex flex-col items-center justify-center">
+          <label class="sr-only" for="wlanqr-out">Generierter WLAN-QR-Code</label>
+          <div
+            id="wlanqr-out"
+            class="flex aspect-square w-full max-w-[16rem] items-center justify-center rounded-lg border border-zinc-200 bg-white p-3 [&_svg]:h-full [&_svg]:w-full"
+          ></div>
+        </div>
+      </div>
+      <p id="wlanqr-msg" class="mt-4 text-xs text-zinc-500" aria-live="polite">Erzeugt lokal in deinem Browser – deine Eingaben werden nicht übertragen.</p>
+    </section>
+
+    <!-- Inhalt (SEO) -->
+    <section class="prose-werkbank mt-10 max-w-none">
+      <p>{gen.intro}</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold tracking-tight text-zinc-900">Häufige Fragen</h2>
+      <dl class="mt-4 space-y-4">
+        {gen.faq.map((f) => (
+          <div class="rounded-lg border border-zinc-200 bg-white p-4">
+            <dt class="font-semibold text-zinc-900">{f.q}</dt>
+            <dd class="mt-1 text-sm text-zinc-600">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {
+      relatedTools.length > 0 && (
+        <section class="mt-12 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-bold tracking-tight text-zinc-900">Passende Rechner</h2>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            {relatedTools.map((t) => (
+              <a href={`/rechner/${t.slug}/`} class="block rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md">
+                <span class="font-medium text-zinc-800">{t.shortTitle ?? t.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <script>
+    import qrcodeImport from 'qrcode-generator';
+
+    // Robust gegen CJS/ESM-Interop (mal Funktion, mal { default: fn }).
+    const qrcode = (((qrcodeImport as any).default ?? qrcodeImport) as typeof qrcodeImport);
+
+    const root = document.querySelector('[data-gen]');
+    if (root) {
+      const ssidEl = document.getElementById('wlanqr-ssid') as HTMLInputElement | null;
+      const encEl = document.getElementById('wlanqr-enc') as HTMLSelectElement | null;
+      const passEl = document.getElementById('wlanqr-pass') as HTMLInputElement | null;
+      const passWrap = document.getElementById('wlanqr-pass-wrap') as HTMLElement | null;
+      const hiddenEl = document.getElementById('wlanqr-hidden') as HTMLInputElement | null;
+      const out = document.getElementById('wlanqr-out') as HTMLElement | null;
+      const msg = document.getElementById('wlanqr-msg') as HTMLElement | null;
+      const svgBtn = document.getElementById('wlanqr-svg') as HTMLButtonElement | null;
+      const pngBtn = document.getElementById('wlanqr-png') as HTMLButtonElement | null;
+
+      if (ssidEl && encEl && passEl && hiddenEl && out && msg && svgBtn && pngBtn) {
+        // Aktueller QR-Code – wird bei jeder Eingabe neu gebaut.
+        let current: ReturnType<typeof qrcode> | null = null;
+
+        // Sonderzeichen \ ; , : " im WIFI-String mit Backslash escapen.
+        const escapeWifi = (value: string) => value.replace(/([\\;,:"])/g, '\\$1');
+
+        const setDownloadEnabled = (enabled: boolean) => {
+          svgBtn.disabled = !enabled;
+          pngBtn.disabled = !enabled;
+          if (enabled) {
+            svgBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            pngBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+          } else {
+            svgBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            pngBtn.classList.add('opacity-50', 'cursor-not-allowed');
+          }
+        };
+
+        const render = () => {
+          const enc = encEl.value;
+          const nopass = enc === 'nopass';
+          // Passwort-Feld bei "Kein Passwort" ausblenden.
+          if (passWrap) passWrap.style.display = nopass ? 'none' : '';
+
+          const ssid = ssidEl.value;
+          const pass = passEl.value;
+
+          if (!ssid.trim()) {
+            current = null;
+            out.innerHTML = '';
+            msg.textContent = 'Bitte den WLAN-Namen (SSID) eingeben, um einen QR-Code zu erzeugen.';
+            setDownloadEnabled(false);
+            return;
+          }
+
+          // WIFI-String nach Standard zusammenbauen:
+          // WIFI:T:<typ>;S:<ssid>;P:<pass>;H:<true|false>;;
+          const type = nopass ? 'nopass' : enc;
+          let wifi = 'WIFI:T:' + type + ';S:' + escapeWifi(ssid) + ';';
+          if (!nopass) wifi += 'P:' + escapeWifi(pass) + ';';
+          wifi += 'H:' + (hiddenEl.checked ? 'true' : 'false') + ';;';
+
+          try {
+            const qr = qrcode(0, 'M');
+            // UTF-8 robust: Text zu Byte-Folge kodieren und als Latin1-String übergeben –
+            // der Standard-Encoder der Bibliothek (charCodeAt & 0xff) liefert exakt diese Bytes zurück.
+            const utf8 = new TextEncoder().encode(wifi);
+            let bin = '';
+            for (let i = 0; i < utf8.length; i++) bin += String.fromCharCode(utf8[i]);
+            qr.addData(bin, 'Byte');
+            qr.make();
+            current = qr;
+            // `title` ergibt im SVG ein <title>-Element samt role/aria-labelledby
+            // (Cast, da die Typdeklaration der Bibliothek diese Option nicht kennt).
+            out.innerHTML = qr.createSvgTag({ scalable: true, margin: 2, title: 'WLAN-QR-Code für ' + ssid } as { scalable: boolean; margin: number });
+            msg.textContent = 'Erzeugt lokal in deinem Browser – deine Eingaben werden nicht übertragen.';
+            setDownloadEnabled(true);
+          } catch {
+            current = null;
+            out.innerHTML = '';
+            msg.textContent = 'Die Eingaben sind zu lang für einen QR-Code. Bitte kürze SSID oder Passwort.';
+            setDownloadEnabled(false);
+          }
+        };
+
+        const slug = () => {
+          const raw = ssidEl.value.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+          return 'wlan-' + (raw || 'qr-code').slice(0, 40);
+        };
+
+        const triggerDownload = (url: string, filename: string) => {
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        };
+
+        // SVG-Download: Markup aus dem Container als Blob speichern.
+        svgBtn.addEventListener('click', () => {
+          const svg = out.querySelector('svg');
+          if (!current || !svg) return;
+          const markup = '<?xml version="1.0" encoding="UTF-8"?>\n' + svg.outerHTML;
+          const blob = new Blob([markup], { type: 'image/svg+xml;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          triggerDownload(url, slug() + '.svg');
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+          msg.textContent = 'WLAN-QR-Code als SVG heruntergeladen.';
+        });
+
+        // PNG-Download: SVG auf ein Canvas zeichnen und als PNG exportieren.
+        pngBtn.addEventListener('click', () => {
+          const svg = out.querySelector('svg');
+          if (!current || !svg) return;
+          const size = 512;
+          // Für die Rasterisierung explizite Maße ergänzen (das scalable-SVG
+          // im DOM hat nur eine viewBox, wodurch naturalWidth/Height 0 wäre).
+          const markup = new XMLSerializer()
+            .serializeToString(svg)
+            .replace('<svg ', `<svg width="${size}" height="${size}" `);
+          const svgUrl = URL.createObjectURL(new Blob([markup], { type: 'image/svg+xml;charset=utf-8' }));
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) {
+              URL.revokeObjectURL(svgUrl);
+              msg.textContent = 'PNG konnte nicht erstellt werden.';
+              return;
+            }
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, size, size);
+            ctx.drawImage(img, 0, 0, size, size);
+            URL.revokeObjectURL(svgUrl);
+            canvas.toBlob((blob) => {
+              if (!blob) {
+                msg.textContent = 'PNG konnte nicht erstellt werden.';
+                return;
+              }
+              const url = URL.createObjectURL(blob);
+              triggerDownload(url, slug() + '.png');
+              setTimeout(() => URL.revokeObjectURL(url), 1000);
+              msg.textContent = 'WLAN-QR-Code als PNG heruntergeladen.';
+            }, 'image/png');
+          };
+          img.onerror = () => {
+            URL.revokeObjectURL(svgUrl);
+            // Fallback: GIF-DataURL der Bibliothek nutzen.
+            if (current) {
+              triggerDownload(current.createDataURL(8, 8), slug() + '.gif');
+              msg.textContent = 'WLAN-QR-Code als Bild heruntergeladen.';
+            }
+          };
+          img.src = svgUrl;
+        });
+
+        ssidEl.addEventListener('input', render);
+        passEl.addEventListener('input', render);
+        encEl.addEventListener('change', render);
+        hiddenEl.addEventListener('change', render);
+        render();
+      }
+    }
+  </script>
+</BaseLayout>

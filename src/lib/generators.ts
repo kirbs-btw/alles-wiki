@@ -448,6 +448,202 @@ export const GENERATORS: GeneratorMeta[] = [
     ],
     updated: '2026-06-19',
   },
+  {
+    slug: 'text-statistik',
+    category: 'technik',
+    title: 'Wörter & Zeichen zählen',
+    shortTitle: 'Text-Statistik',
+    description:
+      'Zähle Wörter, Zeichen, Sätze und Absätze in deinem Text und sieh die geschätzte Lesezeit – live im Browser, nichts wird übertragen.',
+    keywords: ['wörter zählen', 'zeichen zählen', 'text statistik', 'wortzähler', 'zeichen mit leerzeichen'],
+    intro:
+      'Füge deinen Text ein und sieh sofort die Anzahl Wörter, Zeichen (mit und ohne Leerzeichen), Sätze und Absätze sowie die geschätzte Lesezeit. Praktisch für Bewerbungen, Hausarbeiten, Social-Media-Limits und SEO.',
+    faq: [
+      { q: 'Werden Zeichen mit Leerzeichen gezählt?', a: 'Beides wird angezeigt: Zeichen mit und ohne Leerzeichen – viele Vorgaben (z. B. Honorare) beziehen sich auf eine der beiden Zählweisen.' },
+      { q: 'Wie wird die Lesezeit berechnet?', a: 'Aus der Wortzahl bei rund 200 Wörtern pro Minute – ein üblicher Durchschnitt fürs stille Lesen.' },
+    ],
+    updated: '2026-06-19',
+  },
+  {
+    slug: 'gross-klein-konverter',
+    category: 'technik',
+    title: 'Groß-/Kleinschreibung umwandeln',
+    shortTitle: 'Groß/Klein',
+    description:
+      'Text in GROSSBUCHSTABEN, kleinbuchstaben, Title Case oder Satzanfang-Schreibung umwandeln – mit einem Klick kopierbar.',
+    keywords: ['groß und kleinschreibung umwandeln', 'großbuchstaben umwandeln', 'text in kleinbuchstaben', 'title case generator', 'schreibweise ändern'],
+    intro:
+      'Wandle deinen Text in verschiedene Schreibweisen um: komplett groß, komplett klein, Wortanfänge groß (Title Case) oder nur Satzanfänge groß. Ideal für Überschriften, Listen und das Aufräumen kopierter Texte.',
+    faq: [
+      { q: 'Bleiben Umlaute erhalten?', a: 'Ja, ä/ö/ü und ß werden korrekt groß- bzw. kleingeschrieben.' },
+      { q: 'Was ist Title Case?', a: 'Bei Title Case beginnt jedes Wort mit einem Großbuchstaben – häufig für Titel und Überschriften genutzt.' },
+    ],
+    updated: '2026-06-19',
+  },
+  {
+    slug: 'slug-generator',
+    category: 'technik',
+    title: 'URL-Slug-Generator',
+    shortTitle: 'Slug',
+    description:
+      'Aus einem Titel einen sauberen URL-Slug erzeugen – Kleinbuchstaben, Bindestriche, Umlaute aufgelöst. Für Webseiten, Blogs und SEO.',
+    keywords: ['slug generator', 'url slug erstellen', 'permalink generator', 'url freundlich machen', 'slugify'],
+    intro:
+      'Gib einen Titel ein und erhalte einen suchmaschinenfreundlichen URL-Slug: alles klein, Leerzeichen zu Bindestrichen, Umlaute aufgelöst (ä→ae) und Sonderzeichen entfernt. Direkt kopierbar.',
+    faq: [
+      { q: 'Wie werden Umlaute behandelt?', a: 'Sie werden ausgeschrieben: ä→ae, ö→oe, ü→ue, ß→ss – so bleibt der Slug überall problemlos nutzbar.' },
+      { q: 'Warum sind Slugs wichtig?', a: 'Klare, lesbare URLs helfen Nutzern und Suchmaschinen, den Seiteninhalt einzuordnen.' },
+    ],
+    updated: '2026-06-19',
+  },
+  {
+    slug: 'json-formatter',
+    category: 'technik',
+    title: 'JSON formatieren & prüfen',
+    shortTitle: 'JSON',
+    description:
+      'JSON einrücken (Pretty-Print) oder kompakt minifizieren und auf Gültigkeit prüfen – mit klarer Fehlermeldung. Lokal im Browser.',
+    keywords: ['json formatter', 'json formatieren', 'json prüfen', 'json beautify', 'json validieren'],
+    intro:
+      'Füge JSON ein und lass es sauber einrücken oder kompakt minifizieren. Ist das JSON ungültig, bekommst du eine verständliche Fehlermeldung. Alles passiert lokal in deinem Browser.',
+    faq: [
+      { q: 'Werden meine Daten übertragen?', a: 'Nein. Das JSON wird nur in deinem Browser verarbeitet, nichts wird gesendet oder gespeichert.' },
+      { q: 'Was bedeutet Minifizieren?', a: 'Alle überflüssigen Leerzeichen und Zeilenumbrüche werden entfernt – das spart Platz bei der Übertragung.' },
+    ],
+    updated: '2026-06-19',
+  },
+  {
+    slug: 'wlan-qr-generator',
+    category: 'technik',
+    title: 'WLAN-QR-Code-Generator',
+    shortTitle: 'WLAN-QR',
+    description:
+      'QR-Code fürs WLAN erstellen: Gäste scannen und sind verbunden, ohne das Passwort einzutippen. Lokal erzeugt, nichts wird übertragen.',
+    keywords: ['wlan qr code', 'wifi qr code generator', 'wlan qr code erstellen', 'gäste wlan qr', 'wifi passwort qr'],
+    intro:
+      'Gib WLAN-Name (SSID), Passwort und Verschlüsselung ein und erhalte einen QR-Code. Wer ihn mit der Kamera scannt, verbindet sich automatisch – ideal fürs Gäste-WLAN. Die Erzeugung läuft komplett im Browser.',
+    faq: [
+      { q: 'Wie funktioniert das beim Scannen?', a: 'Der QR-Code enthält Netzwerkname, Verschlüsselungstyp und Passwort im Standardformat. Moderne Smartphones bieten beim Scannen direkt das Verbinden an.' },
+      { q: 'Ist mein Passwort sicher?', a: 'Der QR-Code wird nur lokal erzeugt. Bedenke aber: Wer den QR-Code sieht oder scannt, kann sich verbinden – häng ihn nur dort auf, wo du das möchtest.' },
+    ],
+    related: ['stromkosten-rechner'],
+    updated: '2026-06-19',
+  },
+  {
+    slug: 'farbkontrast-checker',
+    category: 'technik',
+    title: 'Farbkontrast-Checker (WCAG)',
+    shortTitle: 'Kontrast',
+    description:
+      'Kontrastverhältnis zwischen Text- und Hintergrundfarbe prüfen – mit WCAG-Bewertung (AA/AAA) und Live-Vorschau. Für barrierearmes Webdesign.',
+    keywords: ['farbkontrast prüfen', 'kontrast checker wcag', 'kontrastverhältnis berechnen', 'lesbarkeit farben', 'aa aaa kontrast'],
+    intro:
+      'Wähle Text- und Hintergrundfarbe und sieh das Kontrastverhältnis samt WCAG-Bewertung (AA und AAA für normalen und großen Text). Eine Live-Vorschau zeigt, wie lesbar die Kombination ist – wichtig für Barrierefreiheit.',
+    faq: [
+      { q: 'Was bedeutet AA und AAA?', a: 'WCAG-Stufen: AA verlangt mindestens 4,5:1 (großer Text 3:1), AAA mindestens 7:1. Je höher, desto besser lesbar.' },
+      { q: 'Warum ist Kontrast wichtig?', a: 'Ausreichender Kontrast macht Texte für Menschen mit Sehschwäche und bei schlechten Lichtverhältnissen lesbar.' },
+    ],
+    related: ['hex-rgb-umrechner'],
+    updated: '2026-06-19',
+  },
+  {
+    slug: 'emoji-picker',
+    category: 'alltag',
+    title: 'Emoji-Auswahl',
+    shortTitle: 'Emojis',
+    description:
+      'Emojis durchsuchen und mit einem Klick kopieren – nach Kategorien sortiert. Für Chats, Social Media und Bios.',
+    keywords: ['emoji kopieren', 'emojis zum kopieren', 'emoji liste', 'emoji picker', 'smileys kopieren'],
+    intro:
+      'Stöbere durch Emojis nach Kategorien oder suche nach einem Stichwort und kopiere dein Wunsch-Emoji mit einem Klick. Praktisch, wenn deine Tastatur keine Emoji-Auswahl hat.',
+    faq: [
+      { q: 'Funktionieren die Emojis überall?', a: 'Es sind Standard-Unicode-Emojis. Die Darstellung kann je nach Gerät und App leicht abweichen, der Code ist aber identisch.' },
+      { q: 'Kann ich mehrere kopieren?', a: 'Klicke nacheinander – jedes geklickte Emoji wird in die Zwischenablage gelegt bzw. gesammelt.' },
+    ],
+    updated: '2026-06-19',
+  },
+  {
+    slug: 'stoppuhr',
+    category: 'alltag',
+    title: 'Stoppuhr',
+    shortTitle: 'Stoppuhr',
+    description:
+      'Online-Stoppuhr mit Start, Stopp und Rundenzeiten – auf die Hundertstelsekunde genau. Für Sport, Training und den Alltag.',
+    keywords: ['stoppuhr online', 'online stoppuhr', 'stoppuhr mit runden', 'zeitmessung online', 'stoppuhr starten'],
+    intro:
+      'Starte und stoppe die Zeit auf die Hundertstelsekunde genau und nimm beliebig viele Rundenzeiten auf. Ideal fürs Training, zum Kochen oder für kleine Wettbewerbe – ganz ohne App.',
+    faq: [
+      { q: 'Wie genau ist die Stoppuhr?', a: 'Sie zeigt Hundertstelsekunden. Die tatsächliche Genauigkeit hängt von deinem Gerät und Browser ab, reicht aber für Alltag und Training locker.' },
+      { q: 'Was sind Rundenzeiten?', a: 'Zwischenzeiten, die du per Klick festhältst, ohne die Uhr anzuhalten – praktisch für mehrere Durchgänge.' },
+    ],
+    updated: '2026-06-19',
+  },
+  {
+    slug: 'pomodoro-timer',
+    category: 'beruf',
+    title: 'Pomodoro-Timer',
+    shortTitle: 'Pomodoro',
+    description:
+      'Konzentriert arbeiten mit der Pomodoro-Technik: 25 Minuten Fokus, 5 Minuten Pause. Mit Zähler und Signalton – direkt im Browser.',
+    keywords: ['pomodoro timer', 'pomodoro technik', 'fokus timer', '25 5 timer', 'lerntimer'],
+    intro:
+      'Die Pomodoro-Technik teilt Arbeit in 25-Minuten-Blöcke mit kurzen Pausen. Dieser Timer wechselt automatisch zwischen Fokus- und Pausenphasen, zählt die abgeschlossenen Einheiten und gibt am Ende jeder Phase einen Signalton. Längen sind anpassbar.',
+    faq: [
+      { q: 'Wie lang sind die Phasen?', a: 'Standard sind 25 Minuten Fokus und 5 Minuten Pause, nach vier Einheiten eine längere Pause. Du kannst die Zeiten anpassen.' },
+      { q: 'Wofür ist Pomodoro gut?', a: 'Die festen Blöcke helfen gegen Aufschieben und Erschöpfung – konzentriertes Arbeiten mit eingeplanten Pausen.' },
+    ],
+    related: ['lerneinheiten-pomodoro-rechner'],
+    updated: '2026-06-19',
+  },
+  {
+    slug: 'fantasy-namensgenerator',
+    category: 'alltag',
+    title: 'Fantasy-Namen-Generator',
+    shortTitle: 'Fantasy-Namen',
+    description:
+      'Namen für Fantasy-Charaktere, Rollenspiele und Games generieren – verschiedene Stile (elbisch, düster, drollig). Mit einem Klick kopierbar.',
+    keywords: ['fantasy namen generator', 'rpg namen', 'charakter namen generator', 'gamer namen', 'rollenspiel namen'],
+    intro:
+      'Brauchst du einen Namen für einen Charakter in einem Rollenspiel, Roman oder Game? Wähle einen Stil und generiere so viele klangvolle Fantasy-Namen, wie du möchtest – jeder mit einem Klick kopierbar.',
+    faq: [
+      { q: 'Sind die Namen einzigartig?', a: 'Sie werden zufällig aus Silben zusammengesetzt, sodass viele verschiedene Varianten entstehen. Eine Garantie auf Einzigartigkeit gibt es nicht.' },
+      { q: 'Kann ich den Stil wählen?', a: 'Ja, verschiedene Stile erzeugen unterschiedlich klingende Namen – von wohlklingend bis düster.' },
+    ],
+    updated: '2026-06-19',
+  },
+  {
+    slug: 'tally-counter',
+    category: 'alltag',
+    title: 'Zähler / Strichliste',
+    shortTitle: 'Zähler',
+    description:
+      'Einfacher Klick-Zähler für den Alltag – zählen, runterzählen, zurücksetzen. Für Inventur, Besucher, Wiederholungen und Spiele.',
+    keywords: ['zähler online', 'strichliste online', 'klick zähler', 'counter online', 'tally counter'],
+    intro:
+      'Ein digitaler Handzähler: Tippe zum Hochzählen, optional auch runter, und setze bei Bedarf zurück. Praktisch für Inventur, das Zählen von Personen, Wiederholungen beim Sport oder Spielpunkte.',
+    faq: [
+      { q: 'Bleibt der Stand erhalten?', a: 'Solange die Seite geöffnet ist, ja. Beim Neuladen startet der Zähler wieder bei null.' },
+      { q: 'Kann ich die Schrittweite ändern?', a: 'Standard ist +1 pro Klick; eine Schrittweite lässt sich einstellen, um z. B. in Zweierschritten zu zählen.' },
+    ],
+    updated: '2026-06-19',
+  },
+  {
+    slug: 'countdown-event',
+    category: 'alltag',
+    title: 'Countdown bis Datum',
+    shortTitle: 'Countdown',
+    description:
+      'Live-Countdown bis zu einem Datum und einer Uhrzeit – Tage, Stunden, Minuten, Sekunden ticken mit. Für Urlaub, Geburtstag und Events.',
+    keywords: ['countdown erstellen', 'countdown bis datum', 'tage countdown', 'event countdown', 'countdown timer datum'],
+    intro:
+      'Wähle ein Zieldatum und eine Uhrzeit und sieh den Countdown live herunterticken – in Tagen, Stunden, Minuten und Sekunden. Ideal für Urlaub, Geburtstage, Feiertage oder den nächsten großen Termin.',
+    faq: [
+      { q: 'Tickt der Countdown live?', a: 'Ja, die Anzeige aktualisiert sich jede Sekunde, solange die Seite geöffnet ist.' },
+      { q: 'Was passiert nach dem Ziel?', a: 'Ist das Datum erreicht, zeigt der Countdown, dass das Ereignis da ist bzw. wie lange es her ist.' },
+    ],
+    related: ['tage-bis-rechner'],
+    updated: '2026-06-19',
+  },
 ];
 
 export function getGenerator(slug: string): GeneratorMeta | undefined {

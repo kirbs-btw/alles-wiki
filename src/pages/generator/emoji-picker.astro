@@ -1,0 +1,408 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getGenerator } from '../../lib/generators';
+import { getCategory } from '../../lib/categories';
+import { getTool } from '../../lib/registry';
+import { generatorLd, breadcrumbLd, faqLd } from '../../lib/schema';
+
+const gen = getGenerator('emoji-picker')!;
+const cat = getCategory(gen.category)!;
+const path = `/generator/${gen.slug}`;
+
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Generatoren', href: '/generator' },
+  { name: gen.title, href: path },
+];
+
+const relatedTools = (gen.related ?? [])
+  .map((slug) => getTool(slug))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const ld: object[] = [
+  generatorLd({ title: gen.title, description: gen.description, path }),
+  breadcrumbLd(crumbs.map((c) => ({ name: c.name, path: c.href }))),
+  faqLd(gen.faq),
+];
+---
+
+<BaseLayout title={gen.title} description={gen.description} path={path} jsonLd={ld}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="mt-4">
+      <p class="text-sm font-semibold text-brand-700">{cat.name} · Generator</p>
+      <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-zinc-900">{gen.title}</h1>
+      <p class="mt-2 text-lg text-zinc-600">{gen.description}</p>
+    </header>
+
+    <!-- Widget -->
+    <section class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm" data-gen>
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <label class="sr-only" for="emoji-search">Emoji suchen</label>
+        <input
+          id="emoji-search"
+          type="search"
+          placeholder="Suchen, z. B. herz, lachen, hund …"
+          autocomplete="off"
+          class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-3 text-base text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+        />
+      </div>
+
+      <div id="emoji-cats" class="mt-4 flex flex-wrap gap-2" role="group" aria-label="Kategorien">
+        <!-- Kategorie-Buttons werden per Skript eingefügt -->
+      </div>
+
+      <div
+        id="emoji-grid"
+        class="mt-5 grid grid-cols-6 gap-2 sm:grid-cols-8 md:grid-cols-10"
+        role="list"
+        aria-label="Emojis"
+      >
+        <!-- Emoji-Buttons werden per Skript eingefügt -->
+      </div>
+
+      <p id="emoji-msg" class="mt-4 text-sm text-zinc-500" aria-live="polite">
+        Klicke ein Emoji, um es zu kopieren.
+      </p>
+    </section>
+
+    <!-- Inhalt (SEO) -->
+    <section class="prose-werkbank mt-10 max-w-none">
+      <p>{gen.intro}</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold tracking-tight text-zinc-900">Häufige Fragen</h2>
+      <dl class="mt-4 space-y-4">
+        {gen.faq.map((f) => (
+          <div class="rounded-lg border border-zinc-200 bg-white p-4">
+            <dt class="font-semibold text-zinc-900">{f.q}</dt>
+            <dd class="mt-1 text-sm text-zinc-600">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {
+      relatedTools.length > 0 && (
+        <section class="mt-12 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-bold tracking-tight text-zinc-900">Passende Rechner</h2>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            {relatedTools.map((t) => (
+              <a href={`/rechner/${t.slug}/`} class="block rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md">
+                <span class="font-medium text-zinc-800">{t.shortTitle ?? t.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <script>
+    const root = document.querySelector('[data-gen]');
+    if (root) {
+      const search = document.getElementById('emoji-search') as HTMLInputElement | null;
+      const catsEl = document.getElementById('emoji-cats') as HTMLElement | null;
+      const gridEl = document.getElementById('emoji-grid') as HTMLElement | null;
+      const msg = document.getElementById('emoji-msg') as HTMLElement | null;
+
+      // Eingebettete Emoji-Liste: Zeichen, deutsche Stichworte, Kategorie.
+      type Emoji = { c: string; k: string[]; cat: string };
+      const EMOJIS: Emoji[] = [
+        // Smileys
+        { c: '😀', k: ['grinsen', 'lachen', 'freude', 'smiley'], cat: 'Smileys' },
+        { c: '😃', k: ['lachen', 'freude', 'froh'], cat: 'Smileys' },
+        { c: '😄', k: ['lachen', 'glücklich', 'freude'], cat: 'Smileys' },
+        { c: '😁', k: ['grinsen', 'zähne', 'freude'], cat: 'Smileys' },
+        { c: '😆', k: ['lachen', 'kichern', 'haha'], cat: 'Smileys' },
+        { c: '😅', k: ['schwitzen', 'lachen', 'erleichtert'], cat: 'Smileys' },
+        { c: '😂', k: ['tränen', 'lachen', 'lol', 'haha'], cat: 'Smileys' },
+        { c: '🤣', k: ['rollen', 'lachen', 'rofl', 'boden'], cat: 'Smileys' },
+        { c: '😊', k: ['lächeln', 'froh', 'erröten'], cat: 'Smileys' },
+        { c: '🙂', k: ['lächeln', 'leicht', 'froh'], cat: 'Smileys' },
+        { c: '😉', k: ['zwinkern', 'augenzwinkern', 'flirten'], cat: 'Smileys' },
+        { c: '😍', k: ['verliebt', 'herzaugen', 'liebe'], cat: 'Smileys' },
+        { c: '🥰', k: ['verliebt', 'herzen', 'liebe'], cat: 'Smileys' },
+        { c: '😘', k: ['kuss', 'küssen', 'herz'], cat: 'Smileys' },
+        { c: '😋', k: ['lecker', 'zunge', 'schmecken'], cat: 'Smileys' },
+        { c: '😜', k: ['zunge', 'zwinkern', 'frech'], cat: 'Smileys' },
+        { c: '🤪', k: ['verrückt', 'albern', 'zunge'], cat: 'Smileys' },
+        { c: '😎', k: ['cool', 'sonnenbrille', 'lässig'], cat: 'Smileys' },
+        { c: '🤩', k: ['sterne', 'begeistert', 'star'], cat: 'Smileys' },
+        { c: '🥳', k: ['party', 'feiern', 'tröte'], cat: 'Smileys' },
+        { c: '😏', k: ['grinsen', 'verschmitzt', 'selbstgefällig'], cat: 'Smileys' },
+        { c: '😒', k: ['genervt', 'unzufrieden', 'gelangweilt'], cat: 'Smileys' },
+        { c: '😔', k: ['traurig', 'enttäuscht', 'nachdenklich'], cat: 'Smileys' },
+        { c: '😢', k: ['weinen', 'traurig', 'träne'], cat: 'Smileys' },
+        { c: '😭', k: ['weinen', 'heulen', 'traurig'], cat: 'Smileys' },
+        { c: '😡', k: ['wütend', 'sauer', 'rot'], cat: 'Smileys' },
+        { c: '😠', k: ['ärgerlich', 'böse', 'genervt'], cat: 'Smileys' },
+        { c: '🤔', k: ['nachdenken', 'grübeln', 'überlegen'], cat: 'Smileys' },
+        { c: '😴', k: ['schlafen', 'müde', 'schnarchen'], cat: 'Smileys' },
+        { c: '😷', k: ['maske', 'krank', 'erkältet'], cat: 'Smileys' },
+        { c: '🤒', k: ['krank', 'fieber', 'thermometer'], cat: 'Smileys' },
+        { c: '🤗', k: ['umarmen', 'umarmung', 'freude'], cat: 'Smileys' },
+        { c: '🤫', k: ['pssst', 'leise', 'still'], cat: 'Smileys' },
+        { c: '🙃', k: ['umgekehrt', 'verkehrt', 'albern'], cat: 'Smileys' },
+        { c: '😇', k: ['engel', 'unschuldig', 'heiligenschein'], cat: 'Smileys' },
+        { c: '🤯', k: ['kopf', 'explosion', 'schock'], cat: 'Smileys' },
+        { c: '🥺', k: ['bittend', 'kulleraugen', 'flehen'], cat: 'Smileys' },
+        { c: '😱', k: ['schock', 'schrei', 'angst'], cat: 'Smileys' },
+        { c: '🤐', k: ['mund', 'reißverschluss', 'still'], cat: 'Smileys' },
+        { c: '😬', k: ['grimasse', 'verlegen', 'zähne'], cat: 'Smileys' },
+
+        // Gesten
+        { c: '👍', k: ['daumen hoch', 'gut', 'gefällt mir', 'like'], cat: 'Gesten' },
+        { c: '👎', k: ['daumen runter', 'schlecht', 'dislike'], cat: 'Gesten' },
+        { c: '👌', k: ['okay', 'ok', 'perfekt'], cat: 'Gesten' },
+        { c: '✌️', k: ['victory', 'peace', 'frieden', 'zwei'], cat: 'Gesten' },
+        { c: '🤞', k: ['daumen drücken', 'glück', 'gekreuzt'], cat: 'Gesten' },
+        { c: '🤟', k: ['liebe', 'handzeichen', 'rock'], cat: 'Gesten' },
+        { c: '🤘', k: ['rock', 'metal', 'hörner'], cat: 'Gesten' },
+        { c: '🤙', k: ['anrufen', 'shaka', 'call'], cat: 'Gesten' },
+        { c: '👏', k: ['klatschen', 'applaus', 'beifall'], cat: 'Gesten' },
+        { c: '🙌', k: ['hurra', 'jubeln', 'hände hoch'], cat: 'Gesten' },
+        { c: '🙏', k: ['danke', 'bitte', 'beten', 'gebet'], cat: 'Gesten' },
+        { c: '👋', k: ['winken', 'hallo', 'tschüss'], cat: 'Gesten' },
+        { c: '🤝', k: ['handschlag', 'deal', 'einig'], cat: 'Gesten' },
+        { c: '✋', k: ['hand', 'stopp', 'high five'], cat: 'Gesten' },
+        { c: '🖐️', k: ['hand', 'fünf', 'finger'], cat: 'Gesten' },
+        { c: '👊', k: ['faust', 'fist bump', 'schlag'], cat: 'Gesten' },
+        { c: '✊', k: ['faust', 'macht', 'solidarität'], cat: 'Gesten' },
+        { c: '👇', k: ['runter', 'zeigen', 'unten'], cat: 'Gesten' },
+        { c: '👆', k: ['hoch', 'zeigen', 'oben'], cat: 'Gesten' },
+        { c: '👉', k: ['rechts', 'zeigen', 'hier'], cat: 'Gesten' },
+        { c: '👈', k: ['links', 'zeigen'], cat: 'Gesten' },
+        { c: '💪', k: ['muskel', 'stark', 'kraft'], cat: 'Gesten' },
+        { c: '🤲', k: ['hände', 'offen', 'bitte'], cat: 'Gesten' },
+        { c: '🤦', k: ['facepalm', 'kopf', 'verzweifelt'], cat: 'Gesten' },
+        { c: '🤷', k: ['schulterzucken', 'keine ahnung', 'egal'], cat: 'Gesten' },
+
+        // Herzen
+        { c: '❤️', k: ['herz', 'liebe', 'rot'], cat: 'Herzen' },
+        { c: '🧡', k: ['herz', 'orange', 'liebe'], cat: 'Herzen' },
+        { c: '💛', k: ['herz', 'gelb', 'liebe'], cat: 'Herzen' },
+        { c: '💚', k: ['herz', 'grün', 'liebe'], cat: 'Herzen' },
+        { c: '💙', k: ['herz', 'blau', 'liebe'], cat: 'Herzen' },
+        { c: '💜', k: ['herz', 'lila', 'liebe'], cat: 'Herzen' },
+        { c: '🖤', k: ['herz', 'schwarz', 'liebe'], cat: 'Herzen' },
+        { c: '🤍', k: ['herz', 'weiß', 'liebe'], cat: 'Herzen' },
+        { c: '💔', k: ['gebrochen', 'herzschmerz', 'trennung'], cat: 'Herzen' },
+        { c: '❣️', k: ['herz', 'ausrufezeichen', 'liebe'], cat: 'Herzen' },
+        { c: '💕', k: ['zwei herzen', 'liebe', 'verliebt'], cat: 'Herzen' },
+        { c: '💞', k: ['herzen', 'kreisen', 'liebe'], cat: 'Herzen' },
+        { c: '💓', k: ['herz', 'schlagen', 'puls'], cat: 'Herzen' },
+        { c: '💗', k: ['herz', 'wachsen', 'liebe'], cat: 'Herzen' },
+        { c: '💖', k: ['herz', 'funkeln', 'glitzern'], cat: 'Herzen' },
+        { c: '💝', k: ['herz', 'geschenk', 'schleife'], cat: 'Herzen' },
+        { c: '💋', k: ['kuss', 'lippen', 'lippenstift'], cat: 'Herzen' },
+
+        // Tiere
+        { c: '🐶', k: ['hund', 'welpe', 'tier'], cat: 'Tiere' },
+        { c: '🐱', k: ['katze', 'mieze', 'tier'], cat: 'Tiere' },
+        { c: '🐭', k: ['maus', 'tier'], cat: 'Tiere' },
+        { c: '🐹', k: ['hamster', 'tier'], cat: 'Tiere' },
+        { c: '🐰', k: ['hase', 'kaninchen', 'tier'], cat: 'Tiere' },
+        { c: '🦊', k: ['fuchs', 'tier'], cat: 'Tiere' },
+        { c: '🐻', k: ['bär', 'tier'], cat: 'Tiere' },
+        { c: '🐼', k: ['panda', 'bär', 'tier'], cat: 'Tiere' },
+        { c: '🐨', k: ['koala', 'tier'], cat: 'Tiere' },
+        { c: '🦁', k: ['löwe', 'tier'], cat: 'Tiere' },
+        { c: '🐯', k: ['tiger', 'tier'], cat: 'Tiere' },
+        { c: '🐮', k: ['kuh', 'tier'], cat: 'Tiere' },
+        { c: '🐷', k: ['schwein', 'tier'], cat: 'Tiere' },
+        { c: '🐸', k: ['frosch', 'tier'], cat: 'Tiere' },
+        { c: '🐵', k: ['affe', 'tier'], cat: 'Tiere' },
+        { c: '🐔', k: ['huhn', 'henne', 'tier'], cat: 'Tiere' },
+        { c: '🐧', k: ['pinguin', 'tier'], cat: 'Tiere' },
+        { c: '🐦', k: ['vogel', 'tier'], cat: 'Tiere' },
+        { c: '🦄', k: ['einhorn', 'tier', 'magie'], cat: 'Tiere' },
+        { c: '🐝', k: ['biene', 'insekt', 'tier'], cat: 'Tiere' },
+        { c: '🦋', k: ['schmetterling', 'tier', 'insekt'], cat: 'Tiere' },
+        { c: '🐢', k: ['schildkröte', 'tier'], cat: 'Tiere' },
+        { c: '🐙', k: ['krake', 'oktopus', 'tier'], cat: 'Tiere' },
+        { c: '🐬', k: ['delfin', 'tier', 'meer'], cat: 'Tiere' },
+        { c: '🐳', k: ['wal', 'tier', 'meer'], cat: 'Tiere' },
+        { c: '🐠', k: ['fisch', 'tier', 'meer'], cat: 'Tiere' },
+        { c: '🦅', k: ['adler', 'vogel', 'tier'], cat: 'Tiere' },
+
+        // Essen
+        { c: '🍎', k: ['apfel', 'obst', 'rot'], cat: 'Essen' },
+        { c: '🍌', k: ['banane', 'obst'], cat: 'Essen' },
+        { c: '🍇', k: ['trauben', 'obst', 'wein'], cat: 'Essen' },
+        { c: '🍓', k: ['erdbeere', 'obst'], cat: 'Essen' },
+        { c: '🍉', k: ['melone', 'wassermelone', 'obst'], cat: 'Essen' },
+        { c: '🍊', k: ['orange', 'obst'], cat: 'Essen' },
+        { c: '🍋', k: ['zitrone', 'obst', 'sauer'], cat: 'Essen' },
+        { c: '🍒', k: ['kirsche', 'obst'], cat: 'Essen' },
+        { c: '🍑', k: ['pfirsich', 'obst'], cat: 'Essen' },
+        { c: '🍍', k: ['ananas', 'obst'], cat: 'Essen' },
+        { c: '🥑', k: ['avocado', 'gemüse'], cat: 'Essen' },
+        { c: '🍅', k: ['tomate', 'gemüse'], cat: 'Essen' },
+        { c: '🌽', k: ['mais', 'gemüse'], cat: 'Essen' },
+        { c: '🥕', k: ['karotte', 'möhre', 'gemüse'], cat: 'Essen' },
+        { c: '🍔', k: ['burger', 'hamburger', 'fastfood'], cat: 'Essen' },
+        { c: '🍟', k: ['pommes', 'fritten', 'fastfood'], cat: 'Essen' },
+        { c: '🍕', k: ['pizza', 'essen'], cat: 'Essen' },
+        { c: '🌭', k: ['hotdog', 'würstchen'], cat: 'Essen' },
+        { c: '🍩', k: ['donut', 'gebäck', 'süß'], cat: 'Essen' },
+        { c: '🍪', k: ['keks', 'cookie', 'süß'], cat: 'Essen' },
+        { c: '🎂', k: ['kuchen', 'geburtstag', 'torte'], cat: 'Essen' },
+        { c: '🍰', k: ['kuchen', 'torte', 'süß'], cat: 'Essen' },
+        { c: '🍫', k: ['schokolade', 'süß'], cat: 'Essen' },
+        { c: '🍦', k: ['eis', 'softeis', 'süß'], cat: 'Essen' },
+        { c: '☕', k: ['kaffee', 'tee', 'getränk'], cat: 'Essen' },
+        { c: '🍺', k: ['bier', 'getränk', 'prost'], cat: 'Essen' },
+        { c: '🍷', k: ['wein', 'getränk', 'glas'], cat: 'Essen' },
+        { c: '🥤', k: ['getränk', 'limo', 'becher'], cat: 'Essen' },
+
+        // Reise
+        { c: '🚗', k: ['auto', 'wagen', 'fahren'], cat: 'Reise' },
+        { c: '🚕', k: ['taxi', 'auto'], cat: 'Reise' },
+        { c: '🚌', k: ['bus', 'fahren'], cat: 'Reise' },
+        { c: '🚓', k: ['polizei', 'auto'], cat: 'Reise' },
+        { c: '🚑', k: ['krankenwagen', 'notarzt'], cat: 'Reise' },
+        { c: '🚲', k: ['fahrrad', 'rad', 'velo'], cat: 'Reise' },
+        { c: '🏍️', k: ['motorrad', 'fahren'], cat: 'Reise' },
+        { c: '✈️', k: ['flugzeug', 'fliegen', 'reise', 'urlaub'], cat: 'Reise' },
+        { c: '🚀', k: ['rakete', 'weltraum', 'start'], cat: 'Reise' },
+        { c: '🚁', k: ['hubschrauber', 'heli', 'fliegen'], cat: 'Reise' },
+        { c: '🚂', k: ['zug', 'lok', 'eisenbahn'], cat: 'Reise' },
+        { c: '🚢', k: ['schiff', 'boot', 'kreuzfahrt'], cat: 'Reise' },
+        { c: '⛵', k: ['segelboot', 'boot', 'segeln'], cat: 'Reise' },
+        { c: '🏖️', k: ['strand', 'urlaub', 'meer'], cat: 'Reise' },
+        { c: '🏔️', k: ['berg', 'gipfel', 'wandern'], cat: 'Reise' },
+        { c: '🗺️', k: ['karte', 'landkarte', 'reise'], cat: 'Reise' },
+        { c: '🧳', k: ['koffer', 'gepäck', 'reise'], cat: 'Reise' },
+        { c: '🏕️', k: ['camping', 'zelt', 'natur'], cat: 'Reise' },
+        { c: '🌍', k: ['welt', 'erde', 'globus'], cat: 'Reise' },
+        { c: '🏠', k: ['haus', 'zuhause', 'heim'], cat: 'Reise' },
+        { c: '⛽', k: ['tankstelle', 'benzin', 'tanken'], cat: 'Reise' },
+        { c: '🚦', k: ['ampel', 'verkehr', 'signal'], cat: 'Reise' },
+
+        // Symbole
+        { c: '⭐', k: ['stern', 'favorit', 'bewertung'], cat: 'Symbole' },
+        { c: '🌟', k: ['stern', 'funkeln', 'glanz'], cat: 'Symbole' },
+        { c: '✨', k: ['funkeln', 'glitzern', 'magie'], cat: 'Symbole' },
+        { c: '🔥', k: ['feuer', 'flamme', 'heiß', 'lit'], cat: 'Symbole' },
+        { c: '💧', k: ['tropfen', 'wasser'], cat: 'Symbole' },
+        { c: '⚡', k: ['blitz', 'strom', 'energie'], cat: 'Symbole' },
+        { c: '🌈', k: ['regenbogen', 'farben'], cat: 'Symbole' },
+        { c: '☀️', k: ['sonne', 'sonnig', 'wetter'], cat: 'Symbole' },
+        { c: '🌙', k: ['mond', 'nacht', 'sichel'], cat: 'Symbole' },
+        { c: '☁️', k: ['wolke', 'bewölkt', 'wetter'], cat: 'Symbole' },
+        { c: '❄️', k: ['schnee', 'flocke', 'kalt', 'winter'], cat: 'Symbole' },
+        { c: '✅', k: ['häkchen', 'check', 'erledigt', 'ok'], cat: 'Symbole' },
+        { c: '❌', k: ['kreuz', 'falsch', 'nein', 'fehler'], cat: 'Symbole' },
+        { c: '❓', k: ['fragezeichen', 'frage'], cat: 'Symbole' },
+        { c: '❗', k: ['ausrufezeichen', 'achtung', 'wichtig'], cat: 'Symbole' },
+        { c: '💯', k: ['hundert', 'voll', 'perfekt'], cat: 'Symbole' },
+        { c: '🎉', k: ['party', 'feier', 'konfetti', 'tröte'], cat: 'Symbole' },
+        { c: '🎊', k: ['konfetti', 'party', 'feier'], cat: 'Symbole' },
+        { c: '🎁', k: ['geschenk', 'present', 'überraschung'], cat: 'Symbole' },
+        { c: '🏆', k: ['pokal', 'sieg', 'gewinner', 'trophäe'], cat: 'Symbole' },
+        { c: '🎈', k: ['ballon', 'luftballon', 'party'], cat: 'Symbole' },
+        { c: '💡', k: ['idee', 'glühbirne', 'licht'], cat: 'Symbole' },
+        { c: '🔔', k: ['glocke', 'benachrichtigung', 'klingel'], cat: 'Symbole' },
+        { c: '🔒', k: ['schloss', 'sicher', 'gesperrt'], cat: 'Symbole' },
+        { c: '🔑', k: ['schlüssel', 'zugang'], cat: 'Symbole' },
+        { c: '💰', k: ['geld', 'sack', 'reich'], cat: 'Symbole' },
+        { c: '🎵', k: ['note', 'musik', 'ton'], cat: 'Symbole' },
+        { c: '📌', k: ['pin', 'reißzwecke', 'merken'], cat: 'Symbole' },
+      ];
+
+      if (search && catsEl && gridEl && msg) {
+        const CATS = ['Alle', 'Smileys', 'Gesten', 'Herzen', 'Tiere', 'Essen', 'Reise', 'Symbole'];
+        let activeCat = 'Alle';
+
+        // Kopieren mit Fallback.
+        const copyEmoji = async (emoji: string) => {
+          try {
+            await navigator.clipboard.writeText(emoji);
+            msg.textContent = `${emoji} kopiert.`;
+          } catch {
+            // Fallback: in temporäres Textfeld kopieren.
+            try {
+              const ta = document.createElement('textarea');
+              ta.value = emoji;
+              ta.setAttribute('readonly', '');
+              ta.style.position = 'absolute';
+              ta.style.left = '-9999px';
+              document.body.appendChild(ta);
+              ta.select();
+              document.execCommand('copy');
+              document.body.removeChild(ta);
+              msg.textContent = `${emoji} kopiert.`;
+            } catch {
+              msg.textContent = `${emoji} – Kopieren nicht möglich, bitte manuell markieren.`;
+            }
+          }
+        };
+
+        const render = () => {
+          const q = search.value.trim().toLowerCase();
+          const matches = EMOJIS.filter((e) => {
+            const inCat = activeCat === 'Alle' || e.cat === activeCat;
+            if (!inCat) return false;
+            if (!q) return true;
+            return e.k.some((word) => word.includes(q)) || e.cat.toLowerCase().includes(q);
+          });
+          // Anzahl deckeln (Sicherheitsnetz, Liste ist ohnehin klein).
+          const shown = matches.slice(0, 300);
+          gridEl.innerHTML = '';
+          if (shown.length === 0) {
+            msg.textContent = 'Kein passendes Emoji gefunden.';
+            return;
+          }
+          const frag = document.createDocumentFragment();
+          for (const e of shown) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.textContent = e.c;
+            btn.setAttribute('role', 'listitem');
+            btn.setAttribute('title', e.k[0] ?? e.cat);
+            btn.setAttribute('aria-label', `${e.k[0] ?? 'Emoji'} kopieren`);
+            btn.className =
+              'flex aspect-square items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 text-2xl transition hover:-translate-y-0.5 hover:border-brand-300 hover:bg-white hover:shadow-md focus-visible:ring-2 focus-visible:ring-brand-300';
+            btn.addEventListener('click', () => copyEmoji(e.c));
+            frag.appendChild(btn);
+          }
+          gridEl.appendChild(frag);
+          msg.textContent = 'Klicke ein Emoji, um es zu kopieren.';
+        };
+
+        // Kategorie-Buttons aufbauen.
+        const catButtons: HTMLButtonElement[] = [];
+        const styleCatButtons = () => {
+          for (const b of catButtons) {
+            const isActive = b.dataset.cat === activeCat;
+            b.className = isActive
+              ? 'rounded-full bg-brand-700 px-3 py-1.5 text-sm font-semibold text-white transition hover:bg-brand-600 focus-visible:ring-2 focus-visible:ring-brand-300'
+              : 'rounded-full border border-zinc-300 px-3 py-1.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-brand-300';
+            b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+          }
+        };
+        for (const cat of CATS) {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.textContent = cat;
+          b.dataset.cat = cat;
+          b.addEventListener('click', () => {
+            activeCat = cat;
+            styleCatButtons();
+            render();
+          });
+          catButtons.push(b);
+          catsEl.appendChild(b);
+        }
+        styleCatButtons();
+
+        search.addEventListener('input', render);
+        render();
+      }
+    }
+  </script>
+</BaseLayout>
