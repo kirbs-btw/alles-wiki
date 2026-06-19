@@ -1,0 +1,249 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getGenerator } from '../../lib/generators';
+import { getCategory } from '../../lib/categories';
+import { getTool } from '../../lib/registry';
+import { generatorLd, breadcrumbLd, faqLd } from '../../lib/schema';
+
+const gen = getGenerator('morsecode-uebersetzer')!;
+const cat = getCategory(gen.category)!;
+const path = `/generator/${gen.slug}`;
+
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Generatoren', href: '/generator' },
+  { name: gen.title, href: path },
+];
+
+const relatedTools = (gen.related ?? [])
+  .map((slug) => getTool(slug))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const ld: object[] = [
+  generatorLd({ title: gen.title, description: gen.description, path }),
+  breadcrumbLd(crumbs.map((c) => ({ name: c.name, path: c.href }))),
+  faqLd(gen.faq),
+];
+---
+
+<BaseLayout title={gen.title} description={gen.description} path={path} jsonLd={ld}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="mt-4">
+      <p class="text-sm font-semibold text-brand-700">{cat.name} · Generator</p>
+      <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-zinc-900">{gen.title}</h1>
+      <p class="mt-2 text-lg text-zinc-600">{gen.description}</p>
+    </header>
+
+    <!-- Widget -->
+    <section class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm" data-gen>
+      <fieldset class="flex flex-wrap gap-4">
+        <legend class="mb-1 text-sm font-medium text-zinc-700">Modus</legend>
+        <label class="flex items-center gap-2 text-sm text-zinc-700">
+          <input id="mc-mode-encode" type="radio" name="mc-mode" value="encode" checked class="accent-brand-700" />
+          Text → Morse
+        </label>
+        <label class="flex items-center gap-2 text-sm text-zinc-700">
+          <input id="mc-mode-decode" type="radio" name="mc-mode" value="decode" class="accent-brand-700" />
+          Morse → Text
+        </label>
+      </fieldset>
+
+      <div class="mt-5">
+        <label class="mb-1 block text-sm font-medium text-zinc-700" for="mc-input">Eingabe</label>
+        <textarea
+          id="mc-input"
+          rows="4"
+          class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-3 font-mono text-sm text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+          placeholder="Hier Text oder Morsecode eingeben …"></textarea>
+      </div>
+
+      <div class="mt-5">
+        <div class="mb-1 flex items-center justify-between">
+          <label class="block text-sm font-medium text-zinc-700" for="mc-output">Ausgabe</label>
+          <button id="mc-copy" type="button" class="shrink-0 rounded-lg border border-zinc-300 px-3 py-1.5 text-xs font-semibold text-zinc-700 transition hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-brand-300">Kopieren</button>
+        </div>
+        <textarea
+          id="mc-output"
+          rows="4"
+          readonly
+          aria-live="polite"
+          class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-3 font-mono text-sm text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"></textarea>
+      </div>
+
+      <p id="mc-msg" class="mt-3 text-xs text-zinc-500" aria-live="polite">Buchstaben werden mit Leerzeichen, Wörter mit „ / " getrennt. Läuft komplett lokal im Browser.</p>
+    </section>
+
+    <!-- Inhalt (SEO) -->
+    <section class="prose-werkbank mt-10 max-w-none">
+      <p>{gen.intro}</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold tracking-tight text-zinc-900">Häufige Fragen</h2>
+      <dl class="mt-4 space-y-4">
+        {gen.faq.map((f) => (
+          <div class="rounded-lg border border-zinc-200 bg-white p-4">
+            <dt class="font-semibold text-zinc-900">{f.q}</dt>
+            <dd class="mt-1 text-sm text-zinc-600">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {
+      relatedTools.length > 0 && (
+        <section class="mt-12 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-bold tracking-tight text-zinc-900">Passende Rechner</h2>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            {relatedTools.map((t) => (
+              <a href={`/rechner/${t.slug}/`} class="block rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md">
+                <span class="font-medium text-zinc-800">{t.shortTitle ?? t.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <script>
+    const root = document.querySelector('[data-gen]');
+    if (root) {
+      const input = document.getElementById('mc-input') as HTMLTextAreaElement | null;
+      const output = document.getElementById('mc-output') as HTMLTextAreaElement | null;
+      const msg = document.getElementById('mc-msg') as HTMLElement | null;
+      const modeEncode = document.getElementById('mc-mode-encode') as HTMLInputElement | null;
+      const modeDecode = document.getElementById('mc-mode-decode') as HTMLInputElement | null;
+      const copyBtn = document.getElementById('mc-copy');
+
+      if (input && output && msg && modeEncode && modeDecode) {
+        // Internationales Morse-Alphabet inkl. Ziffern, gängiger Satzzeichen und deutscher Umlaute.
+        const TO_MORSE: Record<string, string> = {
+          A: '.-', B: '-...', C: '-.-.', D: '-..', E: '.', F: '..-.', G: '--.',
+          H: '....', I: '..', J: '.---', K: '-.-', L: '.-..', M: '--', N: '-.',
+          O: '---', P: '.--.', Q: '--.-', R: '.-.', S: '...', T: '-', U: '..-',
+          V: '...-', W: '.--', X: '-..-', Y: '-.--', Z: '--..',
+          '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-',
+          '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.',
+          '.': '.-.-.-', ',': '--..--', '?': '..--..', "'": '.----.', '!': '-.-.--',
+          '/': '-..-.', '(': '-.--.', ')': '-.--.-', '&': '.-...', ':': '---...',
+          ';': '-.-.-.', '=': '-...-', '+': '.-.-.', '-': '-....-', '_': '..--.-',
+          '"': '.-..-.', '$': '...-..-', '@': '.--.-.',
+          // Deutsche Umlaute / Sonderbuchstaben
+          'Ä': '.-.-', 'Ö': '---.', 'Ü': '..--', 'ß': '...--..', 'CH': '----',
+        };
+        // Umkehr-Map für die Dekodierung.
+        const FROM_MORSE: Record<string, string> = {};
+        for (const key in TO_MORSE) {
+          const code = TO_MORSE[key];
+          // Erstes Vorkommen gewinnt (z. B. '/' und 'CH' sind eindeutig genug).
+          if (!(code in FROM_MORSE)) FROM_MORSE[code] = key;
+        }
+
+        const MAX_CHARS = 20000;
+
+        const encode = (text: string) => {
+          const src = text.length > MAX_CHARS ? text.slice(0, MAX_CHARS) : text;
+          // Wörter an Leerraum trennen.
+          const words = src.split(/\s+/).filter((w) => w.length > 0);
+          let skipped = 0;
+          const out = words.map((word) => {
+            const upper = word.toUpperCase();
+            const tokens: string[] = [];
+            let i = 0;
+            while (i < upper.length) {
+              // "CH" als Sonderzeichen zusammenfassen.
+              if (upper[i] === 'C' && upper[i + 1] === 'H' && TO_MORSE['CH']) {
+                tokens.push(TO_MORSE['CH']);
+                i += 2;
+                continue;
+              }
+              const ch = upper[i];
+              if (TO_MORSE[ch]) {
+                tokens.push(TO_MORSE[ch]);
+              } else {
+                tokens.push('?');
+                skipped++;
+              }
+              i++;
+            }
+            return tokens.join(' ');
+          });
+          return { result: out.join(' / '), skipped };
+        };
+
+        const decode = (code: string) => {
+          const src = code.length > MAX_CHARS ? code.slice(0, MAX_CHARS) : code;
+          // Wörter sind durch "/" getrennt; Buchstaben durch Leerzeichen.
+          const words = src.trim().split(/\s*\/\s*/);
+          let skipped = 0;
+          const out = words.map((word) => {
+            const letters = word.trim().split(/\s+/).filter((l) => l.length > 0);
+            return letters
+              .map((sym) => {
+                if (sym in FROM_MORSE) return FROM_MORSE[sym];
+                skipped++;
+                return '?';
+              })
+              .join('');
+          });
+          return { result: out.join(' '), skipped };
+        };
+
+        const setMsg = (skipped: number, empty: boolean) => {
+          if (empty) {
+            msg.textContent = 'Bitte einen Text oder Morsecode eingeben.';
+          } else if (skipped > 0) {
+            msg.textContent = `Übersetzt – ${skipped} nicht erkannte${skipped === 1 ? 's Zeichen wurde' : ' Zeichen wurden'} mit „?" markiert.`;
+          } else {
+            msg.textContent = 'Übersetzt. Buchstaben mit Leerzeichen, Wörter mit „ / " getrennt.';
+          }
+        };
+
+        const update = () => {
+          const raw = input.value;
+          if (!raw.trim()) {
+            output.value = '';
+            setMsg(0, true);
+            return;
+          }
+          if (modeDecode.checked) {
+            const { result, skipped } = decode(raw);
+            output.value = result;
+            setMsg(skipped, false);
+          } else {
+            const { result, skipped } = encode(raw);
+            output.value = result;
+            setMsg(skipped, false);
+          }
+        };
+
+        input.addEventListener('input', update);
+        modeEncode.addEventListener('change', () => {
+          input.placeholder = 'Hier Text eingeben …';
+          update();
+        });
+        modeDecode.addEventListener('change', () => {
+          input.placeholder = 'Hier Morsecode eingeben (z. B. .... .- .-.. .-.. ---) …';
+          update();
+        });
+
+        copyBtn?.addEventListener('click', async () => {
+          if (!output.value) return;
+          try {
+            await navigator.clipboard.writeText(output.value);
+            msg.textContent = 'Ergebnis kopiert.';
+          } catch {
+            output.select();
+            msg.textContent = 'Markiert – mit Strg/Cmd+C kopieren.';
+          }
+        });
+
+        update();
+      }
+    }
+  </script>
+</BaseLayout>

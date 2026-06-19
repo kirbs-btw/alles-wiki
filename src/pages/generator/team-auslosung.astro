@@ -1,0 +1,226 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getGenerator } from '../../lib/generators';
+import { getCategory } from '../../lib/categories';
+import { getTool } from '../../lib/registry';
+import { generatorLd, breadcrumbLd, faqLd } from '../../lib/schema';
+
+const gen = getGenerator('team-auslosung')!;
+const cat = getCategory(gen.category)!;
+const path = `/generator/${gen.slug}`;
+
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Generatoren', href: '/generator' },
+  { name: gen.title, href: path },
+];
+
+const relatedTools = (gen.related ?? [])
+  .map((slug) => getTool(slug))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const ld: object[] = [
+  generatorLd({ title: gen.title, description: gen.description, path }),
+  breadcrumbLd(crumbs.map((c) => ({ name: c.name, path: c.href }))),
+  faqLd(gen.faq),
+];
+---
+
+<BaseLayout title={gen.title} description={gen.description} path={path} jsonLd={ld}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="mt-4">
+      <p class="text-sm font-semibold text-brand-700">{cat.name} · Generator</p>
+      <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-zinc-900">{gen.title}</h1>
+      <p class="mt-2 text-lg text-zinc-600">{gen.description}</p>
+    </header>
+
+    <!-- Widget -->
+    <section class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm" data-gen>
+      <div class="grid gap-5 sm:grid-cols-2">
+        <label class="block sm:col-span-2">
+          <span class="mb-1 block text-sm font-medium text-zinc-700">Namen (eine pro Zeile)</span>
+          <textarea
+            id="ta-names"
+            rows="8"
+            placeholder="Anna&#10;Ben&#10;Clara&#10;David&#10;Emil&#10;Frieda"
+            class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-3 font-mono text-sm text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+          ></textarea>
+        </label>
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-zinc-700">Anzahl Teams</span>
+          <input
+            id="ta-count"
+            type="number"
+            min="2"
+            max="20"
+            step="1"
+            value="2"
+            inputmode="numeric"
+            class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-3 text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+          />
+        </label>
+        <div class="flex items-end gap-2">
+          <button id="ta-draw" type="button" class="shrink-0 rounded-lg bg-brand-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-brand-600 focus-visible:ring-2 focus-visible:ring-brand-300">Auslosen</button>
+          <button id="ta-copy" type="button" class="shrink-0 rounded-lg border border-zinc-300 px-4 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-brand-300">Kopieren</button>
+        </div>
+      </div>
+
+      <div id="ta-result" class="mt-6 grid gap-3 sm:grid-cols-2" aria-live="polite"></div>
+      <p id="ta-msg" class="mt-3 text-xs text-zinc-500" aria-live="polite">Trage mindestens zwei Namen ein und lose die Teams aus. Alles läuft lokal in deinem Browser.</p>
+    </section>
+
+    <!-- Inhalt (SEO) -->
+    <section class="prose-werkbank mt-10 max-w-none">
+      <p>{gen.intro}</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold tracking-tight text-zinc-900">Häufige Fragen</h2>
+      <dl class="mt-4 space-y-4">
+        {gen.faq.map((f) => (
+          <div class="rounded-lg border border-zinc-200 bg-white p-4">
+            <dt class="font-semibold text-zinc-900">{f.q}</dt>
+            <dd class="mt-1 text-sm text-zinc-600">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {
+      relatedTools.length > 0 && (
+        <section class="mt-12 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-bold tracking-tight text-zinc-900">Passende Rechner</h2>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            {relatedTools.map((t) => (
+              <a href={`/rechner/${t.slug}/`} class="block rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md">
+                <span class="font-medium text-zinc-800">{t.shortTitle ?? t.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <script>
+    const root = document.querySelector('[data-gen]');
+    if (root) {
+      const namesEl = document.getElementById('ta-names') as HTMLTextAreaElement | null;
+      const countEl = document.getElementById('ta-count') as HTMLInputElement | null;
+      const resultEl = document.getElementById('ta-result') as HTMLElement | null;
+      const msg = document.getElementById('ta-msg') as HTMLElement | null;
+      const drawBtn = document.getElementById('ta-draw');
+      const copyBtn = document.getElementById('ta-copy');
+
+      if (namesEl && countEl && resultEl && msg) {
+        const MAX_TEAMS = 20;
+
+        // Unverzerrter Zufallsindex via Rejection-Sampling (vermeidet Modulo-Bias).
+        const randIndex = (mod: number) => {
+          const limit = Math.floor(2 ** 32 / mod) * mod;
+          const buf = new Uint32Array(1);
+          let v: number;
+          do {
+            crypto.getRandomValues(buf);
+            v = buf[0];
+          } while (v >= limit);
+          return v % mod;
+        };
+
+        const escapeHtml = (s: string) =>
+          s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+        // Letztes Ergebnis als Klartext für die Kopierfunktion.
+        let lastText = '';
+
+        const parseNames = (): string[] =>
+          namesEl.value
+            .split('\n')
+            .map((n) => n.trim())
+            .filter((n) => n.length > 0);
+
+        const clampCount = (names: number): number => {
+          let n = parseInt(countEl.value, 10);
+          if (!Number.isFinite(n)) n = 2;
+          n = Math.floor(n);
+          if (n < 2) n = 2;
+          if (n > MAX_TEAMS) n = MAX_TEAMS;
+          return n;
+        };
+
+        const draw = () => {
+          const names = parseNames();
+          const teamCount = clampCount(names.length);
+          resultEl.innerHTML = '';
+          lastText = '';
+
+          if (names.length < 2) {
+            msg.textContent = 'Bitte mindestens zwei Namen eingeben (eine pro Zeile).';
+            return;
+          }
+          if (teamCount > names.length) {
+            msg.textContent = `Es gibt mehr Teams (${teamCount}) als Namen (${names.length}). Bitte weniger Teams wählen.`;
+            return;
+          }
+
+          // Fisher-Yates-Shuffle mit kryptografischem Zufall.
+          const shuffled = names.slice();
+          for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = randIndex(i + 1);
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+          }
+
+          // Gleichmäßig verteilen: Basisgröße, Rest verteilt sich auf die ersten Teams (+1).
+          const base = Math.floor(shuffled.length / teamCount);
+          const remainder = shuffled.length % teamCount;
+          const teams: string[][] = [];
+          let pos = 0;
+          for (let t = 0; t < teamCount; t++) {
+            const size = base + (t < remainder ? 1 : 0);
+            teams.push(shuffled.slice(pos, pos + size));
+            pos += size;
+          }
+
+          const textLines: string[] = [];
+          const html: string[] = [];
+          teams.forEach((team, idx) => {
+            const heading = `Team ${idx + 1}`;
+            textLines.push(`${heading} (${team.length}):`);
+            team.forEach((m) => textLines.push(`  - ${m}`));
+            textLines.push('');
+            html.push(
+              `<div class="rounded-lg border border-zinc-200 bg-zinc-50 p-4">` +
+                `<h3 class="flex items-center justify-between text-sm font-semibold text-zinc-900">` +
+                `<span>${escapeHtml(heading)}</span>` +
+                `<span class="font-mono text-xs text-zinc-500">${team.length}</span>` +
+                `</h3>` +
+                `<ul class="mt-2 space-y-1 text-sm text-zinc-700">` +
+                team.map((m) => `<li>${escapeHtml(m)}</li>`).join('') +
+                `</ul>` +
+                `</div>`
+            );
+          });
+
+          resultEl.innerHTML = html.join('');
+          lastText = textLines.join('\n').trim();
+          msg.textContent = `${names.length} Namen auf ${teamCount} Teams verteilt.`;
+        };
+
+        drawBtn?.addEventListener('click', draw);
+
+        copyBtn?.addEventListener('click', async () => {
+          if (!lastText) { msg.textContent = 'Erst auslosen, dann kopieren.'; return; }
+          try {
+            await navigator.clipboard.writeText(lastText);
+            msg.textContent = 'Teams in die Zwischenablage kopiert.';
+          } catch {
+            msg.textContent = 'Kopieren nicht möglich – bitte Ergebnis manuell markieren.';
+          }
+        });
+      }
+    }
+  </script>
+</BaseLayout>

@@ -1,0 +1,182 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getGenerator } from '../../lib/generators';
+import { getCategory } from '../../lib/categories';
+import { getTool } from '../../lib/registry';
+import { generatorLd, breadcrumbLd, faqLd } from '../../lib/schema';
+
+const gen = getGenerator('hash-generator')!;
+const cat = getCategory(gen.category)!;
+const path = `/generator/${gen.slug}`;
+
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Generatoren', href: '/generator' },
+  { name: gen.title, href: path },
+];
+
+const relatedTools = (gen.related ?? [])
+  .map((slug) => getTool(slug))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const ld: object[] = [
+  generatorLd({ title: gen.title, description: gen.description, path }),
+  breadcrumbLd(crumbs.map((c) => ({ name: c.name, path: c.href }))),
+  faqLd(gen.faq),
+];
+---
+
+<BaseLayout title={gen.title} description={gen.description} path={path} jsonLd={ld}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="mt-4">
+      <p class="text-sm font-semibold text-brand-700">{cat.name} · Generator</p>
+      <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-zinc-900">{gen.title}</h1>
+      <p class="mt-2 text-lg text-zinc-600">{gen.description}</p>
+    </header>
+
+    <!-- Widget -->
+    <section class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm" data-gen>
+      <div class="grid gap-5 sm:grid-cols-3">
+        <label class="block sm:col-span-2">
+          <span class="mb-1 block text-sm font-medium text-zinc-700">Text</span>
+          <textarea
+            id="hash-input"
+            rows="4"
+            placeholder="Text eingeben …"
+            class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+          ></textarea>
+        </label>
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-zinc-700">Algorithmus</span>
+          <select
+            id="hash-algo"
+            class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+          >
+            <option value="SHA-256" selected>SHA-256</option>
+            <option value="SHA-1">SHA-1</option>
+            <option value="SHA-512">SHA-512</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="mt-5">
+        <div class="flex items-center justify-between">
+          <label class="text-sm font-medium text-zinc-700" for="hash-out">Hash (Hexadezimal)</label>
+          <button id="hash-copy" type="button" class="shrink-0 rounded-lg border border-zinc-300 px-3 py-1.5 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-brand-300">Kopieren</button>
+        </div>
+        <textarea
+          id="hash-out"
+          rows="2"
+          readonly
+          aria-live="polite"
+          class="mt-1 w-full break-all rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 font-mono text-sm text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+        ></textarea>
+      </div>
+
+      <p id="hash-msg" class="mt-3 text-xs text-zinc-500" aria-live="polite">Berechnung läuft lokal in deinem Browser – nichts wird übertragen.</p>
+    </section>
+
+    <!-- Inhalt (SEO) -->
+    <section class="prose-werkbank mt-10 max-w-none">
+      <p>{gen.intro}</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold tracking-tight text-zinc-900">Häufige Fragen</h2>
+      <dl class="mt-4 space-y-4">
+        {gen.faq.map((f) => (
+          <div class="rounded-lg border border-zinc-200 bg-white p-4">
+            <dt class="font-semibold text-zinc-900">{f.q}</dt>
+            <dd class="mt-1 text-sm text-zinc-600">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {
+      relatedTools.length > 0 && (
+        <section class="mt-12 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-bold tracking-tight text-zinc-900">Passende Rechner</h2>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            {relatedTools.map((t) => (
+              <a href={`/rechner/${t.slug}/`} class="block rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md">
+                <span class="font-medium text-zinc-800">{t.shortTitle ?? t.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <script>
+    const root = document.querySelector('[data-gen]');
+    if (root) {
+      const input = document.getElementById('hash-input') as HTMLTextAreaElement | null;
+      const algo = document.getElementById('hash-algo') as HTMLSelectElement | null;
+      const out = document.getElementById('hash-out') as HTMLTextAreaElement | null;
+      const msg = document.getElementById('hash-msg') as HTMLElement | null;
+      const copyBtn = document.getElementById('hash-copy');
+
+      if (input && algo && out && msg) {
+        const toHex = (buf: ArrayBuffer) =>
+          Array.from(new Uint8Array(buf))
+            .map((b) => b.toString(16).padStart(2, '0'))
+            .join('');
+
+        let token = 0;
+        const compute = async () => {
+          const text = input.value;
+          if (!text) {
+            out.value = '';
+            msg.textContent = 'Bitte einen Text eingeben.';
+            return;
+          }
+          // Web-Crypto verfügbar? (sonst sauberer Hinweis statt Crash)
+          if (!(window.crypto && window.crypto.subtle)) {
+            out.value = '';
+            msg.textContent = 'Dein Browser unterstützt die Web-Crypto-API nicht.';
+            return;
+          }
+          const current = ++token;
+          try {
+            const data = new TextEncoder().encode(text);
+            const digest = await window.crypto.subtle.digest(algo.value, data);
+            if (current !== token) return; // veraltete Berechnung verwerfen
+            out.value = toHex(digest);
+            msg.textContent = `${algo.value} berechnet – lokal in deinem Browser.`;
+          } catch {
+            if (current !== token) return;
+            out.value = '';
+            msg.textContent = 'Hash konnte nicht berechnet werden.';
+          }
+        };
+
+        let debounce: number | undefined;
+        const schedule = () => {
+          if (debounce) window.clearTimeout(debounce);
+          debounce = window.setTimeout(compute, 200);
+        };
+
+        input.addEventListener('input', schedule);
+        algo.addEventListener('change', compute);
+
+        if (copyBtn) {
+          copyBtn.addEventListener('click', async () => {
+            if (!out.value) return;
+            try {
+              await navigator.clipboard.writeText(out.value);
+              msg.textContent = 'Hash kopiert.';
+            } catch {
+              out.select();
+              msg.textContent = 'Markiert – mit Strg/Cmd+C kopieren.';
+            }
+          });
+        }
+      }
+    }
+  </script>
+</BaseLayout>

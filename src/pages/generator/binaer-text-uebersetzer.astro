@@ -1,0 +1,205 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getGenerator } from '../../lib/generators';
+import { getCategory } from '../../lib/categories';
+import { getTool } from '../../lib/registry';
+import { generatorLd, breadcrumbLd, faqLd } from '../../lib/schema';
+
+const gen = getGenerator('binaer-text-uebersetzer')!;
+const cat = getCategory(gen.category)!;
+const path = `/generator/${gen.slug}`;
+
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Generatoren', href: '/generator' },
+  { name: gen.title, href: path },
+];
+
+const relatedTools = (gen.related ?? [])
+  .map((slug) => getTool(slug))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const ld: object[] = [
+  generatorLd({ title: gen.title, description: gen.description, path }),
+  breadcrumbLd(crumbs.map((c) => ({ name: c.name, path: c.href }))),
+  faqLd(gen.faq),
+];
+---
+
+<BaseLayout title={gen.title} description={gen.description} path={path} jsonLd={ld}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="mt-4">
+      <p class="text-sm font-semibold text-brand-700">{cat.name} · Generator</p>
+      <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-zinc-900">{gen.title}</h1>
+      <p class="mt-2 text-lg text-zinc-600">{gen.description}</p>
+    </header>
+
+    <!-- Widget -->
+    <section class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm" data-gen>
+      <fieldset class="flex flex-wrap items-center gap-4">
+        <legend class="mb-1 text-sm font-medium text-zinc-700">Modus</legend>
+        <label class="flex items-center gap-2 text-sm text-zinc-700">
+          <input id="bt-mode-encode" type="radio" name="bt-mode" value="encode" checked class="accent-brand-700" />
+          Text → Binär
+        </label>
+        <label class="flex items-center gap-2 text-sm text-zinc-700">
+          <input id="bt-mode-decode" type="radio" name="bt-mode" value="decode" class="accent-brand-700" />
+          Binär → Text
+        </label>
+      </fieldset>
+
+      <div class="mt-5">
+        <label class="mb-1 block text-sm font-medium text-zinc-700" for="bt-in">Eingabe</label>
+        <textarea
+          id="bt-in"
+          rows="4"
+          placeholder="Text hier eingeben …"
+          class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-3 font-mono text-sm text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+        ></textarea>
+      </div>
+
+      <div class="mt-5">
+        <div class="mb-1 flex items-center justify-between">
+          <label class="block text-sm font-medium text-zinc-700" for="bt-out">Ausgabe</label>
+          <button id="bt-copy" type="button" class="shrink-0 rounded-lg border border-zinc-300 px-3 py-1.5 text-xs font-semibold text-zinc-700 transition hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-brand-300">Kopieren</button>
+        </div>
+        <textarea
+          id="bt-out"
+          rows="4"
+          readonly
+          aria-live="polite"
+          placeholder="Ergebnis erscheint hier …"
+          class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-3 font-mono text-sm text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+        ></textarea>
+      </div>
+
+      <p id="bt-msg" class="mt-3 text-xs text-zinc-500" aria-live="polite">UTF-8-genau – läuft komplett lokal in deinem Browser.</p>
+    </section>
+
+    <!-- Inhalt (SEO) -->
+    <section class="prose-werkbank mt-10 max-w-none">
+      <p>{gen.intro}</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold tracking-tight text-zinc-900">Häufige Fragen</h2>
+      <dl class="mt-4 space-y-4">
+        {gen.faq.map((f) => (
+          <div class="rounded-lg border border-zinc-200 bg-white p-4">
+            <dt class="font-semibold text-zinc-900">{f.q}</dt>
+            <dd class="mt-1 text-sm text-zinc-600">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {
+      relatedTools.length > 0 && (
+        <section class="mt-12 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-bold tracking-tight text-zinc-900">Passende Rechner</h2>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            {relatedTools.map((t) => (
+              <a href={`/rechner/${t.slug}/`} class="block rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md">
+                <span class="font-medium text-zinc-800">{t.shortTitle ?? t.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <script>
+    const root = document.querySelector('[data-gen]');
+    if (root) {
+      const input = document.getElementById('bt-in') as HTMLTextAreaElement | null;
+      const output = document.getElementById('bt-out') as HTMLTextAreaElement | null;
+      const modeEncode = document.getElementById('bt-mode-encode') as HTMLInputElement | null;
+      const modeDecode = document.getElementById('bt-mode-decode') as HTMLInputElement | null;
+      const msg = document.getElementById('bt-msg') as HTMLElement | null;
+      const copyBtn = document.getElementById('bt-copy');
+
+      if (input && output && modeEncode && modeDecode && msg) {
+        const HINT = 'UTF-8-genau – läuft komplett lokal in deinem Browser.';
+
+        // Text -> Binär: jedes UTF-8-Byte als 8-Bit-Block, durch Leerzeichen getrennt.
+        const textToBinary = (text: string): string => {
+          const bytes = new TextEncoder().encode(text);
+          const blocks: string[] = [];
+          for (const byte of bytes) {
+            blocks.push(byte.toString(2).padStart(8, '0'));
+          }
+          return blocks.join(' ');
+        };
+
+        // Binär -> Text: 8er-Blöcke parsen -> Bytes -> UTF-8 dekodieren.
+        const binaryToText = (binary: string): string => {
+          // Auf Nullen/Einsen reduzieren (Leerzeichen, Zeilenumbrüche etc. ignorieren).
+          const bits = binary.replace(/[^01]/g, '');
+          if (bits.length === 0) {
+            throw new Error('Keine 0/1-Zeichen gefunden.');
+          }
+          if (bits.length % 8 !== 0) {
+            throw new Error('Die Bit-Anzahl muss ein Vielfaches von 8 sein.');
+          }
+          const byteCount = bits.length / 8;
+          const bytes = new Uint8Array(byteCount);
+          for (let i = 0; i < byteCount; i++) {
+            bytes[i] = parseInt(bits.slice(i * 8, i * 8 + 8), 2);
+          }
+          // fatal: true -> ungültige UTF-8-Sequenzen werfen statt Ersatzzeichen.
+          return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+        };
+
+        const convert = () => {
+          const value = input.value;
+          if (value.trim() === '') {
+            output.value = '';
+            msg.textContent = modeDecode.checked
+              ? 'Bitte Binärcode (0 und 1) eingeben.'
+              : 'Bitte Text eingeben.';
+            return;
+          }
+          try {
+            if (modeDecode.checked) {
+              output.value = binaryToText(value);
+            } else {
+              output.value = textToBinary(value);
+            }
+            msg.textContent = HINT;
+          } catch (err) {
+            output.value = '';
+            const reason = err instanceof Error ? err.message : 'Ungültige Eingabe.';
+            msg.textContent = 'Ungültiger Binärcode: ' + reason;
+          }
+        };
+
+        input.addEventListener('input', convert);
+        modeEncode.addEventListener('change', () => {
+          input.placeholder = 'Text hier eingeben …';
+          convert();
+        });
+        modeDecode.addEventListener('change', () => {
+          input.placeholder = 'Binärcode (8er-Blöcke), z. B. 01001000 01101001';
+          convert();
+        });
+
+        copyBtn?.addEventListener('click', async () => {
+          if (!output.value) return;
+          try {
+            await navigator.clipboard.writeText(output.value);
+            msg.textContent = 'Ergebnis kopiert.';
+          } catch {
+            output.select();
+            msg.textContent = 'Markiert – mit Strg/Cmd+C kopieren.';
+          }
+        });
+
+        convert();
+      }
+    }
+  </script>
+</BaseLayout>

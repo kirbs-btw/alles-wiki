@@ -1,0 +1,207 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getGenerator } from '../../lib/generators';
+import { getCategory } from '../../lib/categories';
+import { getTool } from '../../lib/registry';
+import { generatorLd, breadcrumbLd, faqLd } from '../../lib/schema';
+
+const gen = getGenerator('caesar-verschluesselung')!;
+const cat = getCategory(gen.category)!;
+const path = `/generator/${gen.slug}`;
+
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Generatoren', href: '/generator' },
+  { name: gen.title, href: path },
+];
+
+const relatedTools = (gen.related ?? [])
+  .map((slug) => getTool(slug))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const ld: object[] = [
+  generatorLd({ title: gen.title, description: gen.description, path }),
+  breadcrumbLd(crumbs.map((c) => ({ name: c.name, path: c.href }))),
+  faqLd(gen.faq),
+];
+---
+
+<BaseLayout title={gen.title} description={gen.description} path={path} jsonLd={ld}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="mt-4">
+      <p class="text-sm font-semibold text-brand-700">{cat.name} · Generator</p>
+      <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-zinc-900">{gen.title}</h1>
+      <p class="mt-2 text-lg text-zinc-600">{gen.description}</p>
+    </header>
+
+    <!-- Widget -->
+    <section class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm" data-gen>
+      <div>
+        <label class="mb-1 block text-sm font-medium text-zinc-700" for="caesar-input">Text</label>
+        <textarea
+          id="caesar-input"
+          rows="4"
+          placeholder="Text hier eingeben …"
+          class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-3 font-mono text-sm text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+        ></textarea>
+      </div>
+
+      <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end">
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-zinc-700">Verschiebung</span>
+          <input
+            id="caesar-shift"
+            type="number"
+            min="-25"
+            max="25"
+            step="1"
+            value="13"
+            class="w-32 rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 font-mono text-sm text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+          />
+        </label>
+        <div class="flex flex-wrap gap-2">
+          <button id="caesar-encode" type="button" class="shrink-0 rounded-lg bg-brand-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-600 focus-visible:ring-2 focus-visible:ring-brand-300">Verschlüsseln</button>
+          <button id="caesar-decode" type="button" class="shrink-0 rounded-lg bg-brand-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-600 focus-visible:ring-2 focus-visible:ring-brand-300">Entschlüsseln</button>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <div class="mb-1 flex items-center justify-between">
+          <label class="text-sm font-medium text-zinc-700" for="caesar-output">Ergebnis</label>
+          <button id="caesar-copy" type="button" class="shrink-0 rounded-lg border border-zinc-300 px-3 py-1.5 text-xs font-semibold text-zinc-700 transition hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-brand-300">Kopieren</button>
+        </div>
+        <textarea
+          id="caesar-output"
+          rows="4"
+          readonly
+          aria-live="polite"
+          class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-3 font-mono text-sm text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+        ></textarea>
+      </div>
+
+      <p id="caesar-msg" class="mt-3 text-xs text-zinc-500" aria-live="polite">Verschiebung 13 entspricht ROT13. Läuft komplett lokal in deinem Browser.</p>
+    </section>
+
+    <!-- Inhalt (SEO) -->
+    <section class="prose-werkbank mt-10 max-w-none">
+      <p>{gen.intro}</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold tracking-tight text-zinc-900">Häufige Fragen</h2>
+      <dl class="mt-4 space-y-4">
+        {gen.faq.map((f) => (
+          <div class="rounded-lg border border-zinc-200 bg-white p-4">
+            <dt class="font-semibold text-zinc-900">{f.q}</dt>
+            <dd class="mt-1 text-sm text-zinc-600">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {
+      relatedTools.length > 0 && (
+        <section class="mt-12 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-bold tracking-tight text-zinc-900">Passende Rechner</h2>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            {relatedTools.map((t) => (
+              <a href={`/rechner/${t.slug}/`} class="block rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md">
+                <span class="font-medium text-zinc-800">{t.shortTitle ?? t.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <script>
+    const root = document.querySelector('[data-gen]');
+    if (root) {
+      const input = document.getElementById('caesar-input') as HTMLTextAreaElement | null;
+      const shiftEl = document.getElementById('caesar-shift') as HTMLInputElement | null;
+      const output = document.getElementById('caesar-output') as HTMLTextAreaElement | null;
+      const msg = document.getElementById('caesar-msg') as HTMLElement | null;
+      const encodeBtn = document.getElementById('caesar-encode');
+      const decodeBtn = document.getElementById('caesar-decode');
+      const copyBtn = document.getElementById('caesar-copy');
+
+      if (input && shiftEl && output && msg) {
+        // Aktuelle Richtung: +1 = verschlüsseln, -1 = entschlüsseln.
+        let direction = 1;
+
+        // Verschiebung sicher einlesen und auf -25..25 begrenzen.
+        const readShift = () => {
+          const raw = parseInt(shiftEl.value, 10);
+          if (Number.isNaN(raw)) return 0;
+          if (raw > 25) return 25;
+          if (raw < -25) return -25;
+          return raw;
+        };
+
+        // Caesar-Verschiebung: nur A-Z/a-z verschieben, alles andere bleibt unverändert.
+        const shiftText = (text: string, amount: number) => {
+          // Normierung auf 0..25, damit auch negative Werte sauber mod 26 ergeben.
+          const norm = ((amount % 26) + 26) % 26;
+          let out = '';
+          for (let i = 0; i < text.length; i++) {
+            const code = text.charCodeAt(i);
+            if (code >= 65 && code <= 90) {
+              out += String.fromCharCode(((code - 65 + norm) % 26) + 65);
+            } else if (code >= 97 && code <= 122) {
+              out += String.fromCharCode(((code - 97 + norm) % 26) + 97);
+            } else {
+              out += text[i];
+            }
+          }
+          return out;
+        };
+
+        const update = () => {
+          const text = input.value;
+          const shift = readShift();
+          shiftEl.value = String(shift);
+          if (!text) {
+            output.value = '';
+            msg.textContent = 'Bitte oben einen Text eingeben.';
+            return;
+          }
+          // Entschlüsseln = negative Verschiebung.
+          output.value = shiftText(text, shift * direction);
+          if (shift === 0) {
+            msg.textContent = 'Verschiebung 0 lässt den Text unverändert.';
+          } else if (Math.abs(shift) === 13) {
+            msg.textContent = direction === 1
+              ? 'Verschlüsselt mit Verschiebung 13 (ROT13).'
+              : 'Entschlüsselt mit Verschiebung 13 (ROT13).';
+          } else {
+            msg.textContent = direction === 1
+              ? `Verschlüsselt mit Verschiebung ${shift}.`
+              : `Entschlüsselt mit Verschiebung ${shift}.`;
+          }
+        };
+
+        encodeBtn?.addEventListener('click', () => { direction = 1; update(); });
+        decodeBtn?.addEventListener('click', () => { direction = -1; update(); });
+        input.addEventListener('input', update);
+        shiftEl.addEventListener('input', update);
+
+        copyBtn?.addEventListener('click', async () => {
+          if (!output.value) return;
+          try {
+            await navigator.clipboard.writeText(output.value);
+            msg.textContent = 'Ergebnis kopiert.';
+          } catch {
+            output.select();
+            msg.textContent = 'Markiert – mit Strg/Cmd+C kopieren.';
+          }
+        });
+
+        update();
+      }
+    }
+  </script>
+</BaseLayout>

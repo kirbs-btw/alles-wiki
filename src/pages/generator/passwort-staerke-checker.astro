@@ -1,0 +1,254 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getGenerator } from '../../lib/generators';
+import { getCategory } from '../../lib/categories';
+import { getTool } from '../../lib/registry';
+import { generatorLd, breadcrumbLd, faqLd } from '../../lib/schema';
+
+const gen = getGenerator('passwort-staerke-checker')!;
+const cat = getCategory(gen.category)!;
+const path = `/generator/${gen.slug}`;
+
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Generatoren', href: '/generator' },
+  { name: gen.title, href: path },
+];
+
+const relatedTools = (gen.related ?? [])
+  .map((slug) => getTool(slug))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const ld: object[] = [
+  generatorLd({ title: gen.title, description: gen.description, path }),
+  breadcrumbLd(crumbs.map((c) => ({ name: c.name, path: c.href }))),
+  faqLd(gen.faq),
+];
+---
+
+<BaseLayout title={gen.title} description={gen.description} path={path} jsonLd={ld}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="mt-4">
+      <p class="text-sm font-semibold text-brand-700">{cat.name} · Generator</p>
+      <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-zinc-900">{gen.title}</h1>
+      <p class="mt-2 text-lg text-zinc-600">{gen.description}</p>
+    </header>
+
+    <!-- Widget -->
+    <section class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm" data-gen>
+      <label class="block text-sm font-medium text-zinc-700" for="psc-input">Passwort eingeben</label>
+      <div class="mt-1 flex gap-2">
+        <input
+          id="psc-input"
+          type="password"
+          autocomplete="off"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck="false"
+          placeholder="Passwort hier eingeben …"
+          class="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-3 font-mono text-lg text-zinc-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+        />
+        <button id="psc-toggle" type="button" aria-pressed="false" aria-label="Passwort anzeigen" class="shrink-0 rounded-lg border border-zinc-300 px-4 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-brand-300">Anzeigen</button>
+      </div>
+
+      <!-- Stärke-Balken -->
+      <div class="mt-5">
+        <div class="flex items-center justify-between text-sm">
+          <span class="font-medium text-zinc-700">Stärke</span>
+          <span id="psc-label" class="font-semibold text-zinc-500">–</span>
+        </div>
+        <div class="mt-1 h-2.5 w-full overflow-hidden rounded-full bg-zinc-200" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" id="psc-bar-track">
+          <div id="psc-bar" class="h-full w-0 rounded-full bg-zinc-300 transition-all duration-300"></div>
+        </div>
+      </div>
+
+      <!-- Kennzahlen -->
+      <div class="mt-5 grid gap-3 sm:grid-cols-3">
+        <div class="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3">
+          <div class="text-xs font-medium text-zinc-500">Länge</div>
+          <div id="psc-len" class="mt-0.5 font-mono text-lg font-semibold text-zinc-900">0</div>
+        </div>
+        <div class="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3">
+          <div class="text-xs font-medium text-zinc-500">Zeichenklassen</div>
+          <div id="psc-classes" class="mt-0.5 font-mono text-lg font-semibold text-zinc-900">0</div>
+        </div>
+        <div class="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3">
+          <div class="text-xs font-medium text-zinc-500">Entropie</div>
+          <div id="psc-entropy" class="mt-0.5 font-mono text-lg font-semibold text-zinc-900">0 Bit</div>
+        </div>
+      </div>
+
+      <!-- Zeichenklassen-Checkliste -->
+      <ul class="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <li id="psc-c-lower" class="flex items-center gap-2 rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-500"><span class="psc-dot inline-block h-2 w-2 rounded-full bg-zinc-300"></span> Kleinbuchstaben</li>
+        <li id="psc-c-upper" class="flex items-center gap-2 rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-500"><span class="psc-dot inline-block h-2 w-2 rounded-full bg-zinc-300"></span> Großbuchstaben</li>
+        <li id="psc-c-digit" class="flex items-center gap-2 rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-500"><span class="psc-dot inline-block h-2 w-2 rounded-full bg-zinc-300"></span> Ziffern</li>
+        <li id="psc-c-symbol" class="flex items-center gap-2 rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-500"><span class="psc-dot inline-block h-2 w-2 rounded-full bg-zinc-300"></span> Sonderzeichen</li>
+      </ul>
+
+      <p id="psc-msg" class="mt-4 text-xs text-zinc-500" aria-live="polite">Die Prüfung läuft komplett lokal in deinem Browser – dein Passwort wird nicht gespeichert oder übertragen.</p>
+    </section>
+
+    <!-- Inhalt (SEO) -->
+    <section class="prose-werkbank mt-10 max-w-none">
+      <p>{gen.intro}</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold tracking-tight text-zinc-900">Häufige Fragen</h2>
+      <dl class="mt-4 space-y-4">
+        {gen.faq.map((f) => (
+          <div class="rounded-lg border border-zinc-200 bg-white p-4">
+            <dt class="font-semibold text-zinc-900">{f.q}</dt>
+            <dd class="mt-1 text-sm text-zinc-600">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {
+      relatedTools.length > 0 && (
+        <section class="mt-12 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-bold tracking-tight text-zinc-900">Passende Rechner</h2>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            {relatedTools.map((t) => (
+              <a href={`/rechner/${t.slug}/`} class="block rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md">
+                <span class="font-medium text-zinc-800">{t.shortTitle ?? t.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <script>
+    const root = document.querySelector('[data-gen]');
+    if (root) {
+      const input = document.getElementById('psc-input') as HTMLInputElement | null;
+      const toggle = document.getElementById('psc-toggle') as HTMLButtonElement | null;
+      const label = document.getElementById('psc-label') as HTMLElement | null;
+      const bar = document.getElementById('psc-bar') as HTMLElement | null;
+      const barTrack = document.getElementById('psc-bar-track') as HTMLElement | null;
+      const lenEl = document.getElementById('psc-len') as HTMLElement | null;
+      const classesEl = document.getElementById('psc-classes') as HTMLElement | null;
+      const entropyEl = document.getElementById('psc-entropy') as HTMLElement | null;
+      const cLower = document.getElementById('psc-c-lower') as HTMLElement | null;
+      const cUpper = document.getElementById('psc-c-upper') as HTMLElement | null;
+      const cDigit = document.getElementById('psc-c-digit') as HTMLElement | null;
+      const cSymbol = document.getElementById('psc-c-symbol') as HTMLElement | null;
+      const msg = document.getElementById('psc-msg') as HTMLElement | null;
+
+      if (input && toggle && label && bar && barTrack && lenEl && classesEl && entropyEl && cLower && cUpper && cDigit && cSymbol && msg) {
+        // Stufen: Index entspricht aria-valuenow.
+        const levels = [
+          { name: 'Sehr schwach', bar: 'bg-red-500', text: 'text-red-600', pct: '20%' },
+          { name: 'Schwach', bar: 'bg-orange-500', text: 'text-orange-600', pct: '40%' },
+          { name: 'Mittel', bar: 'bg-amber-400', text: 'text-amber-600', pct: '60%' },
+          { name: 'Stark', bar: 'bg-lime-500', text: 'text-lime-700', pct: '80%' },
+          { name: 'Sehr stark', bar: 'bg-emerald-600', text: 'text-emerald-700', pct: '100%' },
+        ];
+        const barClasses = ['bg-zinc-300', 'bg-red-500', 'bg-orange-500', 'bg-amber-400', 'bg-lime-500', 'bg-emerald-600'];
+        const labelClasses = ['text-zinc-500', 'text-red-600', 'text-orange-600', 'text-amber-600', 'text-lime-700', 'text-emerald-700'];
+
+        // Klasse aktiv/inaktiv markieren (Listeneintrag + farbiger Punkt).
+        const markClass = (el: HTMLElement, active: boolean) => {
+          const dot = el.querySelector('.psc-dot') as HTMLElement | null;
+          if (active) {
+            el.classList.remove('text-zinc-500', 'border-zinc-200');
+            el.classList.add('text-emerald-700', 'border-emerald-300', 'bg-emerald-50');
+            if (dot) { dot.classList.remove('bg-zinc-300'); dot.classList.add('bg-emerald-500'); }
+          } else {
+            el.classList.add('text-zinc-500', 'border-zinc-200');
+            el.classList.remove('text-emerald-700', 'border-emerald-300', 'bg-emerald-50');
+            if (dot) { dot.classList.add('bg-zinc-300'); dot.classList.remove('bg-emerald-500'); }
+          }
+        };
+
+        const reset = () => {
+          lenEl.textContent = '0';
+          classesEl.textContent = '0';
+          entropyEl.textContent = '0 Bit';
+          label.textContent = '–';
+          label.className = 'font-semibold text-zinc-500';
+          bar.className = 'h-full w-0 rounded-full bg-zinc-300 transition-all duration-300';
+          barTrack.setAttribute('aria-valuenow', '0');
+          markClass(cLower, false);
+          markClass(cUpper, false);
+          markClass(cDigit, false);
+          markClass(cSymbol, false);
+        };
+
+        const evaluate = () => {
+          const pw = input.value;
+          const len = pw.length;
+
+          if (len === 0) {
+            reset();
+            msg.textContent = 'Die Prüfung läuft komplett lokal in deinem Browser – dein Passwort wird nicht gespeichert oder übertragen.';
+            return;
+          }
+
+          // Genutzte Zeichenklassen ermitteln.
+          const hasLower = /[a-z]/.test(pw);
+          const hasUpper = /[A-Z]/.test(pw);
+          const hasDigit = /[0-9]/.test(pw);
+          // Alles, was kein ASCII-Buchstabe/Ziffer und kein Leerzeichen ist, zählt als Sonderzeichen.
+          const hasSymbol = /[^a-zA-Z0-9]/.test(pw);
+
+          markClass(cLower, hasLower);
+          markClass(cUpper, hasUpper);
+          markClass(cDigit, hasDigit);
+          markClass(cSymbol, hasSymbol);
+
+          // Poolgröße je genutzter Klasse (Annäherung an gängige Tastaturzeichen).
+          let pool = 0;
+          let classCount = 0;
+          if (hasLower) { pool += 26; classCount++; }
+          if (hasUpper) { pool += 26; classCount++; }
+          if (hasDigit) { pool += 10; classCount++; }
+          if (hasSymbol) { pool += 33; classCount++; }
+
+          // Entropie = Länge * log2(Poolgröße). Auf ganze Bit gerundet.
+          const entropy = pool > 0 ? Math.round(len * Math.log2(pool)) : 0;
+
+          lenEl.textContent = String(len);
+          classesEl.textContent = String(classCount);
+          entropyEl.textContent = entropy + ' Bit';
+
+          // Staffelung der Entropie in fünf Stufen.
+          let idx: number;
+          if (entropy < 28) idx = 0;
+          else if (entropy < 40) idx = 1;
+          else if (entropy < 60) idx = 2;
+          else if (entropy < 80) idx = 3;
+          else idx = 4;
+
+          const lvl = levels[idx];
+          label.textContent = lvl.name;
+          label.className = 'font-semibold ' + labelClasses[idx + 1];
+          bar.className = 'h-full rounded-full transition-all duration-300 ' + barClasses[idx + 1];
+          bar.style.width = lvl.pct;
+          barTrack.setAttribute('aria-valuenow', String(idx + 1));
+
+          msg.textContent = 'Bewertet: ' + lvl.name + ' (' + entropy + ' Bit Entropie). Prüfung läuft lokal, nichts wird übertragen.';
+        };
+
+        toggle.addEventListener('click', () => {
+          const show = input.type === 'password';
+          input.type = show ? 'text' : 'password';
+          toggle.textContent = show ? 'Verbergen' : 'Anzeigen';
+          toggle.setAttribute('aria-pressed', show ? 'true' : 'false');
+          toggle.setAttribute('aria-label', show ? 'Passwort verbergen' : 'Passwort anzeigen');
+          input.focus();
+        });
+
+        input.addEventListener('input', evaluate);
+        reset();
+      }
+    }
+  </script>
+</BaseLayout>
